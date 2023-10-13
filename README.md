@@ -1,5 +1,19 @@
 # project-template
 Template repostiory for accelerate your project
+
+## Work on your project
+1) Activate the environement
+```bash
+workon ALCHEMY
+```
+2) If you want to deactivate the environnement
+```bash
+deactivate
+```
+3) To list all the current module on the environnement
+```bash
+pip freeze
+```
 ## Installation
 - Clone the repo
 
@@ -8,8 +22,7 @@ git clone https://github.com/edouardkoehn/WM_Atlas.git
 ```
 - Create your virtual env
 ```bash
-conda create -n wm python=3
-conda activate wm
+mkvirtualenv ALCHEMY
 ```
 - Install poetry
 ```bash
@@ -18,8 +31,6 @@ pip install poetry
 - install the modul and set up the precommit
 ```bash
 poetry install
-poetry run pre-commit install
-poetry env info
 ```
 
 ## Managing dependancies
@@ -29,16 +40,22 @@ poetry add numpy
 ```
 It would automatically install and udpate the pyproject.toml file. If you didn't specifie it, it would add it to the tool.poetry.dependencies.
 
-- to add an dependancy with poetry to a specific group
+
+## Working with git
+1) Check wich files have been modified:
 ```bash
-poetry add pytest --group test
+git status
 ```
-It would automatically install and udpate the pyproject.toml file. The dependancie would be attached to the tool.poetry.dependcies.group.
-[More info about poetry](https://python-poetry.org/docs/managing-dependencies/#adding-a-dependency-to-a-group)
-
-## Pre-commit config
-Pre-commit hook are small software that are called when you do a git commit. Those hooks do several test on you code (formating, imports, etc. ). If not all the tests have been passed, the pre-commmit would not allow you to do the commit. You would have to resolve each of the error before beeing able to do the commit.
-
-Good pratrice with pre-commit :
-1) Git commit regularly
-2) Never git commit when you are in a rush
+2) Add the modified files to your working tree:
+```bash
+git add edi_bg.py
+```
+3) Commit the changes on the working tree:
+```bash
+git commit -m "J'aimes les mouches"
+```
+4) Push your new code on the server:
+```bash
+git push
+```
+If you have any issues: 1) Read the error and google it 2) Use git status to ensure that all the modified files have been save 3) Cry if you see the error conflict.
