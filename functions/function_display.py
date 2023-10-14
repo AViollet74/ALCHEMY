@@ -13,7 +13,7 @@ def convert(images_paths):
 
     for path in images_paths:       
         image = Image.open(path)                                #open image path
-        image = image.resize((500, 500), Image.ANTIALIAS)       #resize image
+        #image = image.resize((500, 500), Image.ANTIALIAS)      #resize image
         image_tk = ImageTk.PhotoImage(image)                    #create ImageTk.PhotoImage object
         images_tk.append(image_tk)                              #add ImageTk.PhotoImage object to the list
         
@@ -21,7 +21,7 @@ def convert(images_paths):
 
 
 
-def show_image(frame, images_tk, image_index):
+def show_image_tk(frame, images_tk, image_index):
     """Create a Canvas widget and display a single image
        Args: frame, 
             list images_tk, list of ImageTk.PhotoImage objects,
@@ -33,7 +33,7 @@ def show_image(frame, images_tk, image_index):
     cnv.grid(row=0, columnspan=3)
     cnv.create_image((image_tk.width()/2), (image_tk.height()/2), anchor=tk.CENTER, image=image_tk)
 
-    return(image_index)
+    return()
 
 
 #Button
@@ -75,23 +75,18 @@ def prv_image(image_index, images_tk):
 
 #Matplotlib
 
-def read(images_paths):
 
-    images_read = [] 
+#fig = plt.figure(figsize=(8, 8)) 
 
-    for path in images_paths:
-        images_read.append(imread(path))
-    return images_read
+def show_image_mpl(images_paths, i, columns, rows):
 
+    title = "Image " + str(i+1)
 
-def show_plot(fig, columns, rows, images_read):
-
-    index=0
-    for i in range(1, columns*rows):
-        fig.add_subplot(rows, columns, i) 
-        plt.imshow(images_read[index]) # showing image
-        plt.axis('off')
-        plt.title("Image", index+1)
-        index +=1
-
-    plt.show() 
+    image = plt.imread(images_paths[i])
+    plt.subplot(rows, columns, i+1)
+    plt.imshow(image)
+    plt.axis('off')
+    plt.title(title)
+    
+    plt.show()
+ 

@@ -25,7 +25,7 @@ images_paths = ["/home/mborot/Pictures/mont_blanc.jpg", "/home/mborot/Pictures/c
 images_tk = display.convert(images_paths)                                                                                                   #list of uploaded of ImageTk.PhotoImage objects = images
 
 image_index=0                                                               #index of the image in the images_tk list that we want to display
-display.show_image(frame, images_tk, image_index)                           #display of the image that corresponds ton the image_index in the images_tk list
+display.show_image_tk(frame, images_tk, image_index)                           #display of the image that corresponds ton the image_index in the images_tk list
 
 root.mainloop()
 
