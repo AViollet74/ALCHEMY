@@ -33,6 +33,8 @@ pip install poetry
 poetry install
 ```
 
+
+
 ## Managing dependancies
 - to add an dependancy with poetry for exemple numpy
 ```bash

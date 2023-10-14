@@ -92,7 +92,11 @@ def play3():
     Pin20.start(50) 
     Pin21.start(50) 
 
+    print("pins are on")
+
     sleep(5)
+
+    print("pins are off")
 
     Pin16.stop() 
     Pin20.stop() 
