@@ -22,7 +22,10 @@ def convert(images_paths):
 
 
 def show_image(frame, images_tk, image_index):
-    """Create a Canvas widget and display a single image"""                      
+    """Create a Canvas widget and display a single image
+       Args: frame, 
+            list images_tk, list of ImageTk.PhotoImage objects,
+            image_index, image index in the list that corresponds to the images that is displayed"""                      
 
     image_tk = images_tk[image_index]
 
@@ -61,6 +64,13 @@ def prv_image(image_index, images_tk):
     if image_index > 0:
         image_index -= 1
         show_image(image_index)
+
+
+"""
+
+
+
+"""
 
 
 #Matplotlib

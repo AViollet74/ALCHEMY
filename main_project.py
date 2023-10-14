@@ -64,14 +64,15 @@ images_tk = display.convert(images_paths)                                       
 
 image_index=0                                                               #index of the image in the images_tk list that we want to display
 n =len(images_tk)                                                           #n is the length of the images_tk list, n=3
-#display.show_image(frame, images_tk, image_index)                           #display of the image that corresponds ton the image_index in the images_tk list
+display.show_image(frame, images_tk, image_index)                           #display of the image that corresponds ton the image_index in the images_tk list
 
-
+""" 
 i = image_index                                                             #index of loop
 z = n                                                                       #number of loops
 
 for i in range(n-1):
     display.show_image(frame, images_tk, i)
+    if 
 
 while i <= n-1 :
     display.show_image(frame, images_tk, i)                                 #display in the frame of the image that corresponds ton the image_index = i in the images_tk list
@@ -79,6 +80,8 @@ while i <= n-1 :
     magnet.coil(Magnet, t1, t2)
     piezo.play3()
     i += 1
+"""
+
 
 
 GPIO.cleanup()                              #clean up all the ports used in the program
