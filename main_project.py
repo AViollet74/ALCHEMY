@@ -25,8 +25,8 @@ magnet.setup_magnet(Magnet)                  #set pin in Magnet list as an outpu
 
 #Piezo elements
 
-Pins = piezo.init_piezo()                   #initialization of the GPIO Pins list
-piezo.setup_piezo(Pins)                     #set pin in Pins list as an output
+pins = piezo.init_piezo()                   #initialization of the GPIO pins list
+piezo.setup_piezo(pins)                     #set pin in pins list as an output
  
 notes=[262,294,330]         #list of notes frequencies       
 durations=[0.5,0.5,0.5]     #list of time durations
@@ -49,62 +49,40 @@ root.title("Images display")
 frame = tk.Frame(root)                                                      #Frame creation
 frame.pack()
 
-lbl = tk.Label(frame, text="Image 1", bg="lavender")                        #Label creation
-lbl.grid(row=1, column=1)                                                   #Label position in the frame
+images_tk, image_names = display.convert(images_paths)                                                                                                                                            #list of uploaded of ImageTk.PhotoImage objects = images
 
-btn_prev = tk.Button(frame, text="Prev")                                    #Button "Previous" creation
-btn_prev.grid(row=1, column=0)                                              #Button "Prev" position in the frame
-
-btn_next = tk.Button(frame, text="Next")                                    #Button "Next" creation
-btn_next.grid(row=1, column=2)                                              #Button "Next" position in the frame
-
-
-images_tk = display.convert(images_paths)                                                                                                                                            #list of uploaded of ImageTk.PhotoImage objects = images
-
-
-
-image_index=0                                                               #index of the image in the images_tk list that we want to display                                                        
-##display.show_image_tk(frame, images_tk, image_index)                        #Tkinter display of the image that corresponds to the image_index in the images_tk list
-##root.mainloop()
 
 
 
 # MATPLOTLIB
 
 # create figure 
-fig = plt.figure(figsize=(8, 8)) 
+#fig = plt.figure(figsize=(8, 8)) 
 
 # setting values to rows and column variables 
-rows = 2
-columns = 2
+#rows = 2
+#columns = 2
 
-n=len(images_paths)
-i=0
 
-while i <= n-1:
 
-    display.show_image_mpl(images_paths, i, columns, rows)
-    magnet.coil(Magnet, t1, t2)
-    piezo.play3()
-    i += 1
+for i in range(len(images_tk)):
+
+    #display.show_image_mpl(images_paths, i, columns, rows)
+    display.show_image_tk(frame, images_tk[i], image_names[i])
+    root.update_idletasks()
+    root.update()
+    #magnet.coil(Magnet, t1, t2)
+    piezo.play1(pins, notes, durations)
+    #piezo.play3()
+
  
 
 
-# MAIN
-
-""" 
-i = 0                                                                        #index of loop
-z = 3                                                                       #number of loops
- 
-
-while i <= z :
-    display.show_image(frame, images_tk, i)                                 #display in the frame of the image that corresponds ton the image_index = i in the images_tk list
-    #piezo.play1(Pins,notes,durations)
-    magnet.coil(Magnet, t1, t2)
-    piezo.play3()
-    i += 1
-"""
 
 
 
 GPIO.cleanup()                              #clean up all the ports used in the program
+last_i = len(images_tk) - 1
+image_class = display.ImageSelector(frame, last_i, images_tk, image_names)
+image_class.show_last_image_tk(images_tk[last_i], image_names[last_i])
+root.mainloop()

@@ -1,5 +1,7 @@
 import RPi.GPIO as GPIO
 from time import sleep
+import time
+import numpy as np
 
 def init_piezo():
     """Initialize the pins list by asking the user how many GPIO pins are used (number of int in the list) 
@@ -56,16 +58,22 @@ def play2(pins,notes,durations):
     """
 
     for n,d in zip(notes, durations):
-        
+        #duration = time.perf_counter()
+        pwm = []
         for p in pins:
             GPIO.output(p, GPIO.HIGH)
-            pin = GPIO.PWM(p, 100)
-            pin.start(50)
-            pin.ChangeFrequency(n)
-            sleep(d)
+            pwm.append(GPIO.PWM(p, 100))
+        for pw in pwm:
+            pw.start(50)
+            pw.ChangeFrequency(n) 
+        sleep(d)
 
-    for p in pins:
-        pin.stop()
+        if len(pins) == 1:
+            pwm[0].stop()
+            GPIO.output(pins[0], GPIO.LOW)
+
+    for pw, p in zip(pwm, pins):
+        pw.stop()
         GPIO.output(p, GPIO.LOW)
 
 

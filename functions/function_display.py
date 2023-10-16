@@ -9,48 +9,90 @@ def convert(images_paths):
     Args : list of images paths
     return :list of converted ImageTk.PhotoImage object"""
 
-    images_tk=[]                                                #create empty list
+    images_tk=[]     
+    image_names=[]                                           #create empty list
 
-    for path in images_paths:       
+    for i, path in enumerate(images_paths):       
         image = Image.open(path)                                #open image path
-        #image = image.resize((500, 500), Image.ANTIALIAS)      #resize image
+        image = image.resize((500, 500), Image.BILINEAR)      #resize image
         image_tk = ImageTk.PhotoImage(image)                    #create ImageTk.PhotoImage object
         images_tk.append(image_tk)                              #add ImageTk.PhotoImage object to the list
+        image_names.append("Image " + str(i+1))
+
         
-    return images_tk
+    return images_tk, image_names
 
 
 
-def show_image_tk(frame, images_tk, image_index):
+def show_image_tk(frame, image_tk, image_name):
     """Create a Canvas widget and display a single image
        Args: frame, 
             list images_tk, list of ImageTk.PhotoImage objects,
-            image_index, image index in the list that corresponds to the images that is displayed"""                      
+            image_index, image index in the list that corresponds to the images that is displayed"""      
 
-    image_tk = images_tk[image_index]
+    
+
+    lbl = tk.Label(frame, text=image_name, bg="lavender")                        #Label creation
+    lbl.grid(row=1, column=1)                                                   #Label position in the frame
+
+    btn_prev = tk.Button(frame, text="Prev")                                    #Button "Previous" creation
+    btn_prev.grid(row=1, column=0)                                              #Button "Prev" position in the frame
+
+    btn_next = tk.Button(frame, text="Next")                                    #Button "Next" creation
+    btn_next.grid(row=1, column=2)                                              #Button "Next" position in the frame                
+
 
     cnv = tk.Canvas(frame, width=500, height=500, bg="ivory")
     cnv.grid(row=0, columnspan=3)
     cnv.create_image((image_tk.width()/2), (image_tk.height()/2), anchor=tk.CENTER, image=image_tk)
 
-    return()
+
 
 
 #Button
 
-""" 
-def prev_image(image_index):
-    
-    if image_index > 0:
-        image_index -= 1
-        show_image(image_index)
+class ImageSelector:
+    def __init__(self, frame, image_index, images_tk, image_names):
+        self.frame = frame
+        self.image_index = image_index
+        self.images_tk = images_tk
+        self.image_names = image_names
 
 
-def next_image(image_index):
-    
-    if image_index < len(images_tk)-1:
-        image_index += 1
-        show_image(image_index)
+    def prev_image(self):
+        
+        if self.image_index > 0:
+            self.image_index -= 1
+            self.show_last_image_tk(self.images_tk[self.image_index], self.image_names[self.image_index])
+
+
+    def next_image(self):
+        
+        if self.image_index < len(self.images_tk)-1:
+            self.image_index += 1
+            self.show_last_image_tk(self.images_tk[self.image_index], self.image_names[self.image_index])
+
+    def show_last_image_tk(self, image_tk, image_name):
+        """Create a Canvas widget and display a single image
+        Args: frame, 
+                list images_tk, list of ImageTk.PhotoImage objects,
+                image_index, image index in the list that corresponds to the images that is displayed"""      
+
+        
+
+        lbl = tk.Label(self.frame, text=image_name, bg="lavender")                        #Label creation
+        lbl.grid(row=1, column=1)                                                   #Label position in the frame
+
+        btn_prev = tk.Button(self.frame, text="Prev", command=self.prev_image)                                    #Button "Previous" creation
+        btn_prev.grid(row=1, column=0)                                              #Button "Prev" position in the frame
+
+        btn_next = tk.Button(self.frame, text="Next", command=self.next_image)                                    #Button "Next" creation
+        btn_next.grid(row=1, column=2)                                              #Button "Next" position in the frame                
+
+
+        cnv = tk.Canvas(self.frame, width=500, height=500, bg="ivory")
+        cnv.grid(row=0, columnspan=3)
+        cnv.create_image((image_tk.width()/2), (image_tk.height()/2), anchor=tk.CENTER, image=image_tk)
 
 """
 
@@ -89,4 +131,4 @@ def show_image_mpl(images_paths, i, columns, rows):
     plt.title(title)
     
     plt.show()
- 
+ """
