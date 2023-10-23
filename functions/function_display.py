@@ -3,6 +3,14 @@ from PIL import Image, ImageTk
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.pyplot import imread
+from time import sleep
+
+def convert_black_image (black_image_path):
+    black_image = Image.open(black_image_path)
+    black_image = black_image.resize((500, 500), Image.BILINEAR)      
+    black_image_tk = ImageTk.PhotoImage(black_image) 
+
+    return black_image_tk 
 
 def convert(images_paths):
     """Upload image and create ImageTk.PhotoImage object
@@ -32,8 +40,8 @@ def show_image_tk(frame, image_tk, image_name):
 
     
 
-    lbl = tk.Label(frame, text=image_name, bg="lavender")                        #Label creation
-    lbl.grid(row=1, column=1)                                                   #Label position in the frame
+    lbl1 = tk.Label(frame, text=image_name, bg="lavender")                        #Label creation
+    lbl1.grid(row=1, column=1)                                                   #Label position in the frame
 
     btn_prev = tk.Button(frame, text="Prev")                                    #Button "Previous" creation
     btn_prev.grid(row=1, column=0)                                              #Button "Prev" position in the frame
@@ -42,9 +50,31 @@ def show_image_tk(frame, image_tk, image_name):
     btn_next.grid(row=1, column=2)                                              #Button "Next" position in the frame                
 
 
-    cnv = tk.Canvas(frame, width=500, height=500, bg="ivory")
-    cnv.grid(row=0, columnspan=3)
-    cnv.create_image((image_tk.width()/2), (image_tk.height()/2), anchor=tk.CENTER, image=image_tk)
+    cnv1 = tk.Canvas(frame, width=500, height=500, bg="ivory")
+    cnv1.grid(row=0, columnspan=3)
+    cnv1.create_image((image_tk.width()/2), (image_tk.height()/2), anchor=tk.CENTER, image=image_tk)
+    
+    
+
+
+def show_black_image_tk(frame, black_image_tk):
+    
+
+    #lbl2 = tk.Label(frame, text="Printing in process", bg="lavender")                        #Label creation
+    #lbl2.grid(row=1, column=1)                                                   #Label position in the frame
+
+    btn_prev = tk.Button(frame, text="Prev")                                    #Button "Previous" creation
+    btn_prev.grid(row=1, column=0)                                              #Button "Prev" position in the frame
+
+    btn_next = tk.Button(frame, text="Next")                                    #Button "Next" creation
+    btn_next.grid(row=1, column=2)                                              #Button "Next" position in the frame                
+
+
+    cnv2 = tk.Canvas(frame, width=500, height=500, bg="ivory")
+    cnv2.grid(row=0, columnspan=3)
+    cnv2.create_image((black_image_tk.width()/2), (black_image_tk.height()/2), anchor=tk.CENTER, image=black_image_tk)
+
+
 
 
 
@@ -72,6 +102,7 @@ class ImageSelector:
             self.image_index += 1
             self.show_last_image_tk(self.images_tk[self.image_index], self.image_names[self.image_index])
 
+
     def show_last_image_tk(self, image_tk, image_name):
         """Create a Canvas widget and display a single image
         Args: frame, 
@@ -80,8 +111,8 @@ class ImageSelector:
 
         
 
-        lbl = tk.Label(self.frame, text=image_name, bg="lavender")                        #Label creation
-        lbl.grid(row=1, column=1)                                                   #Label position in the frame
+        lbl3 = tk.Label(self.frame, text=image_name, bg="lavender")                        #Label creation
+        lbl3.grid(row=1, column=1)                                                   #Label position in the frame
 
         btn_prev = tk.Button(self.frame, text="Prev", command=self.prev_image)                                    #Button "Previous" creation
         btn_prev.grid(row=1, column=0)                                              #Button "Prev" position in the frame
@@ -90,9 +121,10 @@ class ImageSelector:
         btn_next.grid(row=1, column=2)                                              #Button "Next" position in the frame                
 
 
-        cnv = tk.Canvas(self.frame, width=500, height=500, bg="ivory")
-        cnv.grid(row=0, columnspan=3)
-        cnv.create_image((image_tk.width()/2), (image_tk.height()/2), anchor=tk.CENTER, image=image_tk)
+        cnv3 = tk.Canvas(self.frame, width=500, height=500, bg="ivory")
+        cnv3.grid(row=0, columnspan=3)
+        cnv3.create_image((image_tk.width()/2), (image_tk.height()/2), anchor=tk.CENTER, image=image_tk)
+        
 
 """
 

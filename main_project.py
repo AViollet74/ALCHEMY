@@ -36,6 +36,7 @@ durations=[0.5,0.5,0.5]     #list of time durations
 #Image
 
 images_paths = ["/home/mborot/Pictures/mont_blanc.jpg", "/home/mborot/Pictures/cervin.jpg", "/home/mborot/Pictures/Eiger.jpg", "/home/mborot/Pictures/mont_cenis.jpg"]              #list of images paths
+black_image_path = "/home/mborot/Pictures/black.jpg"
 
 #image = Image.open("/home/mborot/Pictures/mont_blanc.jpg")
 #image.show()
@@ -50,7 +51,7 @@ frame = tk.Frame(root)                                                      #Fra
 frame.pack()
 
 images_tk, image_names = display.convert(images_paths)                                                                                                                                            #list of uploaded of ImageTk.PhotoImage objects = images
-
+black_image_tk  = display.convert_black_image(black_image_path)
 
 
 
@@ -68,11 +69,17 @@ images_tk, image_names = display.convert(images_paths)                          
 for i in range(len(images_tk)):
 
     #display.show_image_mpl(images_paths, i, columns, rows)
-    display.show_image_tk(frame, images_tk[i], image_names[i])
+    display.show_black_image_tk(frame, black_image_tk)
     root.update_idletasks()
     root.update()
-    #magnet.coil(Magnet, t1, t2)
+    sleep(2)
+    magnet.coil(Magnet, t1, t2)
     piezo.play1(pins, notes, durations)
+    sleep(2)
+    display.show_image_tk(frame, images_tk[i], image_names[i])
+    root.update_idletasks()
+    root.update()    
+    sleep(2)
     #piezo.play3()
 
  
