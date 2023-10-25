@@ -28,6 +28,6 @@ def slice_stl(input_stl, output_folder):
     slicer.run_command("Exit")
 
 if __name__ == '__main__':
-    input_stl = '/home/mborot/Pictures/22Lattice-TPL.stl'
-    output_folder = '/home/mborot/Pictures'
+    input_stl = "/Users/borotmarion/Documents/EPFL - MA/MA4/22Lattice-TPL.stl"
+    output_folder = "/Users/borotmarion/Documents/EPFL - MA/MA4/Project_ALCHEMY/sliced_png"
     slice_stl(input_stl, output_folder)

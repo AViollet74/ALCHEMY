@@ -1,4 +1,4 @@
-print("Hello :)")
+
 import stl
 from stl import mesh
 from mpl_toolkits import mplot3d
@@ -9,7 +9,7 @@ figure = pyplot.figure()
 axes = figure.add_subplot(projection='3d')
 
 # Load the STL files and add the vectors to the plot
-your_mesh = mesh.Mesh.from_file("/home/mborot/Pictures/22Lattice-TPL.stl")
+your_mesh = mesh.Mesh.from_file("/Users/borotmarion/Documents/EPFL - MA/MA4/22Lattice-TPL.stl")
 axes.add_collection3d(mplot3d.art3d.Poly3DCollection(your_mesh.vectors))
 
 # Auto scale to the mesh size
