@@ -170,7 +170,7 @@ def slice_file(resolution, f=None, scale_model = None,width_px = None, height_px
 			if len(vertice_sets[i])>2:
 				set = convertToPixels(vertice_sets[i], width_multiplier, height_multiplier, obj_center_xyz, center_image)
 				draw.polygon(set, fill = (255, 255, 255))
-		img.save('/Users/borotmarion/Documents/EPFL - MA/MA4/Project_ALCHEMY/outputs/png_filled/'+str(slice)+'.png', 'PNG')
+		img.save('/Users/borotmarion/Documents/EPFL - MA/MA4/Project_ALCHEMY/outputs/png_filled/'+str(slice)+'.png', 'PNG') 
 
 	print("Status: Finished Outputting Slices")
 	print('Time: ', time.time()-tic)

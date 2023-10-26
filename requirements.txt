@@ -2,6 +2,9 @@ gpiozero==2.0
 grovepi==1.0.4
 matplotlib==3.8.0
 numpy_stl==3.0.1
-Pillow==10.1.0
+Pillow
 RPi.GPIO
 numpy
+svgwrite
+scikit-learn
+ipython
