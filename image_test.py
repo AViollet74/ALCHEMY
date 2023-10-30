@@ -17,7 +17,7 @@ def convert_black_image (black_image_path):
 def convert_png(nb_slice):
     paths = []
     for i in range(nb_slice):
-        paths.append("/Users/borotmarion/Documents/EPFL - MA/MA4/Project_ALCHEMY/SLICING/outputs/png_filled/" + str(i) + ".png")                  #folder path for png
+        paths.append("/Users/borotmarion/Documents/EPFL - MA/MA4/Project_ALCHEMY/ALCHEMY/SLICING/outputs/png_filled/" + str(i) + ".png")                  #folder path for png
     return paths
 
 def convert(images_paths):
@@ -148,7 +148,7 @@ for i in range(len(png_tk)):
     show_image_tk(frame, png_tk[i], image_names[i])
     root.update_idletasks()
     root.update()    
-    sleep(0.5)
+    sleep(1)
 
 last_i = len(png_tk) - 1
 image_class = ImageSelector(frame, last_i, png_tk, image_names)
