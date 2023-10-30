@@ -25,7 +25,7 @@ def convert_png(nb_slice):
 
     paths = []
     for i in range(nb_slice):
-        paths.append("/Users/borotmarion/Documents/EPFL - MA/MA4/Project_ALCHEMY/ALCHEMY/SLICING/outputs/png_filled/" + str(i) + ".png")                  #folder path for png
+        paths.append("/Users/borotmarion/Documents/EPFL - MA/MA4/Project_ALCHEMY/outputs/png_filled/" + str(i) + ".png")                  #folder path for png
     return paths
 
 
