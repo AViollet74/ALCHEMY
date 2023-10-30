@@ -17,7 +17,7 @@ def convert_black_image (black_image_path):
 def convert_png(nb_slice):
     paths = []
     for i in range(nb_slice):
-        paths.append("/Users/borotmarion/Documents/EPFL - MA/MA4/Project_ALCHEMY/outputs/png_filled/" + str(i) + ".png")                  #folder path for png
+        paths.append("/Users/borotmarion/Documents/EPFL - MA/MA4/Project_ALCHEMY/SLICING/outputs/png_filled/" + str(i) + ".png")                  #folder path for png
     return paths
 
 def convert(images_paths):
@@ -109,7 +109,7 @@ class ImageSelector:
 
         
 
-        lbl3 = tk.Label(self.frame, text=image_name, bg="lavender")                        #Label creation
+        lbl3 = tk.Label(self.frame, text=image_name)                                 #Label creation
         lbl3.grid(row=1, column=1)                                                   #Label position in the frame
 
         btn_prev = tk.Button(self.frame, text="Prev", command=self.prev_image)                                    #Button "Previous" creation
