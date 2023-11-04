@@ -5,16 +5,16 @@ from matplotlib import pyplot as plt
 from matplotlib.pyplot import imread
 from time import sleep
 
-def convert_black_image (black_image_path):
-    """Upload black image and create ImageTk.PhotoImage object
-    Args : black image path
-    return :converted ImageTk.PhotoImage object of the black image"""
+def convert_single_image (single_image_path):
+    """Upload a single image path and create ImageTk.PhotoImage object
+    Args : image path
+    return :converted ImageTk.PhotoImage object of the single image"""
 
-    black_image = Image.open(black_image_path)
-    black_image = black_image.resize((600, 600), Image.BILINEAR)      
-    black_image_tk = ImageTk.PhotoImage(black_image) 
+    single_image = Image.open(single_image_path)
+    single_image = single_image.resize((750, 324), Image.BILINEAR)      
+    single_image_tk = ImageTk.PhotoImage(single_image) 
 
-    return black_image_tk 
+    return single_image_tk 
 
 
 def convert_png(nb_slice):
@@ -29,30 +29,46 @@ def convert_png(nb_slice):
     return paths
 
 
-def convert(images_paths):
+def convert_1(images_paths):
     """Upload image and create ImageTk.PhotoImage object
     Args : list of images paths
     return :list of converted ImageTk.PhotoImage object"""
 
     images_tk=[]     
-    image_names=[]                                           #create empty list
 
-    for i, path in enumerate(images_paths):       
+    for path in images_paths:       
         image = Image.open(path)                                #open image path
-        image = image.resize((600, 600), Image.BILINEAR)      #resize image
+        image = image.resize((750, 324), Image.BILINEAR)        #resize image
         image_tk = ImageTk.PhotoImage(image)                    #create ImageTk.PhotoImage object
         images_tk.append(image_tk)                              #add ImageTk.PhotoImage object to the list
-        image_names.append("Image " + str(i+1))
+        
+    return images_tk
 
+
+def convert_2(images_paths):
+    """Upload image and create ImageTk.PhotoImage object with associated name
+    Args : list of images paths
+    return :list of converted ImageTk.PhotoImage object AND list of image name"""
+
+    images_tk=[]     
+    image_names=[]                                           
+
+    for path in images_paths:
+        i=1       
+        image = Image.open(path)                                #open image path
+        image = image.resize((750, 324), Image.BILINEAR)        #resize image
+        image_tk = ImageTk.PhotoImage(image)                    #create ImageTk.PhotoImage object
+        images_tk.append(image_tk)                              #add ImageTk.PhotoImage object to the list
+        image_names.append("Image " + str(i))
+        i +=1
         
     return images_tk, image_names
-
 
 def show_image_tk(frame, image_tk, image_name):
     """Create a Canvas widget and display a single image
        Args: frame, 
             list images_tk, list of ImageTk.PhotoImage objects,
-            image_index, image index in the list that corresponds to the images that is displayed"""      
+            string image_name, image index in the images_name list that corresponds to the images that is displayed"""      
 
     
 
@@ -66,16 +82,16 @@ def show_image_tk(frame, image_tk, image_name):
     #btn_next.grid(row=1, column=2)                                              #Button "Next" position in the frame                
 
 
-    cnv1 = tk.Canvas(frame, width=600, height=600, bg="black")
+    cnv1 = tk.Canvas(frame, width=750, height=324, bg="black")
     cnv1.grid(row=0, columnspan=3)
     cnv1.create_image((image_tk.width()/2), (image_tk.height()/2), anchor=tk.CENTER, image=image_tk)
     
 
-def show_black_image_tk(frame, black_image_tk):
+def show_single_image_tk(frame, single_image_tk, image_name):                                 
     
 
-    #lbl2 = tk.Label(frame, text="Printing in process", bg="lavender")                        #Label creation
-    #lbl2.grid(row=1, column=1)                                                   #Label position in the frame
+    lbl2 = tk.Label(frame, text=image_name)                                      #Label creation
+    lbl2.grid(row=1, column=1)                                                   #Label position in the frame
 
     #btn_prev = tk.Button(frame, text="Prev")                                    #Button "Previous" creation
     #btn_prev.grid(row=1, column=0)                                              #Button "Prev" position in the frame
@@ -84,9 +100,9 @@ def show_black_image_tk(frame, black_image_tk):
     #btn_next.grid(row=1, column=2)                                              #Button "Next" position in the frame                
 
 
-    cnv2 = tk.Canvas(frame, width=600, height=600, bg="black")
+    cnv2 = tk.Canvas(frame, width=750, height=324, bg="black")
     cnv2.grid(row=0, columnspan=3)
-    cnv2.create_image((black_image_tk.width()/2), (black_image_tk.height()/2), anchor=tk.CENTER, image=black_image_tk)
+    cnv2.create_image((single_image_tk.width()/2), (single_image_tk.height()/2), anchor=tk.CENTER, image=single_image_tk)
    
 
 
@@ -134,7 +150,7 @@ class ImageSelector:
         btn_next.grid(row=1, column=2)                                              #Button "Next" position in the frame                
 
 
-        cnv3 = tk.Canvas(self.frame, width=500, height=500, bg="ivory")
+        cnv3 = tk.Canvas(self.frame, width=750, height=324, bg="ivory")
         cnv3.grid(row=0, columnspan=3)
         cnv3.create_image((image_tk.width()/2), (image_tk.height()/2), anchor=tk.CENTER, image=image_tk)
         
