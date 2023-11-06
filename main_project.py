@@ -28,48 +28,66 @@ magnet.setup_magnet(Magnet)                  #set pin in Magnet list as an outpu
 pins = piezo.init_piezo()                   #initialization of the GPIO pins list
 piezo.setup_piezo(pins)                     #set pin in pins list as an output
  
-notes=[262,294,330]         #list of notes frequencies       
-durations=[0.5,0.5,0.5]     #list of time durations
+notes=[262,294,330]                         #list of notes frequencies       
+durations=[0.5,0.5,0.5]                     #list of time durations
 
 
 # TKINTER
 
 root = tk.Tk()                                                              #Tinker window creation
 root.attributes('-fullscreen', True)
-#root.title("Images display")
 
+w_root, h_root = root.winfo_screenwidth(), root.winfo_screenheight()
 
-w, h = root.winfo_screenwidth(), root.winfo_screenheight()
+cnv = tk.Canvas(root, bg="black", highlightthickness=0)
+cnv.pack(fill=tk.BOTH, expand=True)
 
+#cnv1 = tk.Canvas(root, width=w_root, height=h_root, bg="black", highlightthickness=0)
+#cnv1.pack()
 
-frame = tk.Frame(root)                                                      #Frame creation
-frame.pack()
-
-
-
-#Image
-
-#black_image_path = "/Users/borotmarion/Documents/EPFL - MA/MA4/Project_ALCHEMY/black_image.png"                                                                                #Number of the last png image  
-
-#images_paths = ["/home/mborot/Pictures/mont_blanc.jpg", "/home/mborot/Pictures/cervin.jpg", "/home/mborot/Pictures/Eiger.jpg", "/home/mborot/Pictures/mont_cenis.jpg"]              #list of images paths
-#images_tk, image_names = display.convert(images_paths)  
-
-
-base_path = "/home/mborot/Pictures/"
 
 black_image_path = "/home/mborot/Pictures/black.jpg"
-black_image_tk  = display.full_convert_0(black_image_path, w, h)                                                    #full screen
+black_image_tk  = display.full_convert_0(black_image_path, w_root, h_root)                                                    #full screen
 #black_image_tk  = display.convert_0(black_image_path)
 
 
+base_path = "/home/mborot/Pictures/"
 sequence=[base_path+"cubic_layer_0.png", base_path+"cubic_layer_1.png", base_path+"cubic_layer_0.png"]
-layers_tk = display.full_convert_1(sequence, w, h)                                                                      #full screen
+layers_tk = display.full_convert_1(sequence, w_root, h_root)                                                                  #full screen
 #layers_tk = display.convert_1(sequence)
 
+layers = [3, 4, 3]                                                                                                            #number of layer, e.g: 3 times layer 0, then 4 times layer 1 and finally 3 times layer 2
 
-layers = [3, 4, 3]   #number of layer, e.g: 3 times layer 0, then 4 times layer 1 and finally 3 times layer 2
 
-display.show_image_tk_0(root, layers_tk[0])
+
+for i in range(0, len(layers)):
+
+    for k in range(0, layers[i]):
+
+        display.show_image_tk_0(cnv, black_image_tk)       
+        root.update_idletasks()
+        root.update()
+        
+        sleep(2)
+
+        magnet.coil(Magnet, t1, t2)
+
+        sleep(2)
+
+        piezo.play1(pins, notes, durations)
+        #piezo.play3()
+
+        sleep(2)
+
+        display.show_image_tk_0(cnv, layers_tk[i])          
+        root.update_idletasks()
+        root.update()
+
+        sleep(4)
+
+
+"""
+display.show_image_tk_0(cnv, layers_tk[2])
 root.update_idletasks()
 root.update()
 
@@ -77,69 +95,6 @@ root.update()
 root.bind('<Escape>', lambda e: root.quit())
 
 """
-for i in range(0, len(layers)):
-
-    for k in range(0, layers[i]):
-
-        #display.show_image_tk_0(root, black_image_tk)       
-        #root.update_idletasks()
-        #root.update()
-        
-        #sleep(2)
-
-        magnet.coil(Magnet, t1, t2)
-
-        #sleep(2)
-
-        piezo.play1(pins, notes, durations)
-        #piezo.play3()
-
-        #sleep(2)
-
-        display.show_image_tk_0(root, layers_tk[i])          
-        root.update_idletasks()
-        root.update()
-
-        sleep(4)
-
-"""
-
-
-
-
-
-
-
-"""
-#Iteration over layers and layers_tk
-
-for i in range(0, len(layers)):
-
-    for k in range(0, layers[i]):
-
-        display.show_image_tk_1(frame, black_image_tk)
-        root.update_idletasks()
-        root.update()
-        
-        sleep(2)
-
-        magnet.coil(Magnet, t1, t2)
-
-        sleep(2)
-
-        piezo.play1(pins, notes, durations)
-        #piezo.play3()
-
-        sleep(2)
-
-        display.show_image_tk_1(frame, layers_tk[i])
-        root.update_idletasks()
-        root.update()
-
-        sleep(2)
-"""
-
-
 
 
 GPIO.cleanup()                              #clean up all the ports used in the program

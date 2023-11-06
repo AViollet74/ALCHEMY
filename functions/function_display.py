@@ -5,20 +5,36 @@ from matplotlib import pyplot as plt
 from matplotlib.pyplot import imread
 
 
+##################################################################################################
 
-def full_convert_0 (image_path, w, h):
+#covertt, resize, and display image in full screen
+
+
+def full_convert_0 (image_path, w_root, h_root):
     """Upload a single image path and create ImageTk.PhotoImage object
     Args : image path, width and heigh of the screen
     return :converted ImageTk.PhotoImage object of the single image"""
 
     image = Image.open(image_path)
-    image = image.resize((w, h))      
+
+        #w, h = image.size
+
+        #if h<w:
+        #    w = w_root
+        #    h = int(h*(w_root/w))
+        #else:
+        #    h=h_root
+        #    w= int(w*(h_root/h))
+
+
+    image = image.resize((w_root, h_root))      
     image_tk = ImageTk.PhotoImage(image) 
 
     return image_tk 
 
 
-def full_convert_1(images_paths, w, h):
+
+def full_convert_1(images_paths, w_root, h_root):
     """Upload image and create ImageTk.PhotoImage object
     Args : list of images paths, width and heigh of the screen
     return :list of converted ImageTk.PhotoImage object"""
@@ -27,21 +43,29 @@ def full_convert_1(images_paths, w, h):
 
     for path in images_paths:       
         image = Image.open(path)                                #open image path
-        image = image.resize((w, h))  
+
+        #w, h = image.size
+
+        #if h<w:
+        #    w = w_root
+        #    h = int(h*(w_root/w))
+        #else:
+        #    h=h_root
+        #    w= int(w*(h_root/h))
+
+        image = image.resize((w_root, h_root))  
         image_tk = ImageTk.PhotoImage(image)                    #create ImageTk.PhotoImage object
         images_tk.append(image_tk)                              #add ImageTk.PhotoImage object to the list
         
     return images_tk
 
 
-def show_image_tk_0(root, image_tk):
+def show_image_tk_0(cnv, image_tk):
     """Create a Canvas widget and display a single image
        Args: root, 
              list images_tk, list of ImageTk.PhotoImage objects"""                     
 
-    cnv1 = tk.Canvas(root, bg="black", highlightthickness=0)
-    cnv1.pack(fill=tk.BOTH, expand=True)
-    cnv1.create_image(0, 0, anchor=tk.NW, image=image_tk) 
+    cnv.create_image(0, 0, anchor=tk.NW, image=image_tk)
    
 ##################################################################################################
 
@@ -55,18 +79,6 @@ def convert_0(image_path):
     single_image_tk = ImageTk.PhotoImage(single_image) 
 
     return single_image_tk 
-
-
-def convert_png(nb_slice):
-    """Create a list of the png image paths from sliced png image 
-    Args : number of the last png image in the png_filled output folder
-    TO DO: enter the path of the png_filled output folder
-    return :list of image paths"""
-
-    paths = []
-    for i in range(nb_slice):
-        paths.append("/Users/borotmarion/Documents/EPFL - MA/MA4/Project_ALCHEMY/outputs/png_filled/" + str(i) + ".png")                  #folder path for png
-    return paths
 
 
 def convert_1(images_paths):
@@ -105,6 +117,19 @@ def convert_2(images_paths):
     return images_tk, image_names
 
 
+def convert_png(nb_slice):
+    """Create a list of the png image paths from sliced png image 
+    Args : number of the last png image in the png_filled output folder
+    TO DO: enter the path of the png_filled output folder
+    return :list of image paths"""
+
+    paths = []
+    for i in range(nb_slice):
+        paths.append("/Users/borotmarion/Documents/EPFL - MA/MA4/Project_ALCHEMY/outputs/png_filled/" + str(i) + ".png")                  #folder path for png
+    return paths
+
+
+##################################################################################################
 
 
 def show_image_tk_1(frame, image_tk):

@@ -42,12 +42,8 @@ frame.pack()
 #Image
 
 #images_paths = ["/home/mborot/Pictures/mont_blanc.jpg", "/home/mborot/Pictures/cervin.jpg", "/home/mborot/Pictures/Eiger.jpg", "/home/mborot/Pictures/mont_cenis.jpg"]              #list of images paths
-     
-#black_image_path = "/Users/borotmarion/Documents/EPFL - MA/MA4/Project_ALCHEMY/black_image.png"                                                                                #Number of the last png image  
-#png_paths = display.convert_png(nb_slice)
-#png_tk, image_names = display.convert(png_paths) 
-#images_tk, image_names = display.convert(images_paths)  
-
+#images_tk, image_names = display.convert(images_paths)
+   
 
 base_path = "/home/mborot/Pictures/"
 
