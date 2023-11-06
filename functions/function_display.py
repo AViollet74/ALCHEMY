@@ -3,14 +3,54 @@ from PIL import Image, ImageTk
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.pyplot import imread
-from time import sleep
 
-def convert_single_image (single_image_path):
+
+def full_convert_0 (image_path, w, h):
+    """Upload a single image path and create ImageTk.PhotoImage object
+    Args : image path, width and heigh of the screen
+    return :converted ImageTk.PhotoImage object of the single image"""
+
+    image = Image.open(image_path)
+    image = image.resize((w, h))      
+    image_tk = ImageTk.PhotoImage(image) 
+
+    return image_tk 
+
+
+def full_convert_1(images_paths, w, h):
+    """Upload image and create ImageTk.PhotoImage object
+    Args : list of images paths, width and heigh of the screen
+    return :list of converted ImageTk.PhotoImage object"""
+
+    images_tk=[]     
+
+    for path in images_paths:       
+        image = Image.open(path)                                #open image path
+        image = image.resize((w, h))  
+        image_tk = ImageTk.PhotoImage(image)                    #create ImageTk.PhotoImage object
+        images_tk.append(image_tk)                              #add ImageTk.PhotoImage object to the list
+        
+    return images_tk
+
+
+
+def show_image_tk_0(root, image_tk):
+    """Create a Canvas widget and display a single image
+       Args: root, 
+             list images_tk, list of ImageTk.PhotoImage objects"""                     
+
+    cnv1 = tk.Canvas(root, bg="black", highlightthickness=0)
+    cnv1.pack(fill=tk.BOTH, expand=True)
+    cnv1.create_image(0, 0, anchor=tk.NW, image=image_tk) 
+   
+##################################################################################################3
+
+def convert_0(image_path):
     """Upload a single image path and create ImageTk.PhotoImage object
     Args : image path
     return :converted ImageTk.PhotoImage object of the single image"""
 
-    single_image = Image.open(single_image_path)
+    single_image = Image.open(image_path)
     single_image = single_image.resize((750, 324), Image.BILINEAR)      
     single_image_tk = ImageTk.PhotoImage(single_image) 
 
@@ -64,7 +104,10 @@ def convert_2(images_paths):
         
     return images_tk, image_names
 
-def show_image_tk(frame, image_tk, image_name):
+
+
+
+def show_image_tk_1(frame, image_tk):
     """Create a Canvas widget and display a single image
        Args: frame, 
             list images_tk, list of ImageTk.PhotoImage objects,
@@ -86,8 +129,10 @@ def show_image_tk(frame, image_tk, image_name):
     cnv1.grid(row=0, columnspan=3)
     cnv1.create_image((image_tk.width()/2), (image_tk.height()/2), anchor=tk.CENTER, image=image_tk)
     
+ 
 
-def show_single_image_tk(frame, single_image_tk, image_name):                                 
+
+def show_image_tk_2(frame, single_image_tk, image_name):                                 
     
 
     lbl2 = tk.Label(frame, text=image_name)                                      #Label creation
