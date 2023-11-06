@@ -5,6 +5,7 @@ from matplotlib import pyplot as plt
 from matplotlib.pyplot import imread
 
 
+
 def full_convert_0 (image_path, w, h):
     """Upload a single image path and create ImageTk.PhotoImage object
     Args : image path, width and heigh of the screen
@@ -33,7 +34,6 @@ def full_convert_1(images_paths, w, h):
     return images_tk
 
 
-
 def show_image_tk_0(root, image_tk):
     """Create a Canvas widget and display a single image
        Args: root, 
@@ -43,7 +43,7 @@ def show_image_tk_0(root, image_tk):
     cnv1.pack(fill=tk.BOTH, expand=True)
     cnv1.create_image(0, 0, anchor=tk.NW, image=image_tk) 
    
-##################################################################################################3
+##################################################################################################
 
 def convert_0(image_path):
     """Upload a single image path and create ImageTk.PhotoImage object
@@ -204,8 +204,37 @@ class ImageSelector:
 """
 
 
-#image = Image.open("/home/mborot/Pictures/mont_blanc.jpg")
-#image.show()
+print("width: ", w)
+print("heigh: ", h)
+
+new_size = (w, h)
+img_PIL_0 = Image.open(sequence[0])
+img_PIL_0.show()
+img_PIL_0 = img_PIL_0.resize(new_size)
+img_PIL_0.save("/home/mborot/Pictures/cubic_layer_0_bis.png")
+
+img_PIL_1 = Image.open(sequence[1])
+img_PIL_1.show()
+img_PIL_1 = img_PIL_1.resize(new_size)
+img_PIL_1.save("/home/mborot/Pictures/cubic_layer_1_bis.png")
+
+sequence_bis=["/home/mborot/Pictures/cubic_layer_0_bis.png", "/home/mborot/Pictures/cubic_layer_1_bis.png", "/home/mborot/Pictures/cubic_layer_0_bis.png"] 
+layers_tk_bis = display.full_convert_1_bis(sequence_bis) 
+
+
+def full_convert_1_bis(images_paths):
+    Upload image and create ImageTk.PhotoImage object
+    Args : list of images paths, width and heigh of the screen
+    return :list of converted ImageTk.PhotoImage object
+
+    images_tk=[]     
+
+    for path in images_paths:       
+        image = Image.open(path)                                #open image path 
+        image_tk = ImageTk.PhotoImage(image)                    #create ImageTk.PhotoImage object
+        images_tk.append(image_tk)                              #add ImageTk.PhotoImage object to the list
+        
+    return images_tk
 
 # MATPLOTLIB
 

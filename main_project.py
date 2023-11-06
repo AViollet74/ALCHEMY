@@ -47,7 +47,6 @@ frame.pack()
 
 
 
-
 #Image
 
 #black_image_path = "/Users/borotmarion/Documents/EPFL - MA/MA4/Project_ALCHEMY/black_image.png"                                                                                #Number of the last png image  
@@ -62,12 +61,13 @@ black_image_path = "/home/mborot/Pictures/black.jpg"
 black_image_tk  = display.full_convert_0(black_image_path, w, h)                                                    #full screen
 #black_image_tk  = display.convert_0(black_image_path)
 
-sequence=[base_path+"cubic_layer_0.png", base_path+"cubic_layer_1.png", base_path+"cubic_layer_0.png",]
+
+sequence=[base_path+"cubic_layer_0.png", base_path+"cubic_layer_1.png", base_path+"cubic_layer_0.png"]
 layers_tk = display.full_convert_1(sequence, w, h)                                                                      #full screen
 #layers_tk = display.convert_1(sequence)
 
-layers = [3, 4, 3]   #number of layer, e.g: 3 times layer 0, then 4 times layer 1 and finally 3 times layer 2
 
+layers = [3, 4, 3]   #number of layer, e.g: 3 times layer 0, then 4 times layer 1 and finally 3 times layer 2
 
 display.show_image_tk_0(root, layers_tk[0])
 root.update_idletasks()
@@ -101,7 +101,11 @@ for i in range(0, len(layers)):
         root.update()
 
         sleep(4)
+
 """
+
+
+
 
 
 
