@@ -16,3 +16,6 @@ while(True):
         sleep(4)
     else:                                   #GPIO.input(pin_sensor) == True
         print("Light pass")
+
+
+GPIO.cleanup()

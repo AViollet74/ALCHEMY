@@ -19,17 +19,17 @@ GPIO.setmode(GPIO.BCM)                      #BCM = Broadcom chip-specific pin nu
 
 #Grove_Electromagnet 
 
-Magnet, t1, t2 = magnet.init_magnet()        #initialization of the GPIO Magnet list and rest time for magnet on (t1) and magnet off (t2)
-magnet.setup_magnet(Magnet)                  #set pin in Magnet list as an output
+magnets, m_time_on = magnet.init_magnet()        #initialization of the GPIO Magnet list and rest time for magnet on (t1) and magnet off (t2)
+magnet.setup_magnet(magnets)                     #set pin in Magnet list as an output
 
 
-#Piezo elements
+#Piezo elements - Transducers
 
-pins = piezo.init_piezo()                   #initialization of the GPIO pins list
-piezo.setup_piezo(pins)                     #set pin in pins list as an output
- 
-notes=[262,294,330]                         #list of notes frequencies       
-durations=[0.5,0.5,0.5]                     #list of time durations
+pins, t_time_on, frequency = piezo.init_piezo()                   #initialization of the GPIO pins list
+piezo.setup_piezo(pins)                                           #set pin in pins list as an output
+
+#notes=[262,294,330]                                              #list of notes frequencies       
+#durations=[0.5,0.5,0.5]                                          #list of time durations
 
 
 # TKINTER
@@ -57,8 +57,13 @@ sequence=[base_path+"cubic_layer_0.png", base_path+"cubic_layer_1.png", base_pat
 layers_tk = display.full_convert_1(sequence, w_root, h_root)                                                                  #full screen
 #layers_tk = display.convert_1(sequence)
 
-layers = [2, 3, 2]                                                                                                            #number of layer, e.g: 3 times layer 0, then 4 times layer 1 and finally 3 times layer 2
+layers = [2, 2, 2]                                                                                                            #number of layer, e.g: 3 times layer 0, then 4 times layer 1 and finally 3 times layer 2
 
+
+
+
+
+#MAIN
 
 
 for i in range(0, len(layers)):
@@ -69,14 +74,13 @@ for i in range(0, len(layers)):
         root.update_idletasks()
         root.update()
         
-        #sleep(2)
+        sleep(2)
 
-        magnet.coil(Magnet, t1, t2)
+        magnet.coil(magnets, m_time_on)
 
-        #sleep(2)
+        sleep(1)
 
-        piezo.play1(pins, notes, durations)
-        #piezo.play3()
+        piezo.play(pins, t_time_on, frequency)
 
         sleep(2)
 
@@ -96,6 +100,7 @@ for i in range(0, len(layers)):
         
     else:
         pass
+
 
 
 

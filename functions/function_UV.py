@@ -15,3 +15,6 @@ while(True):
     GPIO.output(pin_UV, GPIO.LOW)
     print("UV light off")
     sleep(4)
+
+
+GPIO.cleanup() 
