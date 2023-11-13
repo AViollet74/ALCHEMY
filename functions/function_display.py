@@ -17,18 +17,15 @@ def full_convert_0 (image_path, w_root, h_root):
 
     image = Image.open(image_path)
 
-        #w, h = image.size
-
-        #if h<w:
-        #    w = w_root
-        #    h = int(h*(w_root/w))
-        #else:
-        #    h=h_root
-        #    w= int(w*(h_root/h))
-
-
-    image = image.resize((w_root, h_root))      
-    image_tk = ImageTk.PhotoImage(image) 
+    w, h = image.size
+    factor_w = w_root / w
+    factor_h = h_root / h
+    factor = min(factor_w, factor_h)
+    new_w = int(w*factor)
+    new_h = int(h*factor)
+    
+    image = image.resize((new_w, new_h))  
+    image_tk = ImageTk.PhotoImage(image)                    #create ImageTk.PhotoImage object
 
     return image_tk 
 
@@ -44,28 +41,27 @@ def full_convert_1(images_paths, w_root, h_root):
     for path in images_paths:       
         image = Image.open(path)                                #open image path
 
-        #w, h = image.size
+        w, h = image.size
+        factor_w = w_root / w
+        factor_h = h_root / h
+        factor = min(factor_w, factor_h)
+        new_w = int(w*factor)
+        new_h = int(h*factor)
 
-        #if h<w:
-        #    w = w_root
-        #    h = int(h*(w_root/w))
-        #else:
-        #    h=h_root
-        #    w= int(w*(h_root/h))
-
-        image = image.resize((w_root, h_root))  
+        image = image.resize((new_w, new_h))  
         image_tk = ImageTk.PhotoImage(image)                    #create ImageTk.PhotoImage object
         images_tk.append(image_tk)                              #add ImageTk.PhotoImage object to the list
         
     return images_tk
 
 
-def show_image_tk_0(cnv, image_tk):
+def show_image_tk_0(cnv, w_root, h_root, image_tk):
     """Create a Canvas widget and display a single image
        Args: root, 
              list images_tk, list of ImageTk.PhotoImage objects"""                     
 
-    cnv.create_image(0, 0, anchor=tk.NW, image=image_tk)
+    #cnv.create_image(0, 0, anchor=tk.NW, image=image_tk)
+    cnv.create_image((w_root/2), (h_root/2), anchor=tk.CENTER, image=image_tk)
    
 ##################################################################################################
 

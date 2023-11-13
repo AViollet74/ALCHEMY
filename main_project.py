@@ -46,17 +46,18 @@ cnv.pack(fill=tk.BOTH, expand=True)
 #cnv1.pack()
 
 
-black_image_path = "/home/mborot/Pictures/black.jpg"
+black_image_path = "/home/mborot/Pictures/black_image.png"
 black_image_tk  = display.full_convert_0(black_image_path, w_root, h_root)                                                    #full screen
 #black_image_tk  = display.convert_0(black_image_path)
 
 
 base_path = "/home/mborot/Pictures/"
 sequence=[base_path+"cubic_layer_0.png", base_path+"cubic_layer_1.png", base_path+"cubic_layer_0.png"]
+#sequence=[base_path+"mont_blanc.jpg", base_path+"cervin.jpg", base_path+"mont_cenis.jpg"]
 layers_tk = display.full_convert_1(sequence, w_root, h_root)                                                                  #full screen
 #layers_tk = display.convert_1(sequence)
 
-layers = [3, 4, 3]                                                                                                            #number of layer, e.g: 3 times layer 0, then 4 times layer 1 and finally 3 times layer 2
+layers = [2, 3, 2]                                                                                                            #number of layer, e.g: 3 times layer 0, then 4 times layer 1 and finally 3 times layer 2
 
 
 
@@ -64,26 +65,38 @@ for i in range(0, len(layers)):
 
     for k in range(0, layers[i]):
 
-        display.show_image_tk_0(cnv, black_image_tk)       
+        display.show_image_tk_0(cnv, w_root, h_root, black_image_tk)       
         root.update_idletasks()
         root.update()
         
-        sleep(2)
+        #sleep(2)
 
         magnet.coil(Magnet, t1, t2)
 
-        sleep(2)
+        #sleep(2)
 
         piezo.play1(pins, notes, durations)
         #piezo.play3()
 
         sleep(2)
 
-        display.show_image_tk_0(cnv, layers_tk[i])          
+        display.show_image_tk_0(cnv, w_root, h_root, layers_tk[i])          
         root.update_idletasks()
         root.update()
 
         sleep(4)
+
+    if i == len(layers)-1:
+        display.show_image_tk_0(cnv, w_root, h_root, black_image_tk)        
+        root.update_idletasks()
+        root.update()
+
+        print("End of the printing")
+        root.bind('<Escape>', lambda e: root.quit())
+        
+    else:
+        pass
+
 
 
 """
