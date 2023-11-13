@@ -57,7 +57,8 @@ sequence=[base_path+"cubic_layer_0.png", base_path+"cubic_layer_1.png", base_pat
 layers_tk = display.full_convert_1(sequence, w_root, h_root)                                                                  #full screen
 #layers_tk = display.convert_1(sequence)
 
-layers = [2, 2, 2]                                                                                                            #number of layer, e.g: 3 times layer 0, then 4 times layer 1 and finally 3 times layer 2
+layers = [1, 2, 1]                                                                                                            #number of layer, e.g: 3 times layer 0, then 4 times layer 1 and finally 3 times layer 2
+
 
 
 
