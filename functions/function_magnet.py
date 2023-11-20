@@ -12,7 +12,7 @@ def init_magnet():
 
     n = int(input("How many GPIO are used for magnet element(s)? : "))
     if n == 0:
-        return([] , None)
+        return([] , 0)
     else:
         for i in range(n):
             magnets.append(int(input("Enter the GPIO BCM pin number :")))

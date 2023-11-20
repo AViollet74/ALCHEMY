@@ -13,7 +13,7 @@ def init_piezo():
 
     n = int(input("How many GPIO are used for transducer(s)? : "))
     if n == 0:
-        return([], None, None)
+        return([], 0, None)
     else:
         for i in range(n):
             pins.append(int(input("Enter the GPIO BCM pin number :")))
@@ -55,7 +55,7 @@ def play(pins, time_on, freq):
     print("Tranducer(s) on for", time_on, "sec") 
     GPIO.output(pins, GPIO.HIGH)                        #GPIO.output([pin][GPIO.HIGH]), digital output, set pin p high, GPIO.HIGH will drive it to 3.3V, equivalent GPIO.HIGH = True = 1
 
-    sleep(5)
+    sleep(time_on)
 
     print("Transducer(s) off")
     GPIO.output(pins, GPIO.LOW)                         #GPIO.output([pin][GPIO.LOW]), digital output, set pin p low, GPIO.LOW will drive it to 0V, equivalent GPIO.LOW = Fase = 0

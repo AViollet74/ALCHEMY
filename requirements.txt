@@ -8,3 +8,5 @@ numpy
 svgwrite
 scikit-learn
 ipython
+adafruit-circuitpython-motorkit
+screeninfo==0.8.1

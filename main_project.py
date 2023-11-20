@@ -36,8 +36,8 @@ piezo.setup_piezo(pins)                                           #set pin in pi
 
 root = tk.Tk()                                                              #Tinker window creation
 root.attributes('-fullscreen', True)
-
 w_root, h_root = root.winfo_screenwidth(), root.winfo_screenheight()
+root.geometry(f"{2560}x{1440}+{2560}+{0}")
 
 cnv = tk.Canvas(root, bg="black", highlightthickness=0)
 cnv.pack(fill=tk.BOTH, expand=True)
