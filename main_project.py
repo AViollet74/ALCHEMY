@@ -10,6 +10,7 @@ import numpy as np
 from PIL import Image, ImageTk
 from matplotlib import pyplot as plt
 from matplotlib.pyplot import imread
+from screeninfo import get_monitors
 
 
 
@@ -34,10 +35,33 @@ piezo.setup_piezo(pins)                                           #set pin in pi
 
 # TKINTER
 
+"""
+#LCD screen dimension
+w_root = 1280
+h_root = 2400
+x_shift = 2560
+y_shift = 0
+
+"""
+
+
+
+monitors = get_monitors()
+
+for monitor in monitors:
+    if monitor.is_primary == False:
+        x_shift = monitor.x
+        y_shift = monitor.y
+        w_root = monitor.width
+        h_root = monitor.height
+
+
+
+
 root = tk.Tk()                                                              #Tinker window creation
 root.attributes('-fullscreen', True)
-w_root, h_root = root.winfo_screenwidth(), root.winfo_screenheight()
-root.geometry(f"{2560}x{1440}+{2560}+{0}")
+#w_root, h_root = root.winfo_screenwidth(), root.winfo_screenheight()
+root.geometry(f"{w_root}x{h_root}+{x_shift}+{y_shift}")                     #create a root with width=w_root, heigth=h_root, shifted by x_shift from the left and y_shift from the top of the monitor
 
 cnv = tk.Canvas(root, bg="black", highlightthickness=0)
 cnv.pack(fill=tk.BOTH, expand=True)

@@ -61,7 +61,8 @@ def show_image_tk_0(cnv, w_root, h_root, image_tk):
              list images_tk, list of ImageTk.PhotoImage objects"""                     
 
     #cnv.create_image(0, 0, anchor=tk.NW, image=image_tk)
-    cnv.create_image((w_root/2), (h_root/2), anchor=tk.CENTER, image=image_tk)
+    #cnv.create_image((w_root/2), (h_root/2), anchor=tk.CENTER, image=image_tk)
+    cnv.create_image((1920), (1200), anchor=tk.CENTER, image=image_tk)
    
 ##################################################################################################
 
