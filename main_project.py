@@ -37,15 +37,11 @@ piezo.setup_piezo(pins)                                           #set pin in pi
 
 """
 #LCD screen dimension
-w_root = 1280
-h_root = 2400
+w_root = 1920
+h_root = 1200
 x_shift = 2560
 y_shift = 0
-
 """
-
-
-
 monitors = get_monitors()
 
 for monitor in monitors:
@@ -56,6 +52,11 @@ for monitor in monitors:
         h_root = monitor.height
 
 
+
+print("x shift = ", x_shift)
+print("y shift = ", y_shift)
+print("width = ", w_root)
+print("height = ", h_root)
 
 
 root = tk.Tk()                                                              #Tinker window creation
