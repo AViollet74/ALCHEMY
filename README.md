@@ -18,19 +18,11 @@ pip freeze
 - Clone the repo
 
 ```bash
-git clone https://github.com/edouardkoehn/WM_Atlas.git
+git clone git@github.com:mborot/ALCHEMY.git
 ```
 - Create your virtual env
 ```bash
 mkvirtualenv ALCHEMY
-```
-- Install poetry
-```bash
-pip install poetry
-```
-- install the modul and set up the precommit
-```bash
-poetry install
 ```
 
 
@@ -50,11 +42,11 @@ git status
 ```
 2) Add the modified files to your working tree:
 ```bash
-git add edi_bg.py
+git add script.py
 ```
 3) Commit the changes on the working tree:
 ```bash
-git commit -m "J'aimes les mouches"
+git commit -m "update_2.0"
 ```
 4) Push your new code on the server:
 ```bash
