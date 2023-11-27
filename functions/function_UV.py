@@ -1,10 +1,28 @@
 import RPi.GPIO as GPIO
-from time import sleep
 
 GPIO.setwarnings(False)                     #prevents warnings from showing up when you run the code
 GPIO.setmode(GPIO.BCM)                      #BCM = Broadcom chip-specific pin numbers
 
-pin_UV = 21
+uv_pin = 0
+
+def init_uv():
+    u = int(input("Enter the GPIO BCM pin number of the UV light : "))
+    if u == 0:
+        return(None)
+    else:
+        uv_pin = u
+    return(uv_pin)
+
+def switch_on(pin_nb):
+    GPIO.output(pin_nb, GPIO.HIGH)
+    print("UV light on")
+
+def switch_off(pin_nb):
+    GPIO.output(pin_nb, GPIO.LOW)
+    print("UV light off")
+
+"""
+pin_UV = 26
 GPIO.setup(pin_UV, GPIO.OUT)
 
 
@@ -16,5 +34,4 @@ while(True):
     print("UV light off")
     sleep(4)
 
-
-GPIO.cleanup() 
+"""

@@ -18,6 +18,7 @@ kit = MotorKit(i2c=board.I2C())
 
 for i in range(500):
     
+    print("Forward DOUBLE")
     kit.stepper2.onestep(direction=stepper.FORWARD, style=stepper.DOUBLE)
     time.sleep(0.01) 
 
@@ -29,7 +30,8 @@ time.sleep(2)
 # This will almost look like a smooth rotation.
 
 for i in range(1000):
-    
+
+    print("Backward DOUBLE")
     kit.stepper2.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
     time.sleep(0.01) 
 
