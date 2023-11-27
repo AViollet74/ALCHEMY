@@ -59,6 +59,16 @@ def full_convert_1(images_paths, w_root, h_root):
     return images_tk
 
 
+def convert_png(folder_path, nb_slice):
+    """Create a list of the png image paths from sliced png image 
+    Args : number of the last png image in the png_filled output folder
+    TO DO: enter the path of the png_filled output folder
+    return :list of image paths"""
+
+    paths = []
+    for i in range(nb_slice):
+        paths.append(folder_path + str(i) + ".png")                  #folder path for png
+    return paths
 
 def show_image_tk_0(cnv, w_root, h_root, image_tk):
     """Create a Canvas widget and display a single image
@@ -118,16 +128,7 @@ def convert_2(images_paths):
     return images_tk, image_names
 
 
-def convert_png(nb_slice):
-    """Create a list of the png image paths from sliced png image 
-    Args : number of the last png image in the png_filled output folder
-    TO DO: enter the path of the png_filled output folder
-    return :list of image paths"""
 
-    paths = []
-    for i in range(nb_slice):
-        paths.append("/Users/borotmarion/Documents/EPFL - MA/MA4/Project_ALCHEMY/outputs/png_filled/" + str(i) + ".png")                  #folder path for png
-    return paths
 
 
 ##################################################################################################
