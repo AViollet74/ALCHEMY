@@ -7,17 +7,16 @@ uv_pin = 0
 
 def init_uv():
     u = int(input("Enter the GPIO BCM pin number of the UV light : "))
-    if u == 0:
-        return(None)
-    else:
-        uv_pin = u
+    uv_pin = u
     return(uv_pin)
 
 def switch_on(pin_nb):
+    GPIO.setup(uv_pin, GPIO.OUT)
     GPIO.output(pin_nb, GPIO.HIGH)
     print("UV light on")
 
 def switch_off(pin_nb):
+    GPIO.setup(uv_pin, GPIO.OUT)
     GPIO.output(pin_nb, GPIO.LOW)
     print("UV light off")
 

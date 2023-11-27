@@ -29,7 +29,6 @@ piezo.setup_piezo(pins)                                 #set pin in pins list as
 
 #UV ligth
 uv_pin = uv.init_uv()
-GPIO.setup(uv_pin, GPIO.OUT)
 
 #Photoelctric sensor
 sensor_pin = sensor.init_sensor()

@@ -8,15 +8,14 @@ GPIO.setmode(GPIO.BCM)                      #BCM = Broadcom chip-specific pin nu
 snesor_pin = 0
 
 def init_sensor():
-    s = int(input("Enter the GPIO BCM pin number of the UV light : "))
-    if s == 0:
-        return(None)
-    else:
-        sensor_pin = s
+    s = int(input("Enter the GPIO BCM pin number of the photoelectric sensor : "))
+    sensor_pin = s
     return(sensor_pin)
 
-
 """
+sensor_pin = 2
+GPIO.setup(sensor_pin, GPIO.IN)
+
 while(True):
     if GPIO.input(sensor_pin) == False:
         print("Light stop")

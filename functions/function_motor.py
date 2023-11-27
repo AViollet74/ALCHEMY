@@ -16,10 +16,10 @@ kit = MotorKit(i2c=board.I2C())
 # The below loop will run 500 times. Each loop it will move one step, clockwise, then pause for 0.01 seconds
 # This will almost look like a smooth rotation.
 
-for i in range(500):
+for i in range(300):
     
     print("Forward DOUBLE")
-    kit.stepper2.onestep(direction=stepper.FORWARD, style=stepper.DOUBLE)
+    kit.stepper2.onestep(direction=stepper.FORWARD, style=stepper.SINGLE)
     time.sleep(0.01) 
 
 
@@ -29,7 +29,7 @@ time.sleep(2)
 # The below loop will run 1000 times. Each loop it will move two step, anti-Clockwise, then pause for 0.01 seconds
 # This will almost look like a smooth rotation.
 
-for i in range(1000):
+for i in range(100):
 
     print("Backward DOUBLE")
     kit.stepper2.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
@@ -37,4 +37,4 @@ for i in range(1000):
 
 
 # The below line will de-energise the Stepper Motor so it can freely move
-kit.stepper2.release() 
+kit.stepper2.release()
