@@ -3,7 +3,7 @@ import functions.function_piezo as piezo
 import functions.function_display as display
 import functions.function_UV as uv
 import functions.function_photosensor as sensor
-import functions.function_motor as motor
+# import functions.function_motor as motor
 
 import RPi.GPIO as GPIO
 from gpiozero import LED
@@ -125,13 +125,13 @@ for i in range(0, len(layers)):
         root.update_idletasks()
         root.update()
 
-        sleep(4)
+        sleep(10)
 
         uv.switch_off(uv_pin)
 
         sleep(2)
 
-        motor.move_up(step_nb)
+        # motor.move_up(step_nb)
 
 
     if i == len(layers)-1:
