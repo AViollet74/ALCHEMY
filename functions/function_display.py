@@ -23,6 +23,8 @@ def full_convert_0 (image_path, w_root, h_root):
     factor = min(factor_w, factor_h)
     new_w = int(w*factor)
     new_h = int(h*factor)
+    #new_w = 1280
+    #new_h = 2400
     
     image = image.resize((new_w, new_h))  
     image_tk = ImageTk.PhotoImage(image)                    #create ImageTk.PhotoImage object
@@ -42,15 +44,17 @@ def full_convert_1(images_paths, w_root, h_root):
         image = Image.open(path)                                #open image path
 
         w, h = image.size
-        #print("image width init", w)
-        #print("image heigth init", h)
+        print("image width init", w)
+        print("image heigth init", h)
         factor_w = w_root / w
         factor_h = h_root / h
         factor = min(factor_w, factor_h)
         new_w = int(w*factor)
         new_h = int(h*factor)
-        #print("image width new", new_w)
-        #print("image heigth new", new_h)
+        #new_w = 1280
+        #new_h = 2400
+        print("image width new", new_w)
+        print("image heigth new", new_h)
 
         image = image.resize((new_w, new_h))  
         image_tk = ImageTk.PhotoImage(image)                    #create ImageTk.PhotoImage object

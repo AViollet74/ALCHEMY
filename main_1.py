@@ -3,6 +3,7 @@ import functions.function_piezo as piezo
 import functions.function_display as display
 import functions.function_UV as uv
 import functions.function_photosensor as sensor
+import functions.function_motor as motor
 
 import RPi.GPIO as GPIO
 from gpiozero import LED
@@ -38,6 +39,9 @@ sensor_pin = sensor.init_sensor()
 GPIO.setup(sensor_pin, GPIO.IN)
 
 #GPIO.setup(pin_sensor, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+#Motor
+step_nb = 500
 
 # TKINTER
 
@@ -90,12 +94,12 @@ black_image_tk  = display.full_convert_0(black_image_path, w_root, h_root)      
 base_path = "/home/mborot/Pictures/"
 sequence=[base_path+"cubic_layer_0.png", base_path+"cubic_layer_1.png", base_path+"cubic_layer_0.png"]
 layers_tk = display.full_convert_1(sequence, w_root, h_root)                                                                  #full screen
-layers = [2, 2, 2]                                                                                                            #number of layer, e.g: 3 times layer 0, then 4 times layer 1 and finally 3 times layer 2
+layers = [1, 1, 1]                                                                                                            #number of layer, e.g: 3 times layer 0, then 4 times layer 1 and finally 3 times layer 2
 
 
 #MAIN
 
-uv.switch_on(uv_pin)
+#motor.start_position(sensor_pin)
 
 for i in range(0, len(layers)):
 
@@ -113,13 +117,22 @@ for i in range(0, len(layers)):
 
         piezo.play(pins, p_time_on, frequency)
 
-        sleep(2)
+        sleep(1)
+
+        uv.switch_on(uv_pin)
 
         display.show_image_tk_0(cnv, w_root, h_root, layers_tk[i])        
         root.update_idletasks()
         root.update()
 
         sleep(4)
+
+        uv.switch_off(uv_pin)
+
+        sleep(2)
+
+        motor.move_up(step_nb)
+
 
     if i == len(layers)-1:
         display.show_image_tk_0(cnv, w_root, h_root, black_image_tk)        
@@ -133,7 +146,9 @@ for i in range(0, len(layers)):
         pass
 
 
-uv.switch_off(uv_pin)
+
+
+
 
 
 """

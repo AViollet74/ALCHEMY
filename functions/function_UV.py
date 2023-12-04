@@ -11,12 +11,12 @@ def init_uv():
     return(uv_pin)
 
 def switch_on(pin_nb):
-    GPIO.setup(uv_pin, GPIO.OUT)
+    GPIO.setup(pin_nb, GPIO.OUT)
     GPIO.output(pin_nb, GPIO.HIGH)
     print("UV light on")
 
 def switch_off(pin_nb):
-    GPIO.setup(uv_pin, GPIO.OUT)
+    GPIO.setup(pin_nb, GPIO.OUT)
     GPIO.output(pin_nb, GPIO.LOW)
     print("UV light off")
 
