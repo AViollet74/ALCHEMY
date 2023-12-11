@@ -5,10 +5,6 @@ from matplotlib import pyplot as plt
 from matplotlib.pyplot import imread
 
 
-##################################################################################################
-
-#covertt, resize, and display image in full screen
-
 
 def full_convert_0 (image_path, w_root, h_root):
     """Upload a single image path and create ImageTk.PhotoImage object
@@ -44,8 +40,6 @@ def full_convert_1(images_paths, w_root, h_root):
         image = Image.open(path)                                #open image path
 
         w, h = image.size
-        print("image width init", w)
-        print("image heigth init", h)
         factor_w = w_root / w
         factor_h = h_root / h
         factor = min(factor_w, factor_h)
@@ -53,8 +47,6 @@ def full_convert_1(images_paths, w_root, h_root):
         new_h = int(h*factor)
         # new_w = 1280
         # new_h = 2400
-        print("image width new", new_w)
-        print("image heigth new", new_h)
 
         image = image.resize((new_w, new_h))  
         image_tk = ImageTk.PhotoImage(image)                    #create ImageTk.PhotoImage object
@@ -65,7 +57,7 @@ def full_convert_1(images_paths, w_root, h_root):
 
 def convert_png(folder_path, nb_slice):
     """Create a list of the png image paths from sliced png image 
-    Args : number of the last png image in the png_filled output folder
+    Args : total number of png images in the png_filled output folder
     TO DO: enter the path of the png_filled output folder
     return :list of image paths"""
 

@@ -4,39 +4,33 @@ import functions.function_display as display
 import functions.function_UV as uv
 import functions.function_photosensor as sensor
 
-"""
-import board
-from adafruit_motor import stepper
-from adafruit_motorkit import MotorKit
-import functions.function_motor as motor
-"""
-
-
 import RPi.GPIO as GPIO
 from gpiozero import LED
 from time import sleep
 import tkinter as tk 
-import numpy as np
-from PIL import Image, ImageTk
-from matplotlib import pyplot as plt
 from screeninfo import get_monitors
 
 
+#Images definition
+base_path = "/home/mborot/Pictures/"                                                                    #Folder path
+black_image_path = base_path+"black_image.png"                                                          #Black image path
+sequence=[base_path+"cubic_layer_0.png", base_path+"cubic_layer_1.png", base_path+"cubic_layer_0.png"]  #List of image paths 
+layers = [2, 3, 2]                                                                                      #Number of times that each image of the sequence list will be displayed sucessively (number of layers)
 
-GPIO.setwarnings(False)                     #prevents warnings from showing up when you run the code
-GPIO.setmode(GPIO.BCM)                      #BCM = Broadcom chip-specific pin numbers
+
+#GPIO settings
+GPIO.setwarnings(False)                                                                                 #prevents warnings from showing up when you run the code
+GPIO.setmode(GPIO.BCM)                                                                                  #BCM = Broadcom chip-specific pin numbers
 
 
+#Initialisation of the hardware components
 #Grove_Electromagnet 
-
-magnets, m_time_on = magnet.init_magnet()        #initialization of the GPIO Magnet list and rest time for magnet on (t1) and magnet off (t2)
-magnet.setup_magnet(magnets)                     #set pin in Magnet list as an output
-
+magnets, m_time_on = magnet.init_magnet()                         
+magnet.setup_magnet(magnets)                                      
 
 #Piezo elements - Transducers
-
-pins, p_time_on, frequency = piezo.init_piezo()                   #initialization of the GPIO pins list
-piezo.setup_piezo(pins)                                           #set pin in pins list as an output
+pins, p_time_on, frequency = piezo.init_piezo()                   
+piezo.setup_piezo(pins)                                          
 
 #UV ligth
 uv_pin = uv.init_uv()
@@ -45,27 +39,17 @@ uv_pin = uv.init_uv()
 sensor_pin = sensor.init_sensor()
 GPIO.setup(sensor_pin, GPIO.IN)
 
-#GPIO.setup(pin_sensor, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-
 #Motor
 # kit = MotorKit(i2c=board.I2C())
-step_nb = 500
+#step_nb = 500
 
-# TKINTER
+
+#GUI creation with TkInter 
 
 """
-#INFO MONITORS
+#Uncomment to get information on monitors
 for m in get_monitors():
     print(str(m))
-
-#Larger image on LCD - change in full_convert_0
-w_image = 2200
-h_image = 2400
-
-print("x shift = ", x_shift)
-print("y shift = ", y_shift)
-print("window width = ", w_root)
-print("window height = ", h_root)
 """
 
 monitors = get_monitors()
@@ -86,27 +70,23 @@ else:
 
 
 
-root = tk.Tk()                                                              #Tinker window creation
+root = tk.Tk()                                                                                          #Tinker window creation
 root.attributes('-fullscreen', True)
-#w_root, h_root = root.winfo_screenwidth(), root.winfo_screenheight()
-root.geometry(f"{w_root}x{h_root}+{x_shift}+{y_shift}")                     #create a root with width=w_root, heigth=h_root, shifted by x_shift from the left and y_shift from the top of the monitor
+root.geometry(f"{w_root}x{h_root}+{x_shift}+{y_shift}")                                                 #Create a root with width=w_root, heigth=h_root, shifted by x_shift from the left and y_shift from the top of the monitor
 
 cnv = tk.Canvas(root, bg="black", highlightthickness=0)
 cnv.pack(fill=tk.BOTH, expand=True)
 
 
-#IMAGES
-black_image_path = "/home/mborot/Pictures/black_image.png"
-black_image_tk  = display.full_convert_0(black_image_path, w_root, h_root)                                                    #full screen
+#Conversion of the Images
+black_image_tk  = display.full_convert_0(black_image_path, w_root, h_root)                              #Convert black image path to black image object, with full screen dimensions                                         
+images_tk = display.full_convert_1(sequence, w_root, h_root)                                            #Convert image paths from sequence list to a list of image object, with full screen dimensions                      
 
-base_path = "/home/mborot/Pictures/"
-sequence=[base_path+"cubic_layer_0.png", base_path+"cubic_layer_1.png", base_path+"cubic_layer_0.png"]
-layers_tk = display.full_convert_1(sequence, w_root, h_root)                                                                  #full screen
-layers = [1, 1, 1]                                                                                                            #number of layer, e.g: 3 times layer 0, then 4 times layer 1 and finally 3 times layer 2
 
 
 #MAIN
-# motor.start_position(sensor_pin)
+
+#motor.start_position(sensor_pin)
 
 for i in range(0, len(layers)):
 
@@ -115,30 +95,23 @@ for i in range(0, len(layers)):
         display.show_image_tk_0(cnv, w_root, h_root, black_image_tk)        
         root.update_idletasks()
         root.update()
-        
-        sleep(2)
 
         magnet.coil(magnets, m_time_on)
 
-        sleep(1)
-
         piezo.play(pins, p_time_on, frequency)
-
-        sleep(1)
 
         uv.switch_on(uv_pin)
 
-        display.show_image_tk_0(cnv, w_root, h_root, layers_tk[i])        
+        display.show_image_tk_0(cnv, w_root, h_root, images_tk[i])        
         root.update_idletasks()
         root.update()
 
-        sleep(10)
+        sleep(4)
 
         uv.switch_off(uv_pin)
 
-        sleep(2)
-
-        # motor.move_up(step_nb)
+        #sleep(2)
+        #motor.move_up(step_nb)
 
 
     if i == len(layers)-1:
@@ -153,22 +126,7 @@ for i in range(0, len(layers)):
         pass
 
 
-
-
-
-
-
-"""
-display.show_image_tk_0(cnv, layers_tk[2])
-root.update_idletasks()
-root.update()
-
-#To exit the application by pressing Escape
-root.bind('<Escape>', lambda e: root.quit())
-
-"""
-
-
-GPIO.cleanup()                              #clean up all the ports used in the program
+#Clean up all the ports used in the program
+GPIO.cleanup()                              
 
 root.mainloop()

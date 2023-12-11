@@ -8,24 +8,28 @@ import RPi.GPIO as GPIO
 from gpiozero import LED
 from time import sleep
 import tkinter as tk 
-import numpy as np
-from PIL import Image, ImageTk
 from screeninfo import get_monitors
 
 
+#Images definition
+black_image_path = "/home/mborot/Pictures/black_image.png"                      #Black image path
+base_path = "/home/mborot/Pictures/slicing/"                                    #Folder path
+nb_layers = 13                                                                  #Number of images in the slicing folder, which correspond to the number of layers 
 
-GPIO.setwarnings(False)                                 #prevents warnings from showing up when you run the code
-GPIO.setmode(GPIO.BCM)                                  #BCM = Broadcom chip-specific pin numbers
+
+#GPIO settings
+GPIO.setwarnings(False)                                                         #prevents warnings from showing up when you run the code
+GPIO.setmode(GPIO.BCM)                                                          #BCM = Broadcom chip-specific pin numbers
 
 
+#Initialisation of the hardware components
 #Grove_Electromagnet 
-magnets, m_time_on = magnet.init_magnet()               #initialization of the GPIO Magnet list and rest time for magnet on (t1) and magnet off (t2)
-magnet.setup_magnet(magnets)                            #set pin in Magnet list as an output
-
+magnets, m_time_on = magnet.init_magnet()               
+magnet.setup_magnet(magnets)                            
 
 #Piezo elements - Transducers
-pins, p_time_on, frequency = piezo.init_piezo()         #initialization of the GPIO pins list
-piezo.setup_piezo(pins)                                 #set pin in pins list as an output
+pins, p_time_on, frequency = piezo.init_piezo()         
+piezo.setup_piezo(pins)                                 
 
 #UV ligth
 uv_pin = uv.init_uv()
@@ -34,21 +38,17 @@ uv_pin = uv.init_uv()
 sensor_pin = sensor.init_sensor()
 GPIO.setup(sensor_pin, GPIO.IN)
 
-# TKINTER
+#Motor
+# kit = MotorKit(i2c=board.I2C())
+#step_nb = 500
+
+
+#GUI creation with TkInter 
 
 """
-#INFO MONITORS
+#Uncomment to get information on monitors
 for m in get_monitors():
     print(str(m))
-
-#Larger image on LCD - change in full_convert_0
-w_image = 2200
-h_image = 2400
-
-print("x shift = ", x_shift)
-print("y shift = ", y_shift)
-print("window width = ", w_root)
-print("window height = ", h_root)
 """
 
 monitors = get_monitors()
@@ -69,55 +69,50 @@ else:
 
 
 
-root = tk.Tk()                                                              #Tinker window creation
+root = tk.Tk()                                                                  #Tinker window creation
 root.attributes('-fullscreen', True)
-root.geometry(f"{w_root}x{h_root}+{x_shift}+{y_shift}")                     #create a root with width=w_root, heigth=h_root, shifted by x_shift from the left and y_shift from the top of the monitor
+root.geometry(f"{w_root}x{h_root}+{x_shift}+{y_shift}")                         #Create a root with width=w_root, heigth=h_root, shifted by x_shift from the left and y_shift from the top of the monitor
 
 cnv = tk.Canvas(root, bg="black", highlightthickness=0)
 cnv.pack(fill=tk.BOTH, expand=True)
 
 
-#IMAGES
-black_image_path = "/home/mborot/Pictures/black_image.png"
-black_image_tk  = display.full_convert_0(black_image_path, w_root, h_root)                                                    #full screen
-
-
-#PNG slicing 
-nb_slice = 13
-folder_path = "/home/mborot/Pictures/slicing/" 
-png_paths = display.convert_png(folder_path, nb_slice)
-png_tk = display.full_convert_1(png_paths, w_root, h_root) 
+#Conversion of the Images
+black_image_tk  = display.full_convert_0(black_image_path, w_root, h_root)      #Convert black image path to black image object, with full screen dimensions 
+image_paths = display.convert_png(base_path, nb_layers)                         #Create images_paths list from the folder path and the number of images  
+images_tk = display.full_convert_1(image_paths, w_root, h_root)                 #Convert image paths from images_paths list to a list of image object, with full screen dimensions
 
 
 
 #MAIN
 
-uv.switch_on(uv_pin)
+#motor.start_position(sensor_pin)
 
-for i in range(len(png_tk)):
+for i in range(len(images_tk)):
 
     display.show_image_tk_0(cnv, w_root, h_root, black_image_tk)
     root.update_idletasks()
     root.update()
 
-    sleep(2)
-
     magnet.coil(magnets, m_time_on)
-
-    sleep(1)
 
     piezo.play(pins, p_time_on, frequency)
 
-    sleep(2)
+    uv.switch_on(uv_pin)
 
-    display.show_image_tk_0(cnv, w_root, h_root, png_tk[i])
-    #display.show_image_tk_2(root, png_tk[i], image_names[i])
+    display.show_image_tk_0(cnv, w_root, h_root, images_tk[i])
     root.update_idletasks()
     root.update()
     
     sleep(4)
-    
-    if i == len(png_tk)-1:
+
+    uv.switch_off(uv_pin)
+
+    #sleep(2)
+    #motor.move_up(step_nb)
+
+
+    if i == len(images_tk)-1:
         display.show_image_tk_0(cnv, w_root, h_root, black_image_tk)        
         root.update_idletasks()
         root.update()
@@ -128,8 +123,8 @@ for i in range(len(png_tk)):
     else:
         pass
 
-uv.switch_off(uv_pin)
 
-GPIO.cleanup()                              #clean up all the ports used in the program
+#Clean up all the ports used in the program
+GPIO.cleanup()                              
 
 root.mainloop()
