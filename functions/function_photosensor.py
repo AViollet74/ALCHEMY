@@ -11,7 +11,10 @@ def init_sensor():
     sensor_pin = s
     return(sensor_pin)
 
+
 """
+#TEST PHOTOSENSOR
+
 sensor_pin = 2
 GPIO.setup(sensor_pin, GPIO.IN)
 
@@ -20,8 +23,6 @@ while(True):
         print("Light stop")
     else:                                   #GPIO.input(pin_sensor) == True
         print("Light pass")
-
-
 
 
 """

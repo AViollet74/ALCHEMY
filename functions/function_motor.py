@@ -40,17 +40,12 @@ def start_position(sensor_pin):
 
 
 """
-
-# If you uncomment below it will start by de-energising the Stepper Motor,
-# Worth noting the final state the stepper motor is in is what will continue.
-# Energised Stepper Motors get HOT over time along with the electronic silicon drivers
-
-# kit.stepper1.release()
+#TEST MOTOR
 
 # The below loop will run 500 times. Each loop it will move one step, clockwise, then pause for 0.01 seconds
 # This will almost look like a smooth rotation.
 
-for i in range(300):
+for i in range(500):
     
     print("Forward DOUBLE")
     kit.stepper2.onestep(direction=stepper.FORWARD, style=stepper.SINGLE)
@@ -63,7 +58,7 @@ sleep(2)
 # The below loop will run 1000 times. Each loop it will move two step, anti-Clockwise, then pause for 0.01 seconds
 # This will almost look like a smooth rotation.
 
-for i in range(100):
+for i in range(500):
 
     print("Backward DOUBLE")
     kit.stepper2.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)

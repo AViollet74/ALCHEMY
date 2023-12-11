@@ -3,7 +3,14 @@ import functions.function_piezo as piezo
 import functions.function_display as display
 import functions.function_UV as uv
 import functions.function_photosensor as sensor
-# import functions.function_motor as motor
+
+"""
+import board
+from adafruit_motor import stepper
+from adafruit_motorkit import MotorKit
+import functions.function_motor as motor
+"""
+
 
 import RPi.GPIO as GPIO
 from gpiozero import LED
@@ -41,6 +48,7 @@ GPIO.setup(sensor_pin, GPIO.IN)
 #GPIO.setup(pin_sensor, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 #Motor
+# kit = MotorKit(i2c=board.I2C())
 step_nb = 500
 
 # TKINTER
@@ -98,8 +106,7 @@ layers = [1, 1, 1]                                                              
 
 
 #MAIN
-
-#motor.start_position(sensor_pin)
+# motor.start_position(sensor_pin)
 
 for i in range(0, len(layers)):
 
