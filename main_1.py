@@ -29,8 +29,8 @@ magnets, m_time_on = magnet.init_magnet()
 magnet.setup_magnet(magnets)                                      
 
 #Piezo elements - Transducers
-pins, p_time_on, frequency = piezo.init_piezo()                   
-piezo.setup_piezo(pins)                                          
+piezos, p_time_on, frequency = piezo.init_piezo()                   
+piezo.setup_piezo(piezos)                                          
 
 #UV ligth
 uv_pin = uv.init_uv()
@@ -79,8 +79,8 @@ cnv.pack(fill=tk.BOTH, expand=True)
 
 
 #Conversion of the Images
-black_image_tk  = display.full_convert_0(black_image_path, w_root, h_root)                              #Convert black image path to black image object, with full screen dimensions                                         
-images_tk = display.full_convert_1(sequence, w_root, h_root)                                            #Convert image paths from sequence list to a list of image object, with full screen dimensions                      
+black_image_tk  = display.convert_full_0(black_image_path, w_root, h_root)                              #Convert black image path to black image object, with full screen dimensions                                         
+images_tk = display.convert_full_1(sequence, w_root, h_root)                                            #Convert image paths from sequence list to a list of image object, with full screen dimensions                      
 
 
 
@@ -92,17 +92,17 @@ for i in range(0, len(layers)):
 
     for k in range(0, layers[i]):
 
-        display.show_image_tk_0(cnv, w_root, h_root, black_image_tk)        
+        display.show_image(cnv, w_root, h_root, black_image_tk)        
         root.update_idletasks()
         root.update()
 
-        magnet.coil(magnets, m_time_on)
+        magnet.activate_m(magnets, m_time_on)
 
-        piezo.play(pins, p_time_on, frequency)
+        piezo.activate_p(piezos, p_time_on, frequency)
 
         uv.switch_on(uv_pin)
 
-        display.show_image_tk_0(cnv, w_root, h_root, images_tk[i])        
+        display.show_image(cnv, w_root, h_root, images_tk[i])        
         root.update_idletasks()
         root.update()
 
@@ -115,7 +115,7 @@ for i in range(0, len(layers)):
 
 
     if i == len(layers)-1:
-        display.show_image_tk_0(cnv, w_root, h_root, black_image_tk)        
+        display.show_image(cnv, w_root, h_root, black_image_tk)        
         root.update_idletasks()
         root.update()
 

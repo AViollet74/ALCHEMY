@@ -3,8 +3,10 @@ import RPi.GPIO as GPIO
 from time import sleep
 
 def init_magnet():
-    """Initialize the magnets list by asking the user how many GPIO pins are used (number of int in the list) 
-    and what are the GPIO BCM number of those pins. Return t1 and t2, int of rest time for magnet on/off""" 
+    """Initialize the magnets list with the GPIO pins numbers of the magnet(s) and return the actuation time (user input).
+    return: magnets: list of int GPIO pin number(s) of the magnet(s)
+            t_on: int actuation time of the magnet(s)
+    """ 
 
     magnets = []
     t_on = 0
@@ -18,47 +20,31 @@ def init_magnet():
             magnets.append(int(input("Enter the GPIO BCM pin number :")))
         
         t_on = int(input("How long magnet on [s] ?"))
-        #t_off = int(input("How long magnet off [s] ?"))
 
     return(magnets, t_on)
 
 
 def setup_magnet(magnets):
-    """Set the pins present in the magnets list as outputs"""
+    """Set the pins present in the magnets list as outputs.
+    Arg:    magnets = list of int GPIO pin number(s) of the magnet(s)
+    """
 
     for m in magnets:
-        GPIO.setup(m, GPIO.OUT)                    #setup([pin], [GPIO.IN, GPIO.OUT]), configuring GPIO pins in output mode
+        GPIO.setup(m, GPIO.OUT)                         #setup([pin], [GPIO.IN, GPIO.OUT]), configuring GPIO pins in output mode
     return()
 
 
-def coil(magnets, time_on):
-     """Actuation of the coil
-    Args:   magnets: list of int(pin number BCM)
-            time_on: int of rest time on  
+def activate_m(magnets, time_on):
+     """Actuation of the electromagnet(s) for a given time
+    Args:   magnets: list of int GPIO pin number(s) of the magnet(s)
+            time_on: int rest time on  actuation time of the magnet(s)
     """
      
      print("Magnet(s) on for", time_on, "sec")
-     GPIO.output(magnets, GPIO.HIGH)
+     GPIO.output(magnets, GPIO.HIGH)                    #GPIO.output([pin][GPIO.HIGH]), digital output, set pin p high, GPIO.HIGH will drive it to 3.3V, equivalent GPIO.HIGH = True = 1
      sleep(time_on)
      
      print("Magnet(s) off")
-     GPIO.output(magnets, GPIO.LOW) 
+     GPIO.output(magnets, GPIO.LOW)                     #GPIO.output([pin][GPIO.LOW]), digital output, set pin p low, GPIO.LOW will drive it to 0V, equivalent GPIO.LOW = Fase = 0
 
-
-
-############################################################################
-
-def coil1(magnets, time_on, time_off):
-     """Actuation of the coil
-    Args:   magnets: list of int(pin number BCM)
-            time_on, time_off: int of rest time on/off  
-    """
-     
-     for m in magnets:
-        print("Magnet", m ,"on for", time_on, "sec")
-        GPIO.output(m, GPIO.HIGH)  
-        sleep(time_on)
-        print("Magnet", m ,"off")
-        GPIO.output(m, GPIO.LOW) 
-        sleep(time_off)
  
