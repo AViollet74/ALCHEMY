@@ -1,6 +1,20 @@
 # Semester project ALCHEMY
 This project aims to build a magnetic- and acoustic-field-assisted 3D printer, by developing software using the Raspberry Pi 400 and Python programming.
 
+## Workflow description
+This main_1.py and main_2.py scripts run the following steps:
+
+1) Initialization of the hardware components
+2) Move the build platform downward to the initial
+3) Start of the printing loop
+   - Move the build platform upward
+   - LCD turns black
+   - Activation of the magnet
+   - Activation of the transducer
+   - Turn on the UV light
+   - Display of the image on the LCD
+   - Turn off the UV light 
+
 ## Getting started
 1) Activate I2C communication
 
