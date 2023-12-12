@@ -126,7 +126,7 @@ The following line should appear in the terminal:
    - Frequency
      
 9) Close the window
-   - At the end of the program: **Esc***
+   - At the end of the program: **Esc**
    - While the code is running: **Ctrl + Esc**
    - Stop the code execution in the terminal: **Ctrl + C**
 
