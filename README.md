@@ -70,7 +70,7 @@ The Adafruit DC & Stepper Motor HAT requires I2C communication to work. Enable t
 ## Installation
 1) Clone the repository
    ```bash
-   git clone https://github.com/mborot/ALCHEMY.git
+   git clone git@github.com:mborot/ALCHEMY.git
    ```
 2) Install the dependencies
    ```bash
