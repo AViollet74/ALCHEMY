@@ -2,7 +2,7 @@
 This project aims to build a magnetic- and acoustic-field-assisted 3D printer, by developing software using the Raspberry Pi 400 and Python programming.
 
 ## Workflow description
-This main_1.py and main_2.py scripts run the following steps:
+The main_1.py and main_2.py scripts run the following steps:
 
 1) Initialization of the hardware components
 2) Move the build platform downward to the initial
