@@ -1,5 +1,71 @@
-# project-template
-Template repostiory for accelerate your project
+# Semester project ALCHEMY
+This project aims to build a magnetic- and acoustic-field-assisted 3D printer, by developing software using the Raspberry Pi 400 and Python programming.
+
+## Getting started
+1) Activate I2C communication
+2) Reboot the Raspberry Pi
+3) Verify the I2C address
+   ``bash
+   sudo apt-get install i2c-tools
+   i2cdetect -y 1
+   ``
+4) Check the Python version
+   ``bash
+   python --version
+   ``
+5) Install pip
+   ``bash
+   sudo apt-get install python-pip
+   ``
+## Create a virtual environment
+1) Install virtualenvwrapper
+   ``bash
+   sudo pip install virtualenvwrapper
+   ``
+2) Configure the shell to load the virtualenvwrapper commands
+   - Open an RC file (e.g. .bashrc, .bash\_profile, or .zshrc)
+     ``bash
+     sudo gedit ~/.bashrc
+     ``
+   - Add the following lines
+     ``bash
+     export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+     export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
+     source /usr/local/bin/virtualenvwrapper.sh
+     ``
+   - Save the file
+3) Check the virtualenvwrapper version
+     ``bash
+     mkvirtualenv --version
+     ``
+4) Create a new environment
+     ``bash
+     mkvirtualenv myenv
+     ``
+5) Activate the virtual environment
+   ``bash
+   workon myenv
+   ``
+6) Deactivate the virtual environment
+   ``bash
+   (myenv) deactivate
+   ``
+7) List virtual environments
+   ``bash
+   lsvirtualenv
+   ``
+8) List the packages in the virtual environment
+   ``bash
+   pip freeze
+   ``
+9) Remove the virtual environment
+   ``bash
+   rmvirtualenv myenv
+   ``
+
+## Installation
+
+
 
 ## Work on your project
 1) Activate the environement
