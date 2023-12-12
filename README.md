@@ -99,23 +99,27 @@ The Adafruit DC & Stepper Motor HAT requires I2C communication to work. Enable t
      ```bash
      sequence = [base\_path + "cubic\_layer\_0.png", base\_path + "cubic\_layer\_1.png", ...]
      ```
-4) Specify the layer thickness
+4) Specify the number of layers for each image
+   ```bash
+   layers = [2, 3, ...]
+   ```
+5) Specify the layer thickness
    ```bash
    step\_nb = 500
    ```
-5) Connect the hardware components to GPIO pins
+6) Connect the hardware components to GPIO pins
    
-6) Run the code
+7) Run the code
    ```bash
    python main\_1.py
    ```
-7) Initialize the hardware elements
+8) Initialize the hardware elements
    - Number of magnets and piezo elements
    - GPIO pin numbers ([BCM](https://pinout.xyz/) convention)
    - Activation time
    - Frequency
      
-8) Close the window
+9) Close the window
    - At the end of the program: **Esc***
    - While the code is running: **Ctrl + Esc**
    - Stop the code execution in the terminal: **Ctrl + C**
