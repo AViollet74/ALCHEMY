@@ -4,7 +4,8 @@ This project aims to build a magnetic- and acoustic-field-assisted 3D printer, b
 ## Getting started
 1) Activate I2C communication
 
-The Adafruit DC & Stepper Motor HAT requires I2C communication to work. Enable the I2C Connection found under the Interfaces tab in the     Raspberry Pi Configuration menu. **IMPORTANT: Reboot the Raspberry Pi after the modificaiton**
+The Adafruit DC & Stepper Motor HAT requires I2C communication to work. Enable the I2C Connection found under the Interfaces tab in the     Raspberry Pi Configuration menu. 
+**IMPORTANT: Reboot the Raspberry Pi after the modificaiton**
 
 2) Verify the I2C address
    ```bash
@@ -92,16 +93,16 @@ The Adafruit DC & Stepper Motor HAT requires I2C communication to work. Enable t
    ```
 The following line should appear in the terminal:
 ```bash
-(myenv)@raspberrypi:$\sim$/Documents/ALCHEMY \$
+(myenv)@raspberrypi:~/Documents/ALCHEMY $
 ```
 3) Import the image paths
    - Change the folder path
      ```bash
-     base\_path = "/home/mborot/Pictures/lattice/"
+     base_path = "/home/mborot/Pictures/lattice/"
      ```
    - Change the image names 
      ```bash
-     sequence = [base\_path + "cubic\_layer\_0.png", base\_path + "cubic\_layer\_1.png", ...]
+     sequence = [base_path + "cubic_layer_0.png", base_path + "cubic_layer_1.png", ...]
      ```
 4) Specify the number of layers for each image
    ```bash
@@ -109,7 +110,7 @@ The following line should appear in the terminal:
    ```
 5) Specify the layer thickness
    ```bash
-   step\_nb = 500
+   step_nb = 500
    ```
 6) Connect the hardware components to GPIO pins
    
@@ -130,10 +131,12 @@ The following line should appear in the terminal:
 
 
 ## Running the main_2.py script
+The instructions required to run main_2.py are the same as those for executing main_1.py, with the exception of the following steps:
+
 3) Import the image paths
    - Change the folder path
      ```bash
-     base\_path = "/home/mborot/Pictures/lattice/"
+     base_path = "/home/mborot/Pictures/slicing/"
      ```
    - Change the image names 
      ```bash
@@ -141,14 +144,13 @@ The following line should appear in the terminal:
      ```
 4) Specify the number of layers for each image
    ```bash
-   layers = [2, 3, ...]
+   nb_layers = 13
    ```   
 7) Run the code
    ```bash
    python main_2.py
    ```
    
-
 
 ## Working with git
 1) Check which files have been modified:
