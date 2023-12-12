@@ -154,19 +154,19 @@ The instructions required to run main_2.py are the same as those for executing m
    
 
 ## Working with git
-1) Check which files have been modified:
+1) Check which files have been modified
 ```bash
 git status
 ```
-2) Add the modified files to your working tree:
+2) Add the modified files to your working tree
 ```bash
 git add script.py
 ```
-3) Commit the changes on the working tree:
+3) Commit the changes on the working tree
 ```bash
 git commit -m "commit message"
 ```
-4) Push your new code on the server:
+4) Push the new code on the server
 ```bash
 git push
 ```
