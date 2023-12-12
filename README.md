@@ -81,7 +81,41 @@ The Adafruit DC & Stepper Motor HAT requires I2C communication to work. Enable t
    ```
 
 ## Running the main_1.py script
-
+1) Open the ALCHEMY folder
+   ```bash
+   cd /Documents/ALCHEMY
+   ```
+2) Activate the virtual environment
+   ```bash
+   workon myenv
+   ```
+3) Import the image paths
+   - Change the folder path
+     ```bash
+     base\_path = "/home/mborot/Pictures/lattice/"
+     ```
+   - Change the image names 
+     ```bash
+     sequence = [base\_path + "cubic\_layer\_0.png", base\_path + "cubic\_layer\_1.png", ...]
+     ```
+4) Specify the layer thickness
+   ```bash
+   step\_nb = 500
+   ```
+5) Connect the hardware components to GPIO pins
+6) Run the code
+   ```bash
+   (myenv)@raspberrypi:$\sim$/Documents/ALCHEMY \$ python main\_1.py
+   ```
+7) Initialize the hardware elements
+   - Number of magnets and piezo elements
+   - GPIO pin numbers ([BCM](https://pinout.xyz/) convention)
+   - Activation time
+   - Frequency
+8) Close the window
+   - At the end of the program: **Esc***
+   - While the code is running: **Ctrl + Esc**
+   - Stop the code execution in the terminal: **Ctrl + C**
 
 
 ## Work on your project
