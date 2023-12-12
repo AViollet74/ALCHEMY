@@ -37,6 +37,7 @@ The Adafruit DC & Stepper Motor HAT requires I2C communication to work. Enable t
      source /usr/local/bin/virtualenvwrapper.sh
      ```
    - Save the file
+     
 3) Check the virtualenvwrapper version
    ```bash
    mkvirtualenv --version
@@ -103,15 +104,17 @@ The Adafruit DC & Stepper Motor HAT requires I2C communication to work. Enable t
    step\_nb = 500
    ```
 5) Connect the hardware components to GPIO pins
+   
 6) Run the code
    ```bash
-   (myenv)@raspberrypi:$\sim$/Documents/ALCHEMY \$ python main\_1.py
+   python main\_1.py
    ```
 7) Initialize the hardware elements
    - Number of magnets and piezo elements
    - GPIO pin numbers ([BCM](https://pinout.xyz/) convention)
    - Activation time
    - Frequency
+     
 8) Close the window
    - At the end of the program: **Esc***
    - While the code is running: **Ctrl + Esc**
