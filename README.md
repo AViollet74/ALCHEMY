@@ -5,63 +5,63 @@ This project aims to build a magnetic- and acoustic-field-assisted 3D printer, b
 1) Activate I2C communication
 2) Reboot the Raspberry Pi
 3) Verify the I2C address
-   ``bash
+   ```bash
    sudo apt-get install i2c-tools
    i2cdetect -y 1
-   ``
+   ```
 4) Check the Python version
-   ``bash
+   ```bash
    python --version
-   ``
+   ```
 5) Install pip
-   ``bash
+   ```bash
    sudo apt-get install python-pip
-   ``
+   ```
 ## Create a virtual environment
 1) Install virtualenvwrapper
-   ``bash
+   ```bash
    sudo pip install virtualenvwrapper
-   ``
+   ```
 2) Configure the shell to load the virtualenvwrapper commands
    - Open an RC file (e.g. .bashrc, .bash\_profile, or .zshrc)
-     ``bash
+     ```bash
      sudo gedit ~/.bashrc
-     ``
+     ```
    - Add the following lines
-     ``bash
+     ```bash
      export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
      export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
      source /usr/local/bin/virtualenvwrapper.sh
-     ``
+     ```
    - Save the file
 3) Check the virtualenvwrapper version
-     ``bash
-     mkvirtualenv --version
-     ``
+   ```bash
+   mkvirtualenv --version
+   ```
 4) Create a new environment
-     ``bash
-     mkvirtualenv myenv
-     ``
+   ```bash
+   mkvirtualenv myenv
+   ```
 5) Activate the virtual environment
-   ``bash
+   ```bash
    workon myenv
-   ``
+   ```
 6) Deactivate the virtual environment
-   ``bash
+   ```bash
    (myenv) deactivate
-   ``
+   ```
 7) List virtual environments
-   ``bash
+   ```bash
    lsvirtualenv
-   ``
+   ```
 8) List the packages in the virtual environment
-   ``bash
+   ```bash
    pip freeze
-   ``
+   ```
 9) Remove the virtual environment
-   ``bash
+   ```bash
    rmvirtualenv myenv
-   ``
+   ```
 
 ## Installation
 
