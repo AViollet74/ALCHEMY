@@ -90,6 +90,10 @@ The Adafruit DC & Stepper Motor HAT requires I2C communication to work. Enable t
    ```bash
    workon myenv
    ```
+The following line should appear in the terminal:
+```bash
+(myenv)@raspberrypi:$\sim$/Documents/ALCHEMY \$
+```
 3) Import the image paths
    - Change the folder path
      ```bash
@@ -111,7 +115,7 @@ The Adafruit DC & Stepper Motor HAT requires I2C communication to work. Enable t
    
 7) Run the code
    ```bash
-   python main\_1.py
+   python main_1.py
    ```
 8) Initialize the hardware elements
    - Number of magnets and piezo elements
@@ -125,42 +129,29 @@ The Adafruit DC & Stepper Motor HAT requires I2C communication to work. Enable t
    - Stop the code execution in the terminal: **Ctrl + C**
 
 
-## Work on your project
-1) Activate the environement
-```bash
-workon ALCHEMY
-```
-2) If you want to deactivate the environnement
-```bash
-deactivate
-```
-3) To list all the current module on the environnement
-```bash
-pip freeze
-```
-## Installation
-- Clone the repo
-
-```bash
-git clone git@github.com:mborot/ALCHEMY.git
-```
-- Create your virtual env
-```bash
-mkvirtualenv ALCHEMY
-```
-
-
-
-## Managing dependancies
-- to add an dependancy with poetry for exemple numpy
-```bash
-poetry add numpy
-```
-It would automatically install and udpate the pyproject.toml file. If you didn't specifie it, it would add it to the tool.poetry.dependencies.
+## Running the main_2.py script
+3) Import the image paths
+   - Change the folder path
+     ```bash
+     base\_path = "/home/mborot/Pictures/lattice/"
+     ```
+   - Change the image names 
+     ```bash
+     sequence = [base\_path + "cubic\_layer\_0.png", base\_path + "cubic\_layer\_1.png", ...]
+     ```
+4) Specify the number of layers for each image
+   ```bash
+   layers = [2, 3, ...]
+   ```   
+7) Run the code
+   ```bash
+   python main_2.py
+   ```
+   
 
 
 ## Working with git
-1) Check wich files have been modified:
+1) Check which files have been modified:
 ```bash
 git status
 ```
@@ -170,10 +161,9 @@ git add script.py
 ```
 3) Commit the changes on the working tree:
 ```bash
-git commit -m "update_2.0"
+git commit -m "commit message"
 ```
 4) Push your new code on the server:
 ```bash
 git push
 ```
-If you have any issues: 1) Read the error and google it 2) Use git status to ensure that all the modified files have been save 3) Cry if you see the error conflict.
