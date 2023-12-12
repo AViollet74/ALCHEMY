@@ -3,7 +3,9 @@ This project aims to build a magnetic- and acoustic-field-assisted 3D printer, b
 
 ## Getting started
 1) Activate I2C communication
-   The Adafruit DC & Stepper Motor HAT requires I2C communication to work. Enable the I2C Connection found under the Interfaces tab in the     Raspberry Pi Configuration menu
+
+The Adafruit DC & Stepper Motor HAT requires I2C communication to work. Enable the I2C Connection found under the Interfaces tab in the     Raspberry Pi Configuration menu
+
 2) Reboot the Raspberry Pi
 3) Verify the I2C address
    ```bash
