@@ -16,6 +16,10 @@ black_image_path = "/home/mborot/Pictures/black_image.png"                      
 base_path = "/home/mborot/Pictures/slicing/"                                    #Folder path
 nb_layers = 13                                                                  #Number of images in the slicing folder, which correspond to the number of layers 
 
+#Motor
+# kit = MotorKit(i2c=board.I2C())
+#step_nb = 500
+
 
 #GPIO settings
 GPIO.setwarnings(False)                                                         #prevents warnings from showing up when you run the code
@@ -37,10 +41,6 @@ uv_pin = uv.init_uv()
 #Photoelctric sensor
 sensor_pin = sensor.init_sensor()
 GPIO.setup(sensor_pin, GPIO.IN)
-
-#Motor
-# kit = MotorKit(i2c=board.I2C())
-#step_nb = 500
 
 
 #GUI creation with TkInter 
@@ -77,10 +77,10 @@ cnv = tk.Canvas(root, bg="black", highlightthickness=0)
 cnv.pack(fill=tk.BOTH, expand=True)
 
 
-#Conversion of the Images
-black_image_tk  = display.convert_full_0(black_image_path, w_root, h_root)      #Convert black image path to black image object, with full screen dimensions 
-image_paths = display.convert_list(base_path, nb_layers)                         #Create images_paths list from the folder path and the number of images  
-images_tk = display.convert_full_1(image_paths, w_root, h_root)                 #Convert image paths from images_paths list to a list of image object, with full screen dimensions
+#Conversion of the images paths to Image Objects
+black_image_tk  = display.convert_full_0(black_image_path, w_root, h_root, monitors)                #Convert black image path to black image object, with full screen dimensions 
+image_paths = display.convert_list(base_path, nb_layers)                                            #Create images_paths list from the folder path and the number of images  
+images_tk = display.convert_full_1(image_paths, w_root, h_root, monitors)                           #Convert image paths from images_paths list to a list of image object, with full screen dimensions
 
 
 
@@ -89,6 +89,8 @@ images_tk = display.convert_full_1(image_paths, w_root, h_root)                 
 #motor.start_position(sensor_pin)
 
 for i in range(len(images_tk)):
+
+    #motor.move_up(step_nb)
 
     display.show_image(cnv, w_root, h_root, black_image_tk)
     root.update_idletasks()
@@ -107,9 +109,6 @@ for i in range(len(images_tk)):
     sleep(4)
 
     uv.switch_off(uv_pin)
-
-    #sleep(2)
-    #motor.move_up(step_nb)
 
 
     if i == len(images_tk)-1:

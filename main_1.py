@@ -12,10 +12,14 @@ from screeninfo import get_monitors
 
 
 #Images definition
-base_path = "/home/mborot/Pictures/"                                                                    #Folder path
-black_image_path = base_path+"black_image.png"                                                          #Black image path
+base_path = "/home/mborot/Pictures/lattice/"                                                            #Folder path
+black_image_path = "/home/mborot/Pictures/black_image.png"                                              #Black image path
 sequence=[base_path+"cubic_layer_0.png", base_path+"cubic_layer_1.png", base_path+"cubic_layer_0.png"]  #List of image paths 
 layers = [2, 3, 2]                                                                                      #Number of times that each image of the sequence list will be displayed sucessively (number of layers)
+
+#Motor
+# kit = MotorKit(i2c=board.I2C())
+#step_nb = 500
 
 
 #GPIO settings
@@ -38,10 +42,6 @@ uv_pin = uv.init_uv()
 #Photoelctric sensor
 sensor_pin = sensor.init_sensor()
 GPIO.setup(sensor_pin, GPIO.IN)
-
-#Motor
-# kit = MotorKit(i2c=board.I2C())
-#step_nb = 500
 
 
 #GUI creation with TkInter 
@@ -78,9 +78,9 @@ cnv = tk.Canvas(root, bg="black", highlightthickness=0)
 cnv.pack(fill=tk.BOTH, expand=True)
 
 
-#Conversion of the Images
-black_image_tk  = display.convert_full_0(black_image_path, w_root, h_root)                              #Convert black image path to black image object, with full screen dimensions                                         
-images_tk = display.convert_full_1(sequence, w_root, h_root)                                            #Convert image paths from sequence list to a list of image object, with full screen dimensions                      
+#Conversion of the images paths to Image Objects
+black_image_tk  = display.convert_full_0(black_image_path, w_root, h_root, monitors)                              #Convert black image path to black image object, with full screen dimensions                                         
+images_tk = display.convert_full_1(sequence, w_root, h_root, monitors)                                            #Convert image paths from sequence list to a list of image object, with full screen dimensions                      
 
 
 
@@ -91,6 +91,8 @@ images_tk = display.convert_full_1(sequence, w_root, h_root)                    
 for i in range(0, len(layers)):
 
     for k in range(0, layers[i]):
+
+        #motor.move_up(step_nb)
 
         display.show_image(cnv, w_root, h_root, black_image_tk)        
         root.update_idletasks()
@@ -106,12 +108,9 @@ for i in range(0, len(layers)):
         root.update_idletasks()
         root.update()
 
-        sleep(4)
+        sleep(20)
 
         uv.switch_off(uv_pin)
-
-        #sleep(2)
-        #motor.move_up(step_nb)
 
 
     if i == len(layers)-1:
