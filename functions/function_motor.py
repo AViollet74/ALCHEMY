@@ -20,8 +20,7 @@ def move_up(step_nb):
 
     for i in range(step_nb):
         kit.stepper2.onestep(direction=stepper.FORWARD, style=stepper.DOUBLE)
-        sleep(0.01)  
-        
+        sleep(0.01)      
     kit.stepper2.release()                  #de-energise the Stepper Motor so it can freely move
 
 ## MOTOR1 (Z-table)
