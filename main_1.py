@@ -86,6 +86,8 @@ images_tk = display.convert_full_1(sequence, w_root, h_root, monitors)          
 
 #MAIN
 
+
+
 #motor.start_position(sensor_pin)
 
 for i in range(0, len(layers)):
@@ -98,7 +100,7 @@ for i in range(0, len(layers)):
         root.update_idletasks()
         root.update()
 
-        magnet.activate_m(magnets, m_time_on)
+        magnet.activate_m(magnets, m_time_on) 
 
         piezo.activate_p(piezos, p_time_on, frequency)
 

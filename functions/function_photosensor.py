@@ -28,5 +28,4 @@ while(True):
         print("Light stop")
     else:                                   #GPIO.input(pin_sensor) == True
         print("Light pass")
-
 """

@@ -47,4 +47,8 @@ def activate_m(magnets, time_on):
      print("Magnet(s) off")
      GPIO.output(magnets, GPIO.LOW)                     #GPIO.output([pin][GPIO.LOW]), digital output, set pin p low, GPIO.LOW will drive it to 0V, equivalent GPIO.LOW = Fase = 0
 
+
+
+
+
  
