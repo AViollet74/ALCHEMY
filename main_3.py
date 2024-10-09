@@ -1,9 +1,10 @@
-import functions.function_magnet as magnet
+#import functions.function_magnet as magnet
 import functions.function_piezo as piezo
 import functions.function_display as display
 import functions.function_UV as uv
 import functions.function_photosensor as sensor
 import functions.function_motor as motor
+
 
 import RPi.GPIO as GPIO
 from gpiozero import LED
@@ -47,6 +48,7 @@ GPIO.setmode(GPIO.BCM)                                                          
 #Initialisation of the hardware components (GPIO pins assignation)
 
 #Motor magnets 
+l_container=input("size of resin container in mm")
 while True:
     response = input("Are magnets well positioned ? (yes/no): ").strip().lower()
     if response == "yes":
@@ -157,17 +159,19 @@ for i in range(len(images_tk)):
     ##  PARTICLES ACTUATION IN THE CONTAINER
     #study state of particles and compare to instructions
     if layers_state_values[layer_index] != Particles_state:
-        motor.move_dist_time_dir_1(50,50/10, 1 )        #Move up to empty the contianer
+        motor.move_dist_time_dir_1(50,50/10, 1 )        #Move table up to empty the contianer
         
         if Particles_state==1:
-            motor.move_dist_time_dir_2(220, 220/10,1)
-            motor.move_dist_time_dir_2(220, 220/10,-1)
+            motor.move_dist_time_dir_2(260/2+l_container/2, (260/2+l_container/2)/10,1)
+            #motor.move_dist_time_dir_2(220, 220/10,-1)
             Particles_state=0
         else:
+            motor.move_dist_time_dir_2(260/2+l_container/2, (260/2+l_container/2)/10,-1)
+            sleep(2)            
             piezo.activate_p(piezos, p_time_on, frequency)
             Particles_state=1
             
-        motor.move_dist_time_dir_1(50,50/10, -1 )       #Move down to initial position
+        motor.move_dist_time_dir_1(50,50/10, -1 )       #Move table down to initial position
         
 
     uv.switch_on(uv_pin)
