@@ -171,6 +171,7 @@ for i in range(len(images_tk)):
             piezo.activate_p(piezos, p_time_on, frequency)
             Particles_state=1
             
+            
         motor.move_dist_time_dir_1(50,50/10, -1 )       #Move table down to initial position
         
 
