@@ -1,8 +1,11 @@
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 from time import sleep
 
-GPIO.setwarnings(False)                     #prevents warnings from showing up when you run the code
-GPIO.setmode(GPIO.BCM)                      #BCM = Broadcom chip-specific pin numbers
+#GPIO.setwarnings(False)                     #prevents warnings from showing up when you run the code
+#GPIO.setmode(GPIO.BCM)                      #BCM = Broadcom chip-specific pin numbers
+
+
+
 
 sensor_pin = 0
 

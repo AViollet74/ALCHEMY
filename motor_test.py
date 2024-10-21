@@ -1,6 +1,6 @@
 # Below imports all neccessary packages to make this Python Script run
 import time
-import board
+# import board
 from adafruit_motor import stepper
 from adafruit_motorkit import MotorKit
 import functions.function_motor as motor
@@ -26,15 +26,15 @@ motor.rotor_no_mvt_1(1, 20, 1)
 print("faster")
 motor.rotor_no_mvt_1(10, 20, -1)
 
-print("moving motor 2 and testing functions")
-motor.move_dist_time_dir_2(20, 10, 1)
-print("back wards")
-motor.move_dist_time_dir_2(200, 10, -1)
+# print("moving motor 2 and testing functions")
+# motor.move_dist_time_dir_2(20, 10, 1)
+# print("back wards")
+# motor.move_dist_time_dir_2(200, 10, -1)
 
-print("rotor function")
-motor.rotor_no_mvt_2(1, 20, 1)
-print("faster")
-motor.rotor_no_mvt_2(10, 20, -1)
+# print("rotor function")
+# motor.rotor_no_mvt_2(1, 20, 1)
+# print("faster")
+# motor.rotor_no_mvt_2(10, 20, -1)
 
 
 

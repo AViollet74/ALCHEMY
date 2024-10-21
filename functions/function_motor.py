@@ -8,6 +8,7 @@ from adafruit_motorkit import MotorKit
 #GPIO settings
 GPIO.setwarnings(False)                     #prevents warnings from showing up when you run the code
 GPIO.setmode(GPIO.BCM)                      #BCM = Broadcom chip-specific pin numbers
+import gpiod
 
 
 kit = MotorKit(i2c=board.I2C())             #initialises the variable kit to be our I2C Connected Adafruit Motor HAT
