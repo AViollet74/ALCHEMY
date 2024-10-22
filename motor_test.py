@@ -1,7 +1,7 @@
 # Below imports all neccessary packages to make this Python Script run
 import time
 # import board
-from adafruit_motor import stepper
+from adafruit_motor import stepper #removed for some reasons
 from adafruit_motorkit import MotorKit
 import functions.function_motor as motor
 
