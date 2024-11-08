@@ -1,13 +1,13 @@
 import board
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
 from time import sleep
 from adafruit_motor import stepper
 from adafruit_motorkit import MotorKit
 
 
 #GPIO settings
-GPIO.setwarnings(False)                     #prevents warnings from showing up when you run the code
-GPIO.setmode(GPIO.BCM)                      #BCM = Broadcom chip-specific pin numbers
+# GPIO.setwarnings(False)                     #prevents warnings from showing up when you run the code
+# GPIO.setmode(GPIO.BCM)                      #BCM = Broadcom chip-specific pin numbers
 import gpiod
 
 
@@ -34,26 +34,26 @@ def move_dist_time_dir_1(distance, temps, sens): #moteur 1 ou 2, distance en mm,
     sleep_time = temps/step_num
     if sens > 0:
         for i in range(step_num):
-            kit.stepper1.onestep(direction=stepper.FORWARD, style=stepper.SIMPLE)
+            kit.stepper1.onestep(direction=stepper.FORWARD, style=stepper.DOUBLE)
             sleep(sleep_time) 
     else :
         for i in range(step_num):
-            kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.SIMPLE)
+            kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
             sleep(sleep_time) 
             
 def rotor_no_mvt_1(vitesse, temps, sens): #vitesse en tours par minute, temps en secondes, sens entier positif
     """Moves the motor at a defined speed to disperse particles
     Args : GPIO pin number of the photosensor."""
     print(f"Stepper motor moves at speed {vitesse}rpm during {temps}s, in direction {sens}")
-    n_steps_tot=vitesse*360/1.8*temps
+    n_steps_tot=round(vitesse*360/1.8*temps)
     sleep_time=temps/n_steps_tot
     if sens > 0:
         for i in range(n_steps_tot):
-            kit.stepper1.onestep(direction=stepper.FORWARD, style=stepper.SIMPLE)
+            kit.stepper1.onestep(direction=stepper.FORWARD, style=stepper.DOUBLE)
             sleep(sleep_time) 
     else :
         for i in range(n_steps_tot):
-            kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.SIMPLE)
+            kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
             sleep(sleep_time) 
 
 
@@ -68,26 +68,26 @@ def move_dist_time_dir_2(distance, temps, sens): #moteur 1 ou 2, distance en mm,
     sleep_time = temps/step_num
     if sens > 0:
         for i in range(step_num):
-            kit.stepper2.onestep(direction=stepper.FORWARD, style=stepper.SIMPLE)
+            kit.stepper2.onestep(direction=stepper.FORWARD, style=stepper.DOUBLE)
             sleep(sleep_time) 
     else :
         for i in range(step_num):
-            kit.stepper2.onestep(direction=stepper.BACKWARD, style=stepper.SIMPLE)
+            kit.stepper2.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
             sleep(sleep_time) 
             
 def rotor_no_mvt_2(vitesse, temps, sens): #vitesse en tours par minute, temps en secondes, sens entier positif
     """Moves the motor at a defined speed to disperse particles
     Args : GPIO pin number of the photosensor."""
     print(f"Stepper motor moves at speed {vitesse}rpm during {temps}s, in direction {sens}")
-    n_steps_tot=vitesse*360/1.8*temps
+    n_steps_tot=round(vitesse*360/1.8*temps)
     sleep_time=temps/n_steps_tot
     if sens > 0:
         for i in range(n_steps_tot):
-            kit.stepper2.onestep(direction=stepper.FORWARD, style=stepper.SIMPLE)
+            kit.stepper2.onestep(direction=stepper.FORWARD, style=stepper.DOUBLE)
             sleep(sleep_time) 
     else :
         for i in range(n_steps_tot):
-            kit.stepper2.onestep(direction=stepper.BACKWARD, style=stepper.SIMPLE)
+            kit.stepper2.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
             sleep(sleep_time) 
     
 ## SET initial position 
@@ -96,11 +96,14 @@ def start_position_1(sensor_pin):
     Args : GPIO pin number of the photosensor."""
     
     print("Stepper motor goes to start position")
-
-    while GPIO.input(sensor_pin) == True:
+    chip=gpiod.Chip("gpiochip0")
+    line=chip.get_line(sensor_pin)
+    line.request(consumer="sensor",type=gpiod.LINE_REQ_DIR_IN)
+    while line.get_value() == 0:
          kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
          sleep(0.01)
-    
+
+  
     kit.stepper1.release()                      #de-energise the Stepper Motor so it can freely move
     print("Start position reached")
 
@@ -116,8 +119,8 @@ def start_position_1(sensor_pin):
 
 for i in range(500):
     
-    print("Forward SINGLE")
-    kit.stepper2.onestep(direction=stepper.FORWARD, style=stepper.SINGLE)
+    print("Forward DOUBLE")
+    kit.stepper2.onestep(direction=stepper.FORWARD, style=stepper.DOUBLE)
     sleep(0.01) 
 
 

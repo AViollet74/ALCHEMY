@@ -1,16 +1,36 @@
+a=1
+b=True
+if a==b: 
+    print("Equal")
+
+
+
 a=input("press enter")
 print(len(a))
 print(f"efef{a}ettete")
+import board
+from adafruit_motor import stepper
+from adafruit_motorkit import MotorKit
+import functions.function_motor as motor
+kit = MotorKit(i2c=board.I2C())
 
-
+import tkinter as tk
+print("success")
+# from PIL import Image, ImageTk
+# import cnv 
+# image=Image.open("/home/alchemy/Pictures/Screenshots/code sensor phot.png")
 # import numpy as np
 # print(np.pi)
 
+# import sys
+# sys.path.append("/home/alchemy/ALCHEMY/alchemy/lib64/python3.12/site-packages")
+# print(sys.path)
 
-import sys
-print(sys.path)
+# w_root = 1920
+# h_root = 1080
 
-import board
-from adafruit_motorkit import MotorKit
+# cnv.create_image((w_root/2), (h_root/2), anchor=tk.CENTER, image=image)
+
+print("start throttle")
 kit = MotorKit(i2c=board.I2C())
 kit.motor1.throttle = 1
