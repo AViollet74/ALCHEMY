@@ -1,6 +1,12 @@
 import tkinter as tk 
 from PIL import Image, ImageTk
-
+from screeninfo import get_monitors
+def name_selection(target_name):
+    monitors =get_monitors()
+    for monitor in monitors:
+        if monitor.name == target_name:
+            return monitor
+    return None
 
 
 def convert_list(folder_path, nb_slice):

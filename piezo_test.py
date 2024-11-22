@@ -1,15 +1,13 @@
+
 import functions.function_piezo as piezo
+from time import sleep
 
-import RPi.GPIO as GPIO
-from gpiozero import LED
-
-
-
-piezos, p_time_on, frequency = piezo.init_piezo()                   
+piezos, p_time_on, frequency = piezo.init_piezo()      
+print(piezos)             
 piezo.setup_piezo(piezos)     
 print("Piezo setup succes") 
-piezo.activate_p(piezos, 10,40000)
 
+piezo.activate_p(piezos, p_time_on,frequency)
 
 
 

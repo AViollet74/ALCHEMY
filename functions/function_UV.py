@@ -1,9 +1,10 @@
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
+import gpiod
+import time
+# GPIO.setwarnings(False)                     #prevents warnings from showing up when you run the code
+# GPIO.setmode(GPIO.BCM)                      #BCM = Broadcom chip-specific pin numbers
 
-GPIO.setwarnings(False)                     #prevents warnings from showing up when you run the code
-GPIO.setmode(GPIO.BCM)                      #BCM = Broadcom chip-specific pin numbers
 
-uv_pin = 0
 
 def init_uv():
     """Initialize the UV ligth with the GPIO pins numbers of the UV ligth (user input).
@@ -16,13 +17,18 @@ def init_uv():
 
 
 
+
+
 def switch_on(pin_nb):
     """Turn on the UV ligth.
     Arg:    pin_nb: int of the GPIO pin number of the UV ligth
     """
-
-    GPIO.setup(pin_nb, GPIO.OUT)            #setup([pin], [GPIO.IN, GPIO.OUT]), configuring GPIO pins in output mode
-    GPIO.output(pin_nb, GPIO.HIGH)          #GPIO.output([pin][GPIO.HIGH]), digital output, set pin p high, GPIO.HIGH will drive it to 3.3V, equivalent GPIO.HIGH = True = 1
+    chip=gpiod.Chip("gpiochip0")
+    line=chip.get_line(pin_nb)
+    line.request(consumer="UV",type=gpiod.LINE_REQ_DIR_OUT)
+    line.set_value(1)
+    # GPIO.setup(pin_nb, GPIO.OUT)            #setup([pin], [GPIO.IN, GPIO.OUT]), configuring GPIO pins in output mode
+    # GPIO.output(pin_nb, GPIO.HIGH)          #GPIO.output([pin][GPIO.HIGH]), digital output, set pin p high, GPIO.HIGH will drive it to 3.3V, equivalent GPIO.HIGH = True = 1
     print("UV light on")
 
 
@@ -31,9 +37,12 @@ def switch_off(pin_nb):
     """Turn off the UV ligth.
     Arg:    pin_nb: int of the GPIO pin number of the UV ligth
     """
-
-    GPIO.setup(pin_nb, GPIO.OUT)            #setup([pin], [GPIO.IN, GPIO.OUT]), configuring GPIO pins in output mode
-    GPIO.output(pin_nb, GPIO.LOW)           #GPIO.output([pin][GPIO.LOW]), digital output, set pin p low, GPIO.LOW will drive it to 0V, equivalent GPIO.LOW = Fase = 0
+    chip=gpiod.Chip("gpiochip0")
+    line=chip.get_line(pin_nb)
+    line.request(consumer="UV",type=gpiod.LINE_REQ_DIR_OUT)
+    line.set_value(0)
+    # GPIO.setup(pin_nb, GPIO.OUT)            #setup([pin], [GPIO.IN, GPIO.OUT]), configuring GPIO pins in output mode
+    # GPIO.output(pin_nb, GPIO.LOW)           #GPIO.output([pin][GPIO.LOW]), digital output, set pin p low, GPIO.LOW will drive it to 0V, equivalent GPIO.LOW = Fase = 0
     print("UV light off")
 
 
