@@ -24,6 +24,8 @@ sequence=[base_path+"cubic_layer_0.png", base_path+"cubic_layer_1.png", base_pat
 nb_layers = len([f for f in os.listdir(base_path) if os.path.isfile(os.path.join(base_path, f))])
 
 
+
+
                     #layers_state_path = "/home/mborot/Print/layers.txt" #to be defined how the layer and presence of particles will be chosen 
                     #layers_state_values=open(layers_state_path, "r")
 layers_state_values = [random.choice([0, 1]) for _ in range(nb_layers)]

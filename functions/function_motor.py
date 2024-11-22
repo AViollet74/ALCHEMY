@@ -106,6 +106,9 @@ def start_position_1(sensor_pin):
 
 
 
+
+
+
 """
 #TEST MOTOR
 #uncomment the code below to test the photosensor
