@@ -10,8 +10,8 @@ from time import sleep
 # Below initialises the variable kit to be our I2C Connected Adafruit Motor HAT
 kit = MotorKit(i2c=board.I2C())
 
-sensor_pin = sensor.init_sensor()
-print(sensor_pin)
+# sensor_pin = sensor.init_sensor()
+# print(sensor_pin)
 
 
 # If you uncomment below it will start by de-energising the Stepper Motor,
@@ -22,31 +22,66 @@ print(sensor_pin)
 
 # The below loop will run 500 times. Each loop it will move one step, clockwise, then pause for 0.01 seconds
 # This will almost look like a smooth rotation.
-kit.stepper1.release()
-print("Forward SINGLE")
-for i in range(200):
-    kit.stepper1.onestep(direction=stepper.FORWARD, style=stepper.DOUBLE)          
-    sleep(0.01) 
 
-print("ending 1")
+# print("Motor 3 running")
+# kit.motor2.throttle=1
+# sleep(5)
+# kit.motor2.throttle=0
 
 
 
-print("moving motor 1 and testing functions2")
-motor.move_dist_time_dir_1(20, 10, 1)
+
+# print("Forward SINGLE")
+# for i in range(500):
+#     kit.stepper2.onestep(direction=stepper.FORWARD, style=stepper.SINGLE)          
+#     sleep(0.01)
+
+# print("ending 1")
+# kit.stepper2.release()
+# Moteur 1 running
+# print("motor 1 running")
+# kit.motor1.throttle=1.0
+# sleep(6)
+# kit.motor1.throttle=0
+
+#  Motor 2 running 
+# print("motor 2 runnning")
+# kit.motor2.throttle=1.0
+# sleep(6)
+# kit.motor2.throttle=0
+
+# Motors running
+# kit.motor1.throttle=1.0
+# kit.motor2.throttle=1.0
+# sleep(6)
+# kit.motor1.throttle=0
+# kit.motor2.throttle=0
+
+##### COMMENTE PARCE QUE PROBLEMES HAT
+print("moving motor 1 and 20mm ")
+# motor.move_dist_time_dir_1(20, 5, 1)
+
+
+
+for i in range(500):
+    kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
+sleep(2)
 print("backwards")
-sleep(3)
-motor.move_dist_time_dir_1(200, 10, -1)
+for j in range(500):
+    kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
+# motor.move_dist_time_dir_1(20, 5, -1)
+# sleep(3)
+# motor.move_dist_time_dir_1(200, 10, -1)
 
-print("rotor function")
-motor.rotor_no_mvt_1(1, 2, 1)
-print("faster backwards")
-motor.rotor_no_mvt_1(10, 2, -1)
-print("stop")
+# print("rotor function")
+# motor.rotor_no_mvt_1(1, 2, 1)
+# print("faster backwards") 
+# motor.rotor_no_mvt_1(10, 2, -1)
+# print("stop")
       
-sleep(3)
+# sleep(3)
 
-motor.start_position_1(sensor_pin)
+# motor.start_position_1(sensor_pin)
 
 
 # print("moving motor 2 and testing functions")
@@ -71,4 +106,4 @@ motor.start_position_1(sensor_pin)
 
 
 # The below line will de-energise the Stepper Motor so it can freely move
-kit.stepper2.release()
+kit.stepper1.release()

@@ -3,16 +3,19 @@ b=True
 if a==b: 
     print("Equal")
 
-
-
-a=input("press enter")
-print(len(a))
-print(f"efef{a}ettete")
-import board
-from adafruit_motor import stepper
-from adafruit_motorkit import MotorKit
-import functions.function_motor as motor
-kit = MotorKit(i2c=board.I2C())
+import os
+path = "/home/alchemy/PRINT"
+liste= os.listdir(path)
+nb_layers = len([f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))])
+print("nombre",nb_layers, liste)
+# a=input("press enter")
+# print(len(a))
+# print(f"efef{a}ettete")
+# import board
+# from adafruit_motor import stepper
+# from adafruit_motorkit import MotorKit
+# import functions.function_motor as motor
+# kit = MotorKit(i2c=board.I2C())
 
 import tkinter as tk
 print("success")

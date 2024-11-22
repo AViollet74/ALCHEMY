@@ -11,22 +11,26 @@ import tkinter as tk
 from screeninfo import get_monitors
 
 monitors = get_monitors()
+print(monitors)
 
-if len(monitors) > 1:   
-    for monitor in monitors:
-        if monitor.is_primary == False:
-            x_shift = monitor.x
-            y_shift = monitor.y
-            w_root = monitor.width
-            h_root = monitor.height
-else:
-    for monitor in monitors:
-        x_shift = monitor.x
-        y_shift = monitor.y
-        w_root = monitor.width
-        h_root = monitor.height
-
-
+# if len(monitors) > 1:   
+#     for monitor in monitors:
+#         if monitor.is_primary == False:
+#             x_shift = monitor.x
+#             y_shift = monitor.y
+#             w_root = monitor.width
+#             h_root = monitor.height
+# else:
+#     for monitor in monitors:
+#         x_shift = monitor.x
+#         y_shift = monitor.y
+#         w_root = monitor.width
+#         h_root = monitor.height
+monitor = display.name_selection('HDMI-1')
+x_shift = monitor.x
+y_shift = monitor.y
+w_root = monitor.width
+h_root = monitor.height
 
 root = tk.Tk()                                                                  #Tinker window creation
 root.attributes('-fullscreen', True)

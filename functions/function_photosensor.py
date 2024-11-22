@@ -8,7 +8,6 @@ from time import sleep
 
 
 sensor_pin = 0
-
 def init_sensor():
     """Initialize the photosensor with the GPIO pins numbers of the photosensor (user input).
     return: sensor_pin: int GPIO pin number(s) of the photosensor
