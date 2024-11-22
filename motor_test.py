@@ -10,8 +10,7 @@ from time import sleep
 # Below initialises the variable kit to be our I2C Connected Adafruit Motor HAT
 kit = MotorKit(i2c=board.I2C())
 
-# sensor_pin = sensor.init_sensor()
-# print(sensor_pin)
+
 
 
 # If you uncomment below it will start by de-energising the Stepper Motor,
@@ -58,17 +57,18 @@ kit = MotorKit(i2c=board.I2C())
 # kit.motor2.throttle=0
 
 ##### COMMENTE PARCE QUE PROBLEMES HAT
+
 print("moving motor 1 and 20mm ")
 # motor.move_dist_time_dir_1(20, 5, 1)
 
 
 
-for i in range(500):
+for i in range(200):
     kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
 sleep(2)
 print("backwards")
-for j in range(500):
-    kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
+# for j in range(500):
+#     kit.stepper1.onestep(direction=stepper.FORWARD, style=stepper.DOUBLE)
 # motor.move_dist_time_dir_1(20, 5, -1)
 # sleep(3)
 # motor.move_dist_time_dir_1(200, 10, -1)
@@ -81,6 +81,10 @@ for j in range(500):
       
 # sleep(3)
 
+
+
+# sensor_pin = sensor.init_sensor()
+# print(sensor_pin)
 # motor.start_position_1(sensor_pin)
 
 
@@ -106,4 +110,5 @@ for j in range(500):
 
 
 # The below line will de-energise the Stepper Motor so it can freely move
+kit.stepper2.release()
 kit.stepper1.release()

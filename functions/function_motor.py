@@ -99,9 +99,8 @@ def start_position_1(sensor_pin):
     chip=gpiod.Chip("gpiochip0")
     line=chip.get_line(sensor_pin)
     line.request(consumer="sensor",type=gpiod.LINE_REQ_DIR_IN)
-    while line.get_value() == 0:
+    while line.get_value() == 1:
          kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
-         sleep(0.01)
 
   
     kit.stepper1.release()                      #de-energise the Stepper Motor so it can freely move
