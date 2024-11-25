@@ -34,6 +34,4 @@ print("success")
 
 # cnv.create_image((w_root/2), (h_root/2), anchor=tk.CENTER, image=image)
 
-print("start throttle")
-kit = MotorKit(i2c=board.I2C())
-kit.motor1.throttle = 1
+
