@@ -25,7 +25,7 @@ def save_layers():
     
     # Save to file
     try:
-        with open(f"C:\\Users\\arnau\\OneDrive\\Desktop\\{file_name}.txt", "w") as f:
+        with open(f"/home/alchemy/LAYERS/{file_name}.txt", "w") as f:
             f.write("\n".join(map(str, layer_states)))
         messagebox.showinfo("Success", f"Layers saved to {file_name}.txt")
     except Exception as e:

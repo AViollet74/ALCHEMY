@@ -59,13 +59,14 @@ kit = MotorKit(i2c=board.I2C())
 ##### COMMENTE PARCE QUE PROBLEMES HAT
 
 print("moving motor 1 and 20mm ")
-# motor.move_dist_time_dir_1(20, 5, 1)
+# motor.move_dist_dir_1(80, 1)
+# motor.move_dist_dir_2(8, -1)
 
 
 
-for i in range(200):
-    kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
-sleep(2)
+# for i in range(200):
+#     kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
+# sleep(2)
 print("backwards")
 # for j in range(500):
 #     kit.stepper1.onestep(direction=stepper.FORWARD, style=stepper.DOUBLE)
@@ -83,10 +84,12 @@ print("backwards")
 
 
 
-# sensor_pin = sensor.init_sensor()
-# print(sensor_pin)
-# motor.start_position_1(sensor_pin)
-
+sensor_pin = sensor.init_sensor()
+print(sensor_pin)
+motor.start_position_1(sensor_pin)
+sleep(2)
+motor.move_dist_dir_1(0.2,1)
+# motor.move_dist_dir_1(24,-1)
 
 # print("moving motor 2 and testing functions")
 # motor.move_dist_time_dir_2(20, 10, 1)

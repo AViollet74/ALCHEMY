@@ -7,6 +7,6 @@ width, height = 3840, 2400
 binary_black_image = Image.new("1", (width, height), 0)  # 0 represents black
 
 # Save the binary image to a file
-binary_black_image.save("black_image.png")
+binary_black_image.save("/home/alchemy/black_image.png")
 print("Binary black image saved as 'black_image.png'")
 

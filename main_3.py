@@ -18,12 +18,15 @@ import random
 ################################################################################################################################
 ### Object properties 
 print("Object properties")
-origin_path = "/home/alchemy/PRINT/" 
+origin_path = "/home/alchemy/PRINT/"
+origin_path_layers="/home/alchemy/LAYERS" 
 file_name=input("Name of the folder containing images (Need to be stored in PRINTS)")
 base_path=origin_path + file_name                                                                       #Folder path   
 black_image_path = "/home/alchemy/black_image.png"                                                      #Black image path
 
-sequence = os.listdir(base_path)                                                                        #List of image paths 
+sequence = sorted(os.listdir(base_path), key=lambda x: int(x.split('.')[0]))
+sequence= [os.path.join(base_path,name) for name in sequence]
+print(sequence)                                                                        #List of image paths 
 nb_layers = len([f for f in os.listdir(base_path) if os.path.isfile(os.path.join(base_path, f))])       
 
 
@@ -42,7 +45,7 @@ if nb_layers!=len(layers_state_values):
     sys.exit("error")
 
 # Layer thickness definition
-layer_thickness=input("layer thickness in mm")
+layer_thickness=float(input("layer thickness in mm"))
 if not layer_thickness:
     layer_thickness=0.2
 layer_index=0                                                                                           #Determines the current layer
@@ -57,7 +60,7 @@ Particles_state=1                                                               
 ### Initialisation of the hardware components (GPIO pins assignation)
 
 #Motor magnets 
-l_container=input("size of resin container in mm (for magnet movement definition)")
+l_container=float(input("size of resin container in mm (for magnet movement definition)"))
 # while True:
 response = input("rotate lead screw to place Magnet and press enter").strip().lower()
     # break
@@ -109,9 +112,13 @@ cnv.pack(fill=tk.BOTH, expand=True)
 
 ################################################################################################################################
 ###Conversion of the images paths to Image Objects
+print("a")
 black_image_tk  = display.convert_full_0(black_image_path, w_root, h_root, monitors)                    #Convert black image path to black image object, with full screen dimensions                                         
+print("b")
 image_paths = display.convert_list(base_path, nb_layers)
-images_tk = display.convert_full_1(sequence, w_root, h_root, monitors)     
+print("c")
+images_tk = display.convert_full_1(sequence, w_root, h_root, monitors)
+print("d")     
 ################################################################################################################################
 
 ################################################################################################################################
@@ -131,10 +138,11 @@ while True:
         break
     else:
        pass
-
+sleep(2)
 ## Start MAIN 
 for i in range(len(images_tk)):
     #move ztable by 1 layer thickness
+    print(f"printing layer {i}")
     motor.move_dist_dir_1(layer_thickness,1) 
     Z_table_pos+=layer_thickness
     layer_index+=1
@@ -149,15 +157,29 @@ for i in range(len(images_tk)):
         motor.move_dist_dir_1(24, 1)                                                                    #Move table up to empty the contianer       
 
         if Particles_state==1:
-            motor.move_dist_dir_2(210/2+l_container/2,1)
+            motor.move_dist_dir_2((210/2+l_container/2)/4,1)
+            sleep(2)
+            motor.move_dist_dir_2((210/2+l_container/2)/4,1)
+            sleep(2)
+            motor.move_dist_dir_2((210/2+l_container/2)/4,1)
+            sleep(2)
+            motor.move_dist_dir_2((210/2+l_container/2)/4,1)
+            sleep(2)
+
             Particles_state=0
         else:
-            motor.move_dist_dir_2(210/2+l_container/2,-1)
-            sleep(2)            
+            motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
+            sleep(2)
+            motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
+            sleep(2)   
+            motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
+            sleep(2)   
+            motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
+            sleep(2)        
             vibration.activate_v(motors, time_on)
             Particles_state=1    
 
-        motor.move_dist_dir_1(50,50/10, -1 )                                                            #Move table down to initial position
+        motor.move_dist_dir_1(50, -1 )                                                            #Move table down to initial position
         
 
     uv.switch_on(uv_pin) #ici c'est paris
