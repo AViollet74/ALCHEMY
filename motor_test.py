@@ -88,7 +88,7 @@ sensor_pin = sensor.init_sensor()
 print(sensor_pin)
 motor.start_position_1(sensor_pin)
 sleep(2)
-motor.move_dist_dir_1(0.2,1)
+motor.move_dist_dir_1(1,1)
 # motor.move_dist_dir_1(24,-1)
 
 # print("moving motor 2 and testing functions")
