@@ -119,26 +119,81 @@ images_tk = display.convert_full_1(sequence, w_root, h_root, monitors)
 ################################################################################################################################
 ### MAIN PRINTING
 ## Initialization and zero position of the printing bed
-while True:
-    response = input("Is 0-position set? (yes/no): ").strip().lower()
-    if response == "yes":
-        motor.start_position_1(sensor_pin)
-        Z_table_pos=0
-        break
-    elif response == "no":
-        print("setting")
-        motor.start_position_1(sensor_pin)                                                               # go down to the screen
-        Z_table_pos=0
-        input("After settting: Press Enter to continue...")
-        break
-    else:
-       pass
+# while True:
+#     response = input("Is 0-position set? (yes/no): ").strip().lower()
+#     if response == "yes":
+#         motor.start_position_1(sensor_pin)
+#         Z_table_pos=0
+#         break
+#     elif response == "no":
+#         print("setting")
+#         motor.start_position_1(sensor_pin)                                                               # go down to the screen
+#         Z_table_pos=0
+#         input("After settting: Press Enter to continue...")
+#         break
+#     else:
+#        pass
 
 ## Start TESTING
- #move ztable by 1 layer thickness
-motor.move_dist_dir_1(layer_thickness,1) 
-Z_table_pos+=layer_thickness
-layer_index+=1
-display.show_image(cnv, w_root, h_root, black_image_tk)
-root.update_idletasks()
-root.update() 
+for i in range(len(images_tk)):
+    #move ztable by 1 layer thickness
+    print(f"printing layer {i}")
+    # motor.move_dist_dir_1(layer_thickness,1) 
+    # Z_table_pos+=layer_thickness
+    # layer_index+=1
+    display.show_image(cnv, w_root, h_root, black_image_tk)
+    root.update_idletasks()
+    root.update()
+
+
+    ##  PARTICLES ACTUATION IN THE CONTAINER
+    #Consider state of particles and compare to instructions
+    
+    # if layers_state_values[layer_index] != Particles_state:
+    #     motor.move_dist_dir_1(24, 1)                                                                    #Move table up to empty the contianer       
+
+    #     if Particles_state==1:
+    #         motor.move_dist_dir_2((210/2+l_container/2)/4,1)
+    #         sleep(2)
+    #         motor.move_dist_dir_2((210/2+l_container/2)/4,1)
+    #         sleep(2)
+    #         motor.move_dist_dir_2((210/2+l_container/2)/4,1)
+    #         sleep(2)
+    #         motor.move_dist_dir_2((210/2+l_container/2)/4,1)
+    #         sleep(2)
+
+    #         Particles_state=0
+    #     else:
+    #         motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
+    #         sleep(2)
+    #         motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
+    #         sleep(2)   
+    #         motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
+    #         sleep(2)   
+    #         motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
+    #         sleep(2)        
+    #         vibration.activate_v(motors, time_on)
+    #         Particles_state=1    
+
+    #     motor.move_dist_dir_1(50, -1 )                                                            #Move table down to initial position
+        
+
+    uv.switch_on(uv_pin) #ici c'est paris
+    display.show_image(cnv, w_root, h_root, images_tk[i])
+    root.update_idletasks()
+    root.update()
+    sleep(4)                                                                                            #Time to polymerize layer tbd by using Jacob's equation
+    uv.switch_off(uv_pin)
+
+
+    if i == len(images_tk)-1:
+        display.show_image(cnv, w_root, h_root, black_image_tk)        
+        root.update_idletasks()
+        root.update()
+        print("End of the printing")
+        root.bind('<Escape>', lambda e: root.quit())   
+    else:
+        pass
+root.mainloop()
+
+
