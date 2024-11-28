@@ -29,7 +29,7 @@ def move_dist_time_dir_1(distance, temps, sens): #moteur 1 ou 2, distance en mm,
     """Move the building platform downward, to the starting position (until the photosensor is not reached) by activating the stepper motor in the backrward direction
     Args : GPIO pin number of the photosensor."""
     
-    print(f"Stepper motor moves by {distance}mm in {temps}s, in direction {sens}")
+    # print(f"Stepper motor moves by {distance}mm in {temps}s, in direction {sens}")
     step_num = round(distance/8*360/1.8)
     sleep_time = temps/step_num
     if sens > 0:
@@ -52,7 +52,7 @@ def rotor_no_mvt_1(vitesse, temps, sens): #vitesse en tours par minute, temps en
     """Moves the motor at a defined speed to disperse particles
     Args : GPIO pin number of the photosensor."""
     
-    print(f"Stepper motor moves at speed {vitesse}rpm during {temps}s, in direction {sens}")
+    # print(f"Stepper motor moves at speed {vitesse}rpm during {temps}s, in direction {sens}")
     n_steps_tot=round(vitesse*360/1.8*temps)
     sleep_time=temps/n_steps_tot
     if sens > 0:
@@ -69,7 +69,7 @@ def move_dist_dir_1(distance, sens): #moteur 1 ou 2, distance en mm, temps en se
     """Move the building platform downward, to the starting position (until the photosensor is not reached) by activating the stepper motor in the backrward direction
     Args : GPIO pin number of the photosensor."""
     
-    print(f"Stepper motor moves by {distance}mm, in direction {sens}")
+    # print(f"Stepper motor moves by {distance}mm, in direction {sens}")
     step_num = round(distance*200/8)
     if sens > 0:
         for i in range(step_num):
@@ -85,7 +85,7 @@ def move_dist_time_dir_2(distance, temps, sens): #moteur 1 ou 2, distance en mm,
     """Move the building platform downward, to the starting position (until the photosensor is not reached) by activating the stepper motor in the backrward direction
     Args : GPIO pin number of the photosensor."""
     
-    print(f"Stepper motor moves by {distance}mm in {temps}s, in direction {sens}")
+    # print(f"Stepper motor moves by {distance}mm in {temps}s, in direction {sens}")
     step_num = round(distance/8*360/1.8)
     sleep_time = temps/step_num
     if sens > 0:
@@ -108,7 +108,8 @@ def move_dist_time_dir_2(distance, temps, sens): #moteur 1 ou 2, distance en mm,
 def rotor_no_mvt_2(vitesse, temps, sens): #vitesse en tours par minute, temps en secondes, sens entier positif
     """Moves the motor at a defined speed to disperse particles
     Args : GPIO pin number of the photosensor."""
-    print(f"Stepper motor moves at speed {vitesse}rpm during {temps}s, in direction {sens}")
+    
+    # print(f"Stepper motor moves at speed {vitesse}rpm during {temps}s, in direction {sens}")
     n_steps_tot=round(vitesse*360/1.8*temps)
     sleep_time=temps/n_steps_tot
     if sens > 0:
@@ -128,7 +129,7 @@ def move_dist_dir_2(distance, sens): #moteur 1 ou 2, distance en mm, temps en se
     """Move the building platform downward, to the starting position (until the photosensor is not reached) by activating the stepper motor in the backrward direction
     Args : GPIO pin number of the photosensor."""
     
-    print(f"Stepper motor moves by {distance}mm, in direction {sens}")
+    # print(f"Stepper motor moves by {distance}mm, in direction {sens}")
     step_num = round(distance*200/8)
     if sens > 0:
         for i in range(step_num):

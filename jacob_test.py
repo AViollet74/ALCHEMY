@@ -178,7 +178,7 @@ for i in range(len(images_tk)):
     #     motor.move_dist_dir_1(50, -1 )                                                            #Move table down to initial position
         
 
-    uv.switch_on(uv_pin) #ici c'est paris
+    uv.switch_on(uv_pin) 
     display.show_image(cnv, w_root, h_root, images_tk[i])
     root.update_idletasks()
     root.update()
