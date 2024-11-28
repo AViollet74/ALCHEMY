@@ -35,11 +35,31 @@ class PrinterApp:
         self.black_image_tk = None
         self.layers_state_values = []
 
-        # Create GUI elements first
+        # Create GUI elements
         self.create_widgets()
 
-        # Initialize hardware
+        # Initialize hardware components
         self.init_hardware()
+
+    def create_widgets(self):
+        """Create the graphical user interface."""
+        self.canvas = tk.Canvas(self.root, bg="black", highlightthickness=0)
+        self.canvas.pack(fill=tk.BOTH, expand=True)
+
+        # Stop button
+        self.stop_button = tk.Button(self.root, text="Stop", bg="red", fg="white",
+                                     font=("Arial", 20), command=self.stop_process)
+        self.stop_button.place(relx=0.9, rely=0.9, anchor=tk.CENTER)
+
+        # Status label
+        self.status_label = tk.Label(self.root, text="Status: Ready", bg="black", fg="white",
+                                     font=("Arial", 18))
+        self.status_label.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
+
+        # Z-table position label
+        self.z_table_label = tk.Label(self.root, text="Z-table Position: 0.00 mm", bg="black",
+                                      fg="white", font=("Arial", 18))
+        self.z_table_label.place(relx=0.5, rely=0.9, anchor=tk.CENTER)
 
     def init_hardware(self):
         """Initialize all hardware components."""
@@ -58,26 +78,6 @@ class PrinterApp:
             self.update_status("Hardware initialized.")
         except Exception as e:
             self.update_status(f"Hardware initialization failed: {e}")
-
-    def create_widgets(self):
-        """Create the graphical user interface."""
-        self.canvas = tk.Canvas(self.root, bg="black", highlightthickness=0)
-        self.canvas.pack(fill=tk.BOTH, expand=True)
-
-        # Stop button
-        self.stop_button = tk.Button(self.root, text="Stop", bg="red", fg="white",
-                                     font=("Arial", 20), command=self.stop_process)
-        self.stop_button.place(relx=0.9, rely=0.9, anchor=tk.CENTER)
-
-        # Status area
-        self.status_label = tk.Label(self.root, text="Status: Ready", bg="black", fg="white",
-                                     font=("Arial", 18))
-        self.status_label.place(relx=0.5, rely=0.95, anchor=tk.CENTER)
-
-        # Z-table position display
-        self.z_table_label = tk.Label(self.root, text="Z-table Position: 0.00 mm", bg="black",
-                                      fg="white", font=("Arial", 18))
-        self.z_table_label.place(relx=0.5, rely=0.9, anchor=tk.CENTER)
 
     def update_status(self, status_text):
         """Update the status label."""
