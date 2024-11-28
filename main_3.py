@@ -179,7 +179,7 @@ for i in range(len(images_tk)):
             vibration.activate_v(motors, time_on)
             Particles_state=1    
 
-        motor.move_dist_dir_1(50, -1 )                                                            #Move table down to initial position
+        motor.move_dist_dir_1(24, -1 )                                                            #Move table down to initial position
         
 
     uv.switch_on(uv_pin) #ici c'est paris
