@@ -18,13 +18,7 @@ class PrinterApp:
         self.root.attributes('-fullscreen', True)
         self.root.configure(bg="black")
 
-        # Initialize hardware
-        self.init_hardware()
-
-        # Create GUI elements
-        self.create_widgets()
-
-        # State variables
+        # Initialize state variables
         self.Z_table_pos = 0
         self.Particles_state = 1  # 1 = dispersed, 0 = not dispersed
         self.layer_index = 0
@@ -41,18 +35,29 @@ class PrinterApp:
         self.black_image_tk = None
         self.layers_state_values = []
 
+        # Create GUI elements first
+        self.create_widgets()
+
+        # Initialize hardware
+        self.init_hardware()
+
     def init_hardware(self):
         """Initialize all hardware components."""
         self.update_status("Initializing hardware...")
-        # UV light
-        self.uv_pin = uv.init_uv()
+        try:
+            # UV light
+            self.uv_pin = uv.init_uv()
 
-        # Photoelectric sensor
-        self.sensor_pin = sensor.init_sensor()
+            # Photoelectric sensor
+            self.sensor_pin = sensor.init_sensor()
 
-        # Vibration motors
-        self.motors, self.time_on = vibration.init_vibration()
-        vibration.setup_vibration(self.motors)
+            # Vibration motors
+            self.motors, self.time_on = vibration.init_vibration()
+            vibration.setup_vibration(self.motors)
+
+            self.update_status("Hardware initialized.")
+        except Exception as e:
+            self.update_status(f"Hardware initialization failed: {e}")
 
     def create_widgets(self):
         """Create the graphical user interface."""
@@ -137,40 +142,19 @@ class PrinterApp:
                 self.update_z_table_position()
 
                 # Show black image (optional step for clearing)
-                display.show_image(self.canvas, monitors[0].width, monitors[0].height, self.black_image_tk)
+                display.show_image(self.canvas, get_monitors()[0].width, get_monitors()[0].height, self.black_image_tk)
                 self.root.update_idletasks()
-
-                # Adjust particle state if needed
-                if self.layers_state_values[i] != self.Particles_state:
-                    self.update_status("Adjusting particle dispersion...")
-                    motor.move_dist_dir_1(24, 1)  # Empty container
-
-                    # Clear or disperse particles
-                    if self.Particles_state == 1:
-                        for _ in range(4):
-                            motor.move_dist_dir_2(50, 1)
-                            sleep(2)
-                        self.Particles_state = 0
-                    else:
-                        for _ in range(4):
-                            motor.move_dist_dir_2(50, -1)
-                            sleep(2)
-                        vibration.activate_v(self.motors, self.time_on)
-                        self.Particles_state = 1
-
-                    # Return to initial position
-                    motor.move_dist_dir_1(50, -1)
 
                 # UV light exposure
                 uv.switch_on(self.uv_pin)
-                display.show_image(self.canvas, monitors[0].width, monitors[0].height, image_tk)
+                display.show_image(self.canvas, get_monitors()[0].width, get_monitors()[0].height, image_tk)
                 self.root.update_idletasks()
                 sleep(4)  # Adjust polymerization time
                 uv.switch_off(self.uv_pin)
 
             # Printing completed
             self.update_status("Printing completed.")
-            display.show_image(self.canvas, monitors[0].width, monitors[0].height, self.black_image_tk)
+            display.show_image(self.canvas, get_monitors()[0].width, get_monitors()[0].height, self.black_image_tk)
             self.root.update_idletasks()
             messagebox.showinfo("Process Completed", "Printing process finished successfully.")
         except Exception as e:
