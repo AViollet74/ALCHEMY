@@ -24,7 +24,9 @@ file_name=input("Name of the folder containing images (Need to be stored in PRIN
 base_path=origin_path + file_name                                                                       #Folder path   
 black_image_path = "/home/alchemy/black_image.png"                                                      #Black image path
 
-sequence = os.listdir(base_path)                                                                        #List of image paths 
+sequence = sorted(os.listdir(base_path), key=lambda x: int(x.split('.')[0]))
+sequence= [os.path.join(base_path,name) for name in sequence]
+print(sequence)                                                                       #List of image paths 
 nb_layers = len([f for f in os.listdir(base_path) if os.path.isfile(os.path.join(base_path, f))])       
 
 
@@ -48,7 +50,7 @@ if not layer_thickness:
     layer_thickness=0.2
 layer_index=0                                                                                           #Determines the current layer
 Particles_state=1                                                                                       #Determines if the particles are dispersed or not 
-cure_time=input("exposition time in s")
+cure_time=int(input("exposition time in s"))
 ################################################################################################################################
 
 
@@ -134,8 +136,8 @@ while True:
     else:
        pass
 
-thickness_test=input("Thickness for the test in mm,1")
-motor.move_dist_dir_1(thickness_test)
+thickness_test=float(input("Thickness for the test in mm,1"))
+motor.move_dist_dir_1(thickness_test,1)
 
 ## Start TESTING
 for i in range(len(images_tk)):
@@ -167,3 +169,4 @@ for i in range(len(images_tk)):
 root.mainloop()
 
 
+motor.move_dist_dir_1(64,1)

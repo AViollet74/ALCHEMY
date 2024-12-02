@@ -146,7 +146,12 @@ sleep(2)
 for i in range(len(images_tk)):
     #move ztable by 1 layer thickness
     print(f"printing layer {i}")
-    motor.move_dist_dir_1(layer_thickness,1) 
+    motor.move_dist_dir_1(2,1)
+    sleep(1)
+    motor.move_dist_dir_1(2,-1)
+    sleep(1)
+    motor.move_dist_dir_1(layer_thickness,1)
+
     Z_table_pos+=layer_thickness
     layer_index+=1
     display.show_image(cnv, w_root, h_root, black_image_tk)
