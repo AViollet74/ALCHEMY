@@ -197,6 +197,7 @@ for i in range(len(images_tk)):
     sleep(1)
 
 
+
     if i == len(images_tk)-1:
         display.show_image(cnv, w_root, h_root, black_image_tk)        
         root.update_idletasks()
