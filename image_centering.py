@@ -55,7 +55,7 @@ def main():
         shifted_image = shift_image(image, x_shift, y_shift)
 
         # Save the shifted image
-        output_path = os.path.join(folder, f"shifted_{img_name}")
+        output_path = os.path.join(folder, f"{img_name[:-4]}_s.png")
         shifted_image.save(output_path)
         print(f"Shifted image saved as {output_path}")
 
