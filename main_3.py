@@ -5,6 +5,9 @@ import functions.function_motor as motor
 import functions.function_vibration as vibration
 
 
+
+
+
 # import RPi.GPIO as GPIO
 from gpiozero import LED
 from time import sleep
