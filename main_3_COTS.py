@@ -191,7 +191,7 @@ for i in range(len(images_tk)):
     if layer_index<=4:
         cure_time =80
     else:
-        cure_time=5
+        cure_time=2.5
 
     uv.switch_on(uv_pin) #ici c'est paris
     display.show_image(cnv, w_root, h_root, images_tk[i])
