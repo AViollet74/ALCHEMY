@@ -1,5 +1,3 @@
-
-
 import functions.function_display as display
 import functions.function_UV as uv
 import functions.function_photosensor as sensor
@@ -160,36 +158,8 @@ for i in range(len(images_tk)):
 
 
     ##  PARTICLES ACTUATION IN THE CONTAINER
-    #Consider state of particles and compare to instructions
-    # if layers_state_values[layer_index] != Particles_state:
-    #     motor.move_dist_dir_1(24, 1)                                                                    #Move table up to empty the contianer       
-
-    #     if Particles_state==1:
-    #         motor.move_dist_dir_2((210/2+l_container/2)/4,1)
-    #         sleep(2)
-    #         motor.move_dist_dir_2((210/2+l_container/2)/4,1)
-    #         sleep(2)
-    #         motor.move_dist_dir_2((210/2+l_container/2)/4,1)
-    #         sleep(2)
-    #         motor.move_dist_dir_2((210/2+l_container/2)/4,1)
-    #         sleep(2)
-
-    #         Particles_state=0
-    #     else:
-    #         motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
-    #         sleep(2)
-    #         motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
-    #         sleep(2)   
-    #         motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
-    #         sleep(2)   
-    #         motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
-    #         sleep(2)        
-    #         vibration.activate_v(motors, time_on)
-    #         Particles_state=1    
-
-    #     motor.move_dist_dir_1(24, -1 )                                                            #Move table down to initial position
-    if layer_index<=4:
-        cure_time =80
+    if layer_index<=3:
+        cure_time =25
     else:
         cure_time=2.5
 
