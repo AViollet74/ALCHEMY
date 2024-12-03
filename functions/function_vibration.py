@@ -29,15 +29,15 @@ def init_vibration():
 
 def setup_vibration(motors):
     """Set the pins present in the pins list as outputs"""
-
-    # for p in piezos:
-    chip=gpiod.Chip("gpiochip0")
-    line=chip.get_lines(motors)
-    line.request(consumer="piezo",type=gpiod.LINE_REQ_DIR_OUT)
-    # line.set_values([1 for _ in range(len(piezos))])                                #line.set_value([value]), set the line to the given value, 0 for low, 1 for high
-    
-        # GPIO.setup(p, GPIO.OUT)                         #setup([pin], [GPIO.IN, GPIO.OUT]), configuring GPIO pins in output mode
-    return()
+    if motors==[]:
+        return()
+    else:
+        # for p in piezos:
+        chip=gpiod.Chip("gpiochip0")
+        line=chip.get_lines(motors)
+        line.request(consumer="piezo",type=gpiod.LINE_REQ_DIR_OUT)
+        # line.set_values([1 for _ in range(len(piezos))])                                #line.set_value([value]), set the line to the given value, 0 for low, 1 for high
+        return()
 
 
 def activate_v(motors, time_on):

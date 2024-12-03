@@ -81,11 +81,13 @@ print("Vibration motors setup success")
 
 
 #UV ligth
-uv_pin = uv.init_uv()
+# uv_pin = uv.init_uv()
+uv_pin=27
 print("UV light setup success")
 
 #Photoelctric sensor
-sensor_pin = sensor.init_sensor()                                                                       #le setup GPIO qui va faire fonctionner le sensor est présente dans la fontion start_position_1(sensor_pin)
+# sensor_pin = sensor.init_sensor() 
+sensor_pin=4                                                                                                                                                                                                                  #le setup GPIO qui va faire fonctionner le sensor est présente dans la fontion start_position_1(sensor_pin)
 print("photo sensor setup success")
 
 #GUI creation with TkInter 
@@ -142,6 +144,12 @@ sleep(2)
 ## Start MAIN 
 
 for i in range(len(images_tk)):
+    if (i%20)==0 and i>1:
+        print("pause")
+        sleep(20)
+    else:
+        pass
+
     #move ztable by 1 layer thickness
     print(f"printing layer {i}")
     motor.move_dist_dir_1(2,1)
@@ -159,9 +167,9 @@ for i in range(len(images_tk)):
 
     ##  PARTICLES ACTUATION IN THE CONTAINER
     if layer_index<=3:
-        cure_time =25
+        cure_time =10
     else:
-        cure_time=2.5
+        cure_time=2
 
     uv.switch_on(uv_pin) #ici c'est paris
     display.show_image(cnv, w_root, h_root, images_tk[i])
@@ -181,6 +189,8 @@ for i in range(len(images_tk)):
         root.bind('<Escape>', lambda e: root.quit())   
     else:
         pass
+
+
     if layer_index==5:
         motor.move_dist_dir_1(32,1)
         Z_table_pos-=layer_thickness
