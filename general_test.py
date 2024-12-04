@@ -34,10 +34,10 @@
 
 # cnv.create_image((w_root/2), (h_root/2), anchor=tk.CENTER, image=image)
 
-from time import sleep
-filename=input("valeu")
-from tkinter import messagebox
-a=[1,2,3,4,5]
+# from time import sleep
+# filename=input("valeu")
+# from tkinter import messagebox
+# a=[1,2,3,4,5]
 # try:
 #     with open(f"C:\\Users\\arnau\\OneDrive\\Desktop\\{filename}.txt", "w") as f:
 #             f.write("\n".join(map(str, a)))
@@ -45,18 +45,28 @@ a=[1,2,3,4,5]
 # except Exception as e:
 #     messagebox.showerror("Error", "An error occurred while saving: {e}")
 
-file_path = f"C:\\Users\\arnau\\OneDrive\\Desktop\\{filename}.txt"  # Use the correct path here
+# file_path = f"C:\\Users\\arnau\\OneDrive\\Desktop\\{filename}.txt"  # Use the correct path here
 
 
-try:
-    with open(file_path, "r") as f:
-        # Read all lines from the file and strip any extra whitespace or newlines
-        layer_states = [int(line.strip()) for line in f.readlines()]
-except Exception as e:
-    print(f"An error occurred while reading the file: {e}")
+# try:
+#     with open(file_path, "r") as f:
+#         # Read all lines from the file and strip any extra whitespace or newlines
+#         layer_states = [int(line.strip()) for line in f.readlines()]
+# except Exception as e:
+#     print(f"An error occurred while reading the file: {e}")
 
 
-# Example usage:
+# # Example usage:
 
 
-print(layer_states)
+# print(layer_states)
+import numpy as np
+
+
+a=np.zeros(10)
+val=2
+for i in range(0,len(a), val):
+    for j in range(val):
+        print(i+j)
+    
+

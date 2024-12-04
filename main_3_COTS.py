@@ -21,14 +21,14 @@ print("Object properties")
 origin_path = "/home/alchemy/PRINT/"
 origin_path_layers="/home/alchemy/LAYERS" 
 file_name=input("Name of the folder containing images (Need to be stored in PRINTS)")
+continue_condition=input("did the print already start (press ENTER for NO)?")
 base_path=origin_path + file_name                                                                       #Folder path   
 black_image_path = "/home/alchemy/black_image.png"                                                      #Black image path
 
 sequence = sorted(os.listdir(base_path), key=lambda x: int(x.split('.')[0]))
 sequence= [os.path.join(base_path,name) for name in sequence]
-print(sequence)                                                                        #List of image paths 
+# print(sequence)                                                                        #List of image paths 
 nb_layers = len([f for f in os.listdir(base_path) if os.path.isfile(os.path.join(base_path, f))])       
-
 
 layers_state_path = f"/home/alchemy/LAYERS/{file_name}.txt"                                             #file containing the layer's state of the print
 try:
@@ -114,13 +114,14 @@ cnv.pack(fill=tk.BOTH, expand=True)
 
 ################################################################################################################################
 ###Conversion of the images paths to Image Objects
-print("a")
+# print("a")
 black_image_tk  = display.convert_full_0(black_image_path, w_root, h_root, monitors)                    #Convert black image path to black image object, with full screen dimensions                                         
-print("b")
+# print("b")
 image_paths = display.convert_list(base_path, nb_layers)
-print("c")
-images_tk = display.convert_full_1(sequence, w_root, h_root, monitors)
-print("d")     
+# print("c")
+# images_tk = display.convert_full_1(sequence, w_root, h_root, monitors)
+subset_imagetk=40
+# print("d")     
 ################################################################################################################################
 
 ################################################################################################################################
@@ -138,61 +139,65 @@ while True:
         Z_table_pos=0
         input("After settting: Press Enter to continue...")
         break
+    elif continue_condition!=[]:
+        Z_table_pos=0
+        break
     else:
        pass
 sleep(2)
 ## Start MAIN 
+for j in range(0,nb_layers, subset_imagetk):
+    images_tk=display.convert_full_1(sequence[j:j+39], w_root, h_root, monitors)
+    for i in range(len(images_tk)):
 
-for i in range(len(images_tk)):
+        #move ztable by 1 layer thickness
+        print(f"printing layer {i+j}")
+        motor.move_dist_dir_1(2,1)
+        sleep(1)
+        motor.move_dist_dir_1(2,-1)
+        sleep(1)
+        motor.move_dist_dir_1(layer_thickness,1)
 
-    #move ztable by 1 layer thickness
-    print(f"printing layer {i}")
-    motor.move_dist_dir_1(2,1)
-    sleep(1)
-    motor.move_dist_dir_1(2,-1)
-    sleep(1)
-    motor.move_dist_dir_1(layer_thickness,1)
-
-    Z_table_pos+=layer_thickness
-    layer_index+=1
-    display.show_image(cnv, w_root, h_root, black_image_tk)
-    root.update_idletasks()
-    root.update()
-
-
-    ##  PARTICLES ACTUATION IN THE CONTAINER
-    if layer_index<=3:
-        cure_time =12
-    else:
-        cure_time=2
-
-    uv.switch_on(uv_pin)
-    display.show_image(cnv, w_root, h_root, images_tk[i])
-    root.update_idletasks()
-    root.update()
-    sleep(cure_time)                                                                      #Time to polymerize layer tbd by using Jacob's equation
-    uv.switch_off(uv_pin)
-    sleep(1)
-
-
-
-    if i == len(images_tk)-1:
-        display.show_image(cnv, w_root, h_root, black_image_tk)        
+        Z_table_pos+=layer_thickness
+        layer_index+=1
+        display.show_image(cnv, w_root, h_root, black_image_tk)
         root.update_idletasks()
         root.update()
-        print("End of the printing")
-        root.bind('<Escape>', lambda e: root.quit())   
-    else:
-        pass
 
 
-    # if layer_index==5:
-    #     motor.move_dist_dir_1(32,1)
-    #     Z_table_pos-=layer_thickness
-    #     sleep(5)
-    #     motor.move_dist_dir_1(32,-1)
-    # else:
-    #     pass
+        ##  PARTICLES ACTUATION IN THE CONTAINER
+        if layer_index<=3:
+            cure_time =12
+        else:
+            cure_time=2
+
+        uv.switch_on(uv_pin)
+        display.show_image(cnv, w_root, h_root, images_tk[i])
+        root.update_idletasks()
+        root.update()
+        sleep(cure_time)                                                                      #Time to polymerize layer tbd by using Jacob's equation
+        uv.switch_off(uv_pin)
+        sleep(1)
+
+
+
+        if i == len(images_tk)-1:
+            display.show_image(cnv, w_root, h_root, black_image_tk)        
+            root.update_idletasks()
+            root.update()
+            print("End of the printing")
+            root.bind('<Escape>', lambda e: root.quit())   
+        else:
+            pass
+
+
+        # if layer_index==5:
+        #     motor.move_dist_dir_1(32,1)
+        #     Z_table_pos-=layer_thickness
+        #     sleep(5)
+        #     motor.move_dist_dir_1(32,-1)
+        # else:
+        #     pass
 
 
 root.mainloop()
