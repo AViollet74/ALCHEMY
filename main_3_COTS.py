@@ -144,11 +144,6 @@ sleep(2)
 ## Start MAIN 
 
 for i in range(len(images_tk)):
-    if (i%20)==0 and i>1:
-        print("pause")
-        sleep(20)
-    else:
-        pass
 
     #move ztable by 1 layer thickness
     print(f"printing layer {i}")
@@ -167,15 +162,15 @@ for i in range(len(images_tk)):
 
     ##  PARTICLES ACTUATION IN THE CONTAINER
     if layer_index<=3:
-        cure_time =10
+        cure_time =12
     else:
         cure_time=2
 
-    uv.switch_on(uv_pin) #ici c'est paris
+    uv.switch_on(uv_pin)
     display.show_image(cnv, w_root, h_root, images_tk[i])
     root.update_idletasks()
     root.update()
-    sleep(cure_time)                                                                                            #Time to polymerize layer tbd by using Jacob's equation
+    sleep(cure_time)                                                                      #Time to polymerize layer tbd by using Jacob's equation
     uv.switch_off(uv_pin)
     sleep(1)
 
@@ -191,13 +186,13 @@ for i in range(len(images_tk)):
         pass
 
 
-    if layer_index==5:
-        motor.move_dist_dir_1(32,1)
-        Z_table_pos-=layer_thickness
-        sleep(5)
-        motor.move_dist_dir_1(32,-1)
-    else:
-        pass
+    # if layer_index==5:
+    #     motor.move_dist_dir_1(32,1)
+    #     Z_table_pos-=layer_thickness
+    #     sleep(5)
+    #     motor.move_dist_dir_1(32,-1)
+    # else:
+    #     pass
 
 
 root.mainloop()
