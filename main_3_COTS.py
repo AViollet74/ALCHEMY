@@ -47,7 +47,7 @@ if nb_layers!=len(layers_state_values):
 # Layer thickness definition
 layer_thickness=float(input("layer thickness in mm"))
 if not layer_thickness:
-    layer_thickness=0.2
+    layer_thickness=0.08
 layer_index=0                                                                                           #Determines the current layer
 Particles_state=1                                                                                       #Determines if the particles are dispersed or not 
 
@@ -120,7 +120,7 @@ black_image_tk  = display.convert_full_0(black_image_path, w_root, h_root, monit
 image_paths = display.convert_list(base_path, nb_layers)
 # print("c")
 # images_tk = display.convert_full_1(sequence, w_root, h_root, monitors)
-subset_imagetk=40
+subset_imagetk=1
 # print("d")     
 ################################################################################################################################
 
@@ -147,14 +147,14 @@ while True:
 sleep(2)
 ## Start MAIN 
 for j in range(0,nb_layers, subset_imagetk):
-    images_tk=display.convert_full_1(sequence[j:j+39], w_root, h_root, monitors)
+    images_tk=display.convert_full_1(sequence[j:j+subset_imagetk], w_root, h_root, monitors)
     for i in range(len(images_tk)):
 
         #move ztable by 1 layer thickness
         print(f"printing layer {i+j}")
-        motor.move_dist_dir_1(2,1)
+        motor.move_dist_dir_1(1,1)
         sleep(1)
-        motor.move_dist_dir_1(2,-1)
+        motor.move_dist_dir_1(1,-1)
         sleep(1)
         motor.move_dist_dir_1(layer_thickness,1)
 
@@ -169,7 +169,9 @@ for j in range(0,nb_layers, subset_imagetk):
         if layer_index<=3:
             cure_time =12
         else:
-            cure_time=2
+            cure_time=7
+
+        
 
         uv.switch_on(uv_pin)
         display.show_image(cnv, w_root, h_root, images_tk[i])

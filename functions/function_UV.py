@@ -29,7 +29,7 @@ def switch_on(pin_nb):
     line.set_value(1)
     # GPIO.setup(pin_nb, GPIO.OUT)            #setup([pin], [GPIO.IN, GPIO.OUT]), configuring GPIO pins in output mode
     # GPIO.output(pin_nb, GPIO.HIGH)          #GPIO.output([pin][GPIO.HIGH]), digital output, set pin p high, GPIO.HIGH will drive it to 3.3V, equivalent GPIO.HIGH = True = 1
-    print("UV light on")
+    # print("UV light on")
 
 
 
@@ -43,7 +43,7 @@ def switch_off(pin_nb):
     line.set_value(0)
     # GPIO.setup(pin_nb, GPIO.OUT)            #setup([pin], [GPIO.IN, GPIO.OUT]), configuring GPIO pins in output mode
     # GPIO.output(pin_nb, GPIO.LOW)           #GPIO.output([pin][GPIO.LOW]), digital output, set pin p low, GPIO.LOW will drive it to 0V, equivalent GPIO.LOW = Fase = 0
-    print("UV light off")
+    # print("UV light off")
 
 
 

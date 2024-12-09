@@ -74,6 +74,7 @@ def move_dist_dir_1(distance, sens): #moteur 1 ou 2, distance en mm, temps en se
     if sens > 0:
         for i in range(step_num):
             kit.stepper1.onestep(direction=stepper.FORWARD, style=stepper.DOUBLE)
+            # sleep(0.001)
     else :
         for i in range(step_num):
             kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)

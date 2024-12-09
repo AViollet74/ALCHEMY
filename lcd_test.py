@@ -39,15 +39,16 @@ root.geometry(f"{w_root}x{h_root}+{x_shift}+{y_shift}")                         
 cnv = tk.Canvas(root, bg="black", highlightthickness=0)
 cnv.pack(fill=tk.BOTH, expand=True)
 
+black_image_tk  = display.convert_full_0("/home/alchemy/white_image.png", w_root, h_root, monitors)
 
 
-black_image_tk  = display.convert_full_0("/home/alchemy/PRINT/sample cube/1.png", w_root, h_root, monitors)
+# black_image_tk  = display.convert_full_0("/home/alchemy/PRINT/sample cube/1.png", w_root, h_root, monitors)
 image_other=display.convert_full_0("/home/alchemy/PRINT/sample cube/30.png", w_root, h_root, monitors)
 for i in range(2):
     display.show_image(cnv, w_root, h_root, black_image_tk)
     root.update_idletasks()
     root.update()
-    sleep(6)
+    sleep(100)
     display.show_image(cnv, w_root, h_root, image_other)
     root.update_idletasks()
     root.update()
