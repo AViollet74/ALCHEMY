@@ -160,25 +160,27 @@ for i in range(len(images_tk)):
         motor.move_dist_dir_1(24, 1)                                                                    #Move table up to empty the contianer       
 
         if Particles_state==1:
-            motor.move_dist_dir_2((210/2+l_container/2)/4,1)
+            # motor.move_dist_dir_2((210/2+l_container/2)/4,1)
+            motor.move_dist_time_dir_released_2((210/2+l_container/2),30,1)
             sleep(2)
-            motor.move_dist_dir_2((210/2+l_container/2)/4,1)
-            sleep(2)
-            motor.move_dist_dir_2((210/2+l_container/2)/4,1)
-            sleep(2)
-            motor.move_dist_dir_2((210/2+l_container/2)/4,1)
-            sleep(2)
+            # motor.move_dist_dir_2((210/2+l_container/2)/4,1)
+            # sleep(2)
+            # motor.move_dist_dir_2((210/2+l_container/2)/4,1)
+            # sleep(2)
+            # motor.move_dist_dir_2((210/2+l_container/2)/4,1)
+            # sleep(2)
 
             Particles_state=0
         else:
-            motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
+            # motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
+            motor.move_dist_time_dir_released_2((210/2+l_container/2),30,-1)
             sleep(2)
-            motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
-            sleep(2)   
-            motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
-            sleep(2)   
-            motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
-            sleep(2)        
+            # motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
+            # sleep(2)   
+            # motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
+            # sleep(2)   
+            # motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
+            # sleep(2)        
             vibration.activate_v(motors, time_on)
             Particles_state=1    
 
