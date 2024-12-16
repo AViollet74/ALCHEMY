@@ -191,25 +191,81 @@ def move_dist_time_dir_released_2(distance, temps, sens): #moteur 1 ou 2, distan
     Args : GPIO pin number of the photosensor."""
     
     # print(f"Stepper motor moves by {distance}mm in {temps}s, in direction {sens}")
+    motor_stepsize = 200  #in mm/step (8 steps per revolution)
     step_num = round(distance/8*360/1.8)
-    sleep_time = temps/step_num
+    sleep_time = temps/step_num * motor_stepsize
+    id_step=0
     if sens > 0:
         start_time = monotonic()
-        for i in range(step_num):
-            kit.stepper2.onestep(direction=stepper.FORWARD, style=stepper.DOUBLE)
-            kit.stepper2.release()
-            while monotonic() - start_time < sleep_time:
+        for i in range(0,step_num,motor_stepsize):
+            for j in range(motor_stepsize):
+                id_step+=1
+                kit.stepper2.onestep(direction=stepper.FORWARD, style=stepper.DOUBLE)
+                # kit.stepper2.release()
+                # while monotonic() - start_time < sleep_time:
+                #     pass
+                # start_time=monotonic()
+                if id_step==step_num:
+                    break
+                else:
+                    pass   
+            if id_step==step_num:
+                break
+            else:
                 pass
-            start_time=monotonic()
+            kit.stepper2.release()
+            sleep(sleep_time)
+            
     else :
         start_time = monotonic()
+        for i in range(0,step_num, motor_stepsize):
+            for j in range(motor_stepsize):
+                id_step+=1
+                kit.stepper2.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
+                kit.stepper2.release()
+                while monotonic() - start_time < sleep_time:
+                    pass
+                start_time=monotonic()
+                if id_step==step_num:
+                    break
+                else:
+                    pass   
+            if id_step==step_num:
+                break
+            else:
+                pass
+            kit.stepper2.release()
+            sleep(sleep_time)
+    kit.stepper2.release()
+
+
+
+
+
+def move_dist_dir_pause_2(distance, sens, pause_time=5, step_condition=100): #moteur 1 ou 2, distance en mm, temps en secondes, sens en entier positif ou negatif
+    """Move the building platform downward, to the starting position (until the photosensor is not reached) by activating the stepper motor in the backrward direction
+    Args : GPIO pin number of the photosensor."""
+    
+    # print(f"Stepper motor moves by {distance}mm, in direction {sens}")
+    step_num = round(distance*200/8)
+    # step_condition=100
+    if sens > 0:
+        for i in range(step_num):
+            kit.stepper2.onestep(direction=stepper.FORWARD, style=stepper.DOUBLE)
+            if i%step_condition==0:
+                sleep(pause_time)
+            else:
+                pass
+    else :
         for i in range(step_num):
             kit.stepper2.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
-            kit.stepper2.release()
-            while monotonic() - start_time < sleep_time:
+            if i%step_condition==0:
+                sleep(pause_time)
+            else:
                 pass
-            start_time=monotonic()
     kit.stepper2.release()
+    
+
 
 
 
