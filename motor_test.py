@@ -27,25 +27,24 @@ kit = MotorKit(i2c=board.I2C())
 # sleep(5)
 # kit.motor2.throttle=0
 
-print("Motor 1 running slowly up")
-motor.move_dist_time_dir_released_1(80,80, 1)
-sleep(3)
-print("Motor 1 running slowly down")
-motor.move_dist_time_dir_released_1(80,80, 1)
+# print("Motor 1 running slowly up")
+# motor.move_dist_time_dir_released_1(80,80, 1)
+# sleep(3)
+# print("Motor 1 running slowly down")
+# motor.move_dist_time_dir_released_1(80,80, 1)
 
-print("SLOWER")
+# print("SLOWER")
 
-print("Motor 1 running slowly up")
-motor.move_dist_time_dir_released_1(80,160, 1)
-sleep(3)
-print("Motor 1 running slowly down")
-motor.move_dist_time_dir_released_1(80,160, 1)
+# print("Motor 1 running slowly up")
+# motor.move_dist_time_dir_released_1(80,160, 1)
+# sleep(3)
+# print("Motor 1 running slowly down")
+# motor.move_dist_time_dir_released_1(80,160, 1)
 
 
-# print("Forward SINGLE")
-# for i in range(500):
-#     kit.stepper2.onestep(direction=stepper.FORWARD, style=stepper.SINGLE)          
-#     sleep(0.01)
+print("Forward SINGLE")
+for i in range(500):
+    kit.stepper1.onestep(direction=stepper.FORWARD, style=stepper.SINGLE)          
 
 # print("ending 1")
 # kit.stepper2.release()

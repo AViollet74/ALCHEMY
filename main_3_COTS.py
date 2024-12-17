@@ -169,7 +169,7 @@ for j in range(0,nb_layers, subset_imagetk):
         if layer_index<=3:
             cure_time =12
         else:
-            cure_time=7
+            cure_time=2
 
         
 
