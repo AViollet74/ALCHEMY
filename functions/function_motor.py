@@ -70,14 +70,14 @@ def move_dist_dir_1(distance, sens): #moteur 1 ou 2, distance en mm, temps en se
     Args : GPIO pin number of the photosensor."""
     
     # print(f"Stepper motor moves by {distance}mm, in direction {sens}")
-    step_num = round(distance*200/8)
+    step_num = round(2*distance*200/8)
     if sens > 0:
         for i in range(step_num):
-            kit.stepper1.onestep(direction=stepper.FORWARD, style=stepper.DOUBLE)
+            kit.stepper1.onestep(direction=stepper.FORWARD, style=stepper.INTERLEAVE)
             # sleep(0.001)
     else :
         for i in range(step_num):
-            kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
+            kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.INTERLEAVE)
     kit.stepper1.release()
 
 

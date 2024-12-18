@@ -11,9 +11,10 @@ from time import sleep
 import tkinter as tk 
 from screeninfo import get_monitors
 import sys
+from time import time
 
 import os
-import random
+# import random
 
 ################################################################################################################################
 ### Object properties 
@@ -47,7 +48,7 @@ if nb_layers!=len(layers_state_values):
 # Layer thickness definition
 layer_thickness=float(input("layer thickness in mm"))
 if not layer_thickness:
-    layer_thickness=0.08
+    layer_thickness=0.05
 layer_index=0                                                                                           #Determines the current layer
 Particles_state=1                                                                                       #Determines if the particles are dispersed or not 
 
@@ -67,8 +68,8 @@ response = input("rotate lead screw to place Magnet and press enter").strip().lo
     # if response == "yes":
     #     break
     # elif response == "no":
-    #     distance=input("What distance from side in mm?")
-    #     time=distance*0.25 #-> 4mm par seconde
+    #     distance=input(=distance*"What distance from side in mm?")
+    #     time0.25 #-> 4mm par seconde
     #     motor.move_dist_time_dir_2(distance, time, 1)
     # else:
     #    pass
@@ -114,14 +115,10 @@ cnv.pack(fill=tk.BOTH, expand=True)
 
 ################################################################################################################################
 ###Conversion of the images paths to Image Objects
-# print("a")
 black_image_tk  = display.convert_full_0(black_image_path, w_root, h_root, monitors)                    #Convert black image path to black image object, with full screen dimensions                                         
-# print("b")
 image_paths = display.convert_list(base_path, nb_layers)
-# print("c")
 # images_tk = display.convert_full_1(sequence, w_root, h_root, monitors)
 subset_imagetk=1
-# print("d")     
 ################################################################################################################################
 
 ################################################################################################################################
@@ -144,22 +141,26 @@ while True:
         break
     else:
        pass
+
 sleep(2)
+
 ## Start MAIN 
 for j in range(0,nb_layers, subset_imagetk):
     images_tk=display.convert_full_1(sequence[j:j+subset_imagetk], w_root, h_root, monitors)
     for i in range(len(images_tk)):
+        start_time=time()
 
         #move ztable by 1 layer thickness
         print(f"printing layer {i+j}")
         motor.move_dist_dir_1(1,1)
-        sleep(1)
+        sleep(2)
         motor.move_dist_dir_1(1,-1)
-        sleep(1)
+        sleep(2)
         motor.move_dist_dir_1(layer_thickness,1)
 
         Z_table_pos+=layer_thickness
         layer_index+=1
+        
         display.show_image(cnv, w_root, h_root, black_image_tk)
         root.update_idletasks()
         root.update()
@@ -171,7 +172,6 @@ for j in range(0,nb_layers, subset_imagetk):
         else:
             cure_time=2
 
-        
 
         uv.switch_on(uv_pin)
         display.show_image(cnv, w_root, h_root, images_tk[i])
@@ -181,6 +181,10 @@ for j in range(0,nb_layers, subset_imagetk):
         uv.switch_off(uv_pin)
         sleep(1)
 
+
+        end_time=time()
+        delta_time=end_time-start_time
+        print(f"deltatime={delta_time} seconds")
 
 
         if i == len(images_tk)-1:
@@ -192,14 +196,6 @@ for j in range(0,nb_layers, subset_imagetk):
         else:
             pass
 
-
-        # if layer_index==5:
-        #     motor.move_dist_dir_1(32,1)
-        #     Z_table_pos-=layer_thickness
-        #     sleep(5)
-        #     motor.move_dist_dir_1(32,-1)
-        # else:
-        #     pass
 
 
 root.mainloop()
