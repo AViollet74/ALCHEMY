@@ -5,6 +5,7 @@ from time import monotonic
 from adafruit_motor import stepper
 from adafruit_motorkit import MotorKit
 import gpiod
+from time import time
 
 ################################################################################################################################
 ## Steup I2C communiaciton + base movement
@@ -68,17 +69,35 @@ def rotor_no_mvt_1(vitesse, temps, sens): #vitesse en tours par minute, temps en
 def move_dist_dir_1(distance, sens): #moteur 1 ou 2, distance en mm, temps en secondes, sens en entier positif ou negatif
     """Move the building platform downward, to the starting position (until the photosensor is not reached) by activating the stepper motor in the backrward direction
     Args : GPIO pin number of the photosensor."""
-    
+    start_time=time()
+    delta_1=0
     # print(f"Stepper motor moves by {distance}mm, in direction {sens}")
     step_num = round(2*distance*200/8)
     if sens > 0:
         for i in range(step_num):
+            start_1=time()
             kit.stepper1.onestep(direction=stepper.FORWARD, style=stepper.INTERLEAVE)
+            end_1=time()
+            if abs(delta_1- (end_1-start_1))>0.0005:
+                print("sth wrong")
+            else:
+                pass      
+            delta_1=end_1-start_1
             # sleep(0.001)
     else :
         for i in range(step_num):
+            start_1=time()
             kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.INTERLEAVE)
+            end_1=time()
+            if abs(delta_1- (end_1-start_1))>0.0005:
+                print("sth wrong")
+            else:
+                pass      
+            delta_1=end_1-start_1
+            
     kit.stepper1.release()
+    end_time=time()
+    print(f"Time to reach the position : {end_time-start_time}s")
 
 
 def move_dist_time_dir_released_1(distance, temps, sens): #moteur 1 ou 2, distance en mm, temps en secondes, sens en entier positif ou negatif
