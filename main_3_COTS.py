@@ -152,9 +152,9 @@ for j in range(0,nb_layers, subset_imagetk):
 
         #move ztable by 1 layer thickness
         print(f"printing layer {i+j}")
-        motor.move_dist_dir_1(1,1)
-        sleep(2)
-        motor.move_dist_dir_1(1,-1)
+        motor.move_dist_dir_1(2,1)
+        sleep(3)
+        motor.move_dist_dir_1(2,-1)
         sleep(2)
         motor.move_dist_dir_1(layer_thickness,1)
 
