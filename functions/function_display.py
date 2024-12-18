@@ -74,7 +74,7 @@ def convert_full_1(image_paths, w_root, h_root, monitors):
         
         new_w = int(w*factor)
         if len(monitors) > 1: 
-            new_h = int(int(h*factor)*3.15)                 #factor 3,15 to adapte image heigth to the LCD screen
+            new_h = int(int(h*factor)*3)                 #factor 3,15 to adapte image heigth to the LCD screen
         else:
             new_h = int(h*factor)
             
