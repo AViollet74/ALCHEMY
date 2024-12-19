@@ -154,9 +154,9 @@ for j in range(0,nb_layers, subset_imagetk):
         print(f"printing layer {i+j}")
         motor.move_dist_dir_1(2,1)
         sleep(3)
-        motor.move_dist_dir_1(2,-1)
+        motor.move_dist_dir_1(2-layer_thickness,-1)
         sleep(2)
-        motor.move_dist_dir_1(layer_thickness,1)
+        # motor.move_dist_dir_1(layer_thickness,1)
 
         Z_table_pos+=layer_thickness
         layer_index+=1
@@ -170,7 +170,7 @@ for j in range(0,nb_layers, subset_imagetk):
         if layer_index<=3:
             cure_time =12
         else:
-            cure_time=2
+            cure_time=2.8
 
 
         uv.switch_on(uv_pin)
