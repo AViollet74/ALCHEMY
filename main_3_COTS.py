@@ -141,9 +141,9 @@ for j in range(0,nb_layers, subset_imagetk):
     images_tk=display.convert_full_1(sequence[j:j+subset_imagetk], w_root, h_root, monitors)
     for i in range(len(images_tk)):
         start_time=time()
-
+        percentage=(i+j)/nb_layers
         #move ztable by 1 layer thickness
-        print(f"printing layer {i+j}")
+        print(f"printing layer {i+j},{percentage:.1f}% Complete")
         motor.move_dist_dir_1(2,1)
         sleep(3)
         motor.move_dist_dir_1(2-layer_thickness,-1)
