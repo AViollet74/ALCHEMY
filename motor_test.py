@@ -43,7 +43,7 @@ kit = MotorKit(i2c=board.I2C())
 
 
 print("Forward SINGLE")
-for i in range(500):
+for i in range(1000):
     kit.stepper1.onestep(direction=stepper.FORWARD, style=stepper.SINGLE)          
 
 # print("ending 1")

@@ -44,11 +44,15 @@ except Exception as e:
 if nb_layers!=len(layers_state_values):
     print(f"number of layer not consistent: {nb_layers} in print and {len(layers_state_values)} in layer definition")
     sys.exit("error")
+else :
+    pass
 
 # Layer thickness definition
 layer_thickness=float(input("layer thickness in mm"))
 if not layer_thickness:
-    layer_thickness=0.05
+    layer_thickness=0.08
+else :
+    pass
 layer_index=0                                                                                           #Determines the current layer
 Particles_state=1                                                                                       #Determines if the particles are dispersed or not 
 
@@ -57,22 +61,13 @@ Particles_state=1                                                               
 
 
 
-###############################################################
+################################################################################################################################### 
 ### Initialisation of the hardware components (GPIO pins assignation)
 
 #Motor magnets 
 l_container=float(input("size of resin container in mm (for magnet movement definition)"))
 # while True:
 response = input("rotate lead screw to place Magnet and press enter").strip().lower()
-    # break
-    # if response == "yes":
-    #     break
-    # elif response == "no":
-    #     distance=input(=distance*"What distance from side in mm?")
-    #     time0.25 #-> 4mm par seconde
-    #     motor.move_dist_time_dir_2(distance, time, 1)
-    # else:
-    #    pass
 print("Magnets setting success")
 
 # Dispersion elements - vibration motors
@@ -82,13 +77,11 @@ print("Vibration motors setup success")
 
 
 #UV ligth
-# uv_pin = uv.init_uv()
-uv_pin=27
+uv_pin = uv.init_uv()
 print("UV light setup success")
 
 #Photoelctric sensor
-# sensor_pin = sensor.init_sensor() 
-sensor_pin=4                                                                                                                                                                                                                  #le setup GPIO qui va faire fonctionner le sensor est présente dans la fontion start_position_1(sensor_pin)
+sensor_pin = sensor.init_sensor()                                                                                                                                                                                                                #le setup GPIO qui va faire fonctionner le sensor est présente dans la fontion start_position_1(sensor_pin)
 print("photo sensor setup success")
 
 #GUI creation with TkInter 
@@ -96,7 +89,6 @@ for m in get_monitors():
     print("INFO", str(m))
 
 monitors = get_monitors()
-# print(type(monitors))
 monitor=display.name_selection('HDMI-1')                                                                # port for the LCD screen
 x_shift = monitor.x
 y_shift = monitor.y

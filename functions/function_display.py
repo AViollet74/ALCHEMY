@@ -1,11 +1,18 @@
 import tkinter as tk 
 from PIL import Image, ImageTk
 from screeninfo import get_monitors
+
+
 def name_selection(target_name):
-    monitors =get_monitors()
+    """Gets a list of the available monitors and allows the user to select a monitor based on its name 
+    Args:   target_name: string of the name of the monitor
+    return: monitor: object of the selected monitor if found, None otherwise
+    """    
+    
+    monitors =get_monitors()                                    # get all monitors
     for monitor in monitors:
-        if monitor.name == target_name:
-            return monitor
+        if monitor.name == target_name:                         # find the monitor with the given name
+            return monitor                                      # return the monitor
     return None
 
 
@@ -74,7 +81,7 @@ def convert_full_1(image_paths, w_root, h_root, monitors):
         
         new_w = int(w*factor)
         if len(monitors) > 1: 
-            new_h = int(int(h*factor)*3)                 #factor 3,15 to adapte image heigth to the LCD screen
+            new_h = int(int(h*factor)*3)                    #factor 3,15 to adapte image heigth to the LCD screen
         else:
             new_h = int(h*factor)
             
@@ -95,5 +102,5 @@ def show_image(cnv, w_root, h_root, image_tk):
             w_root, h_root: int of the width and heigh of the monitor
             image_tk: ImageTk.PhotoImage objects
     """                     
-
-    cnv.create_image((w_root/2), (h_root/2), anchor=tk.CENTER, image=image_tk)
+    
+    cnv.create_image((w_root/2), (h_root/2), anchor=tk.CENTER, image=image_tk) #displays the image on the screen

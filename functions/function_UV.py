@@ -1,10 +1,5 @@
-# import RPi.GPIO as GPIO
 import gpiod
 import time
-# GPIO.setwarnings(False)                     #prevents warnings from showing up when you run the code
-# GPIO.setmode(GPIO.BCM)                      #BCM = Broadcom chip-specific pin numbers
-
-
 
 def init_uv():
     """Initialize the UV ligth with the GPIO pins numbers of the UV ligth (user input).
@@ -12,7 +7,10 @@ def init_uv():
     """
 
     u = int(input("Enter the GPIO BCM pin number of the UV light : "))
-    uv_pin = u
+    if not u:
+        uv_pin = 27
+    else:
+        uv_pin = u
     return(uv_pin)
 
 
