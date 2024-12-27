@@ -141,8 +141,8 @@ for j in range(0,nb_layers, subset_imagetk):                                    
     images_tk=display.convert_full_1(sequence[j:j+subset_imagetk], w_root, h_root, monitors)            # by default, size of subset of image objects i set to 1
     for i in range(len(images_tk)): 
         start_time=time()
-        percentage=(i+j)/nb_layers
-        print(f"printing layer {i+j},{percentage:.1f}% Complete")
+        percentage=(i+j)/nb_layers*100
+        print(f"printing layer {i+j}____________________{percentage:.1f}% Complete")
         motor.move_dist_dir_1(2,1)
         sleep(3)
         motor.move_dist_dir_1(2-layer_thickness,-1)
@@ -159,9 +159,9 @@ for j in range(0,nb_layers, subset_imagetk):                                    
 
         ##  PARTICLES ACTUATION IN THE CONTAINER
         if layer_index<=3:
-            cure_time =12                                                                               # 12 for commercial resin, 
+            cure_time =8*12                                                                               # 12 for commercial resin, 
         else:
-            cure_time=2.8                                                                               # 2.8 for commercial resin, 
+            cure_time=25                                                                              # 2.8 for commercial resin, 
 
 
         uv.switch_on(uv_pin)
