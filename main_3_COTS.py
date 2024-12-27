@@ -137,12 +137,11 @@ while True:
 sleep(2)
 
 ## Start MAIN 
-for j in range(0,nb_layers, subset_imagetk):
-    images_tk=display.convert_full_1(sequence[j:j+subset_imagetk], w_root, h_root, monitors)
-    for i in range(len(images_tk)):
+for j in range(0,nb_layers, subset_imagetk):                                                            # double loop over the image objects can be used to improve performance of the printer by creating a subset of image objects each time
+    images_tk=display.convert_full_1(sequence[j:j+subset_imagetk], w_root, h_root, monitors)            # by default, size of subset of image objects i set to 1
+    for i in range(len(images_tk)): 
         start_time=time()
         percentage=(i+j)/nb_layers
-        #move ztable by 1 layer thickness
         print(f"printing layer {i+j},{percentage:.1f}% Complete")
         motor.move_dist_dir_1(2,1)
         sleep(3)
@@ -160,16 +159,16 @@ for j in range(0,nb_layers, subset_imagetk):
 
         ##  PARTICLES ACTUATION IN THE CONTAINER
         if layer_index<=3:
-            cure_time =12
+            cure_time =12                                                                               # 12 for commercial resin, 
         else:
-            cure_time=2.8
+            cure_time=2.8                                                                               # 2.8 for commercial resin, 
 
 
         uv.switch_on(uv_pin)
         display.show_image(cnv, w_root, h_root, images_tk[i])
         root.update_idletasks()
         root.update()
-        sleep(cure_time)                                                                      #Time to polymerize layer tbd by using Jacob's equation
+        sleep(cure_time)
         uv.switch_off(uv_pin)
         sleep(1)
 
