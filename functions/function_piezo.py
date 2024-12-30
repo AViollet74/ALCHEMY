@@ -8,13 +8,11 @@ def init_piezo():
     return: piezo: list of int GPIO pin number(s) of the piezo element(s)
             t_on: int actuation time of the piezo element(s)
             freq: int of the frequency
-    """ 
-             
+    """          
 
     piezos = []
     t_on = 0
     freq = 0 
-
 
     n = int(input("How many GPIO are used for piezo element(s)? : "))
     if n == 0:
@@ -22,7 +20,6 @@ def init_piezo():
     else:
         for i in range(n):
             piezos.append(int(input("Enter the GPIO BCM pin number :")))
-
         t_on = int(input("How long transducers on [s] ?"))
         freq = int(input("At what frequency piezo elements work [Hz] ? :"))
 

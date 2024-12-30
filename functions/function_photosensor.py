@@ -6,11 +6,11 @@ def init_sensor():
     return: sensor_pin: int GPIO pin number(s) of the photosensor
     """
 
-    s = int(input("Enter the GPIO BCM pin number of the photoelectric sensor : "))
+    s = input("Enter the GPIO BCM pin number of the photoelectric sensor : ")
     if not s:
         sensor_pin = 4
     else :
-        sensor_pin= s
+        sensor_pin= int(s)
     return(sensor_pin)
 
 

@@ -5,7 +5,6 @@ import functions.function_motor as motor
 import functions.function_vibration as vibration
 
 
-# import RPi.GPIO as GPIO
 from gpiozero import LED
 from time import sleep
 import tkinter as tk 
@@ -14,7 +13,6 @@ import sys
 from time import time
 
 import os
-# import random
 
 ################################################################################################################################
 ### Object properties 
@@ -22,15 +20,13 @@ print("Object properties")
 origin_path = "/home/alchemy/PRINT/"
 origin_path_layers="/home/alchemy/LAYERS" 
 file_name=input("Name of the folder containing images (Need to be stored in PRINTS)")
-continue_condition=input("did the print already start (press ENTER for NO)?")
+# continue_condition=input("did the print already start (press ENTER for NO)?")
 base_path=origin_path + file_name                                                                       #Folder path   
 black_image_path = "/home/alchemy/black_image.png"                                                      #Black image path
 
 sequence = sorted(os.listdir(base_path), key=lambda x: int(x.split('.')[0]))
 sequence= [os.path.join(base_path,name) for name in sequence]
-# print(sequence)                                                                        #List of image paths 
 nb_layers = len([f for f in os.listdir(base_path) if os.path.isfile(os.path.join(base_path, f))])       
-
 layers_state_path = f"/home/alchemy/LAYERS/{file_name}.txt"                                             #file containing the layer's state of the print
 try:
     with open(layers_state_path, "r") as f:
@@ -38,7 +34,6 @@ try:
         layers_state_values = [int(line.strip()) for line in f.readlines()]
 except Exception as e:
     print(f"An error occurred while reading the file: {e}")
-#layers_state_values = [random.choice([0, 1]) for _ in range(nb_layers)]
 
 # Control that the numbre of layers are matching
 if nb_layers!=len(layers_state_values):
@@ -48,11 +43,11 @@ else :
     pass
 
 # Layer thickness definition
-layer_thickness=float(input("layer thickness in mm"))
+layer_thickness=(input("layer thickness in mm (ENTER for default value)"))
 if not layer_thickness:
     layer_thickness=0.08
 else :
-    pass
+    layer_thickness=float(layer_thickness)
 layer_index=0                                                                                           #Determines the current layer
 Particles_state=1                                                                                       #Determines if the particles are dispersed or not 
 
@@ -109,7 +104,7 @@ cnv.pack(fill=tk.BOTH, expand=True)
 ###Conversion of the images paths to Image Objects
 black_image_tk  = display.convert_full_0(black_image_path, w_root, h_root, monitors)                    #Convert black image path to black image object, with full screen dimensions                                         
 image_paths = display.convert_list(base_path, nb_layers)
-# images_tk = display.convert_full_1(sequence, w_root, h_root, monitors)
+# images_tk = display.convert_full_1(sequence, w_root, h_root, monitors)                                #Too demandiing for memory, leads to drop in performance for high number of layers
 subset_imagetk=1
 ################################################################################################################################
 
@@ -128,9 +123,6 @@ while True:
         Z_table_pos=0
         input("After settting: Press Enter to continue...")
         break
-    elif continue_condition!=[]:
-        Z_table_pos=0
-        break
     else:
        pass
 
@@ -142,7 +134,7 @@ for j in range(0,nb_layers, subset_imagetk):                                    
     for i in range(len(images_tk)): 
         start_time=time()
         percentage=(i+j)/nb_layers*100
-        print(f"printing layer {i+j}____________________{percentage:.1f}% Complete")
+        print(f"printing layer {i+j}_________________________________{percentage:.1f}% Complete")
         motor.move_dist_dir_1(2,1)
         sleep(3)
         motor.move_dist_dir_1(2-layer_thickness,-1)

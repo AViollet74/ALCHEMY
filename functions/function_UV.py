@@ -6,11 +6,11 @@ def init_uv():
     return: sensor_pin: int GPIO pin number(s) of the UV ligth
     """
 
-    u = int(input("Enter the GPIO BCM pin number of the UV light : "))
+    u = input("Enter the GPIO BCM pin number of the UV light : ")
     if not u:
         uv_pin = 27
     else:
-        uv_pin = u
+        uv_pin = int(u)
     return(uv_pin)
 
 

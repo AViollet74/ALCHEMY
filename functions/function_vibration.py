@@ -14,11 +14,11 @@ def init_vibration():
     t_on = 0
     
     
-    n = int(input("How many GPIO are used for vibration element(s)? : "))
-    if n == 0:
-        return([], 0, None)
+    n = input("How many GPIO are used for vibration element(s)? : ")
+    if not n:
+        return(motors, t_on)
     else:
-        for i in range(n):
+        for i in range(int(n)):
             motors.append(int(input("Enter the GPIO BCM pin number :")))
 
         t_on = int(input("How long motors on [s] ?"))
