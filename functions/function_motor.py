@@ -178,13 +178,13 @@ def move_dist_dir_2(distance, sens): #moteur 1 ou 2, distance en mm, temps en se
     Args : distance in mm, direction in integer (1: forward, -1: backward)"""
     
     # print(f"Stepper motor moves by {distance}mm, in direction {sens}")
-    step_num = round(distance*200/8)
+    step_num = round(2*distance*200/8)
     if sens > 0:
         for i in range(step_num):
-            kit.stepper2.onestep(direction=stepper.FORWARD, style=stepper.DOUBLE)
+            kit.stepper2.onestep(direction=stepper.FORWARD, style=stepper.INTERLEAVE)
     else :
         for i in range(step_num):
-            kit.stepper2.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
+            kit.stepper2.onestep(direction=stepper.BACKWARD, style=stepper.INTERLEAVE)
     kit.stepper2.release()
     
     

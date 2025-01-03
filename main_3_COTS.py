@@ -49,7 +49,7 @@ if not layer_thickness:
 else :
     layer_thickness=float(layer_thickness)
 layer_index=0                                                                                           #Determines the current layer
-Particles_state=1                                                                                       #Determines if the particles are dispersed or not 
+Particles_state=1                                                                                       #Determines if the particles are dispersed or not (initial state : dispersed particle) 
 
 ################################################################################################################################
 
@@ -60,7 +60,11 @@ Particles_state=1                                                               
 ### Initialisation of the hardware components (GPIO pins assignation)
 
 #Motor magnets 
-l_container=float(input("size of resin container in mm (for magnet movement definition)"))
+l_container=(input("size of resin container in mm (for magnet movement definition)"))
+if not l_container:
+    l_container=74
+else:
+    l_container=float(l_container)
 # while True:
 response = input("rotate lead screw to place Magnet and press enter").strip().lower()
 print("Magnets setting success")
@@ -149,11 +153,45 @@ for j in range(0,nb_layers, subset_imagetk):                                    
         root.update()
 
 
-        ##  PARTICLES ACTUATION IN THE CONTAINER
+        ##  PARTICLES ACTUATION IN THE CONTAINER      
         if layer_index<=3:
             cure_time =20                                                                           # 12 for commercial resin, 96 for custom resin 1, 
         else:
             cure_time=2.8                                                                             # 2.8 for commercial resin, 25 for custom resin 1, 
+        attract_time =20                                                                                #time in seconds
+    ##  PARTICLES ACTUATION IN THE CONTAINER
+    #Consider state of particles and compare to instructions
+        if layers_state_values[layer_index] != Particles_state:
+            motor.move_dist_dir_1(24, 1)                                                                    #Move table up to empty the contianer       
+
+            if Particles_state==1:
+                # motor.move_dist_dir_2((210/2+l_container/2)/4,1)
+                motor.move_dist_dir_2((210/2+l_container/2),1)                                              #Move to the other size of the resin container
+                sleep(attract_time)                                                                                   #Time to slepp to gather particlesto side
+                motor.move_dist_dir_1(l_container/2, -1)                                                    #Move table back on side of container in 2 times with sleep time between them
+                sleep(attract_time) 
+                motor.move_dist_dir_1(l_container/2, -1)                                                    #Move table back on side of container in 2 times with sleep time between them
+                sleep(attract_time)
+                Particles_state=0
+            else:
+                # motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
+                motor.move_dist_time_dir_released_2((210/2+l_container/2-l_container),-1)
+                sleep(2)
+                # motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
+                # sleep(2)   
+                # motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
+                # sleep(2)   
+                # motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
+                # sleep(2)        
+                vibration.activate_v(motors, time_on)
+                Particles_state=1    
+
+            motor.move_dist_dir_1(24, -1 )                                                            #Move table down to initial position
+        # elif layers_state_values[layer_index]==0:
+        #     vibration.activate_v(motors, time_on)                                                     #activate vibration if particles are dispersed to confirm dispersion
+        else :  
+            pass
+
 
 
         uv.switch_on(uv_pin)
