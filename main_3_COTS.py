@@ -158,7 +158,7 @@ for j in range(0,nb_layers, subset_imagetk):                                    
             cure_time =20                                                                           # 12 for commercial resin, 96 for custom resin 1, 
         else:
             cure_time=2.8                                                                             # 2.8 for commercial resin, 25 for custom resin 1, 
-        attract_time =20                                                                                #time in seconds
+        attract_time =30                                                                                #time in seconds
     ##  PARTICLES ACTUATION IN THE CONTAINER
     #Consider state of particles and compare to instructions
         if layers_state_values[layer_index] != Particles_state:
@@ -168,9 +168,9 @@ for j in range(0,nb_layers, subset_imagetk):                                    
                 # motor.move_dist_dir_2((210/2+l_container/2)/4,1)
                 motor.move_dist_dir_2((210/2+l_container/2),1)                                              #Move to the other size of the resin container
                 sleep(attract_time)                                                                                   #Time to slepp to gather particlesto side
-                motor.move_dist_dir_1(l_container/2, -1)                                                    #Move table back on side of container in 2 times with sleep time between them
+                motor.move_dist_dir_2(l_container/2, -1)                                                    #Move table back on side of container in 2 times with sleep time between them
                 sleep(attract_time) 
-                motor.move_dist_dir_1(l_container/2, -1)                                                    #Move table back on side of container in 2 times with sleep time between them
+                motor.move_dist_dir_2(l_container/2, -1)                                                    #Move table back on side of container in 2 times with sleep time between them
                 sleep(attract_time)
                 Particles_state=0
             else:
