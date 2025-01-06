@@ -176,16 +176,35 @@ def rotor_no_mvt_2(vitesse, temps, sens): #vitesse en tours par minute, temps en
 def move_dist_dir_2(distance, sens): #moteur 1 ou 2, distance en mm, temps en secondes, sens en entier positif ou negatif
     """Move the magnetic actuator (motor 2)
     Args : distance in mm, direction in integer (1: forward, -1: backward)"""
-    
-    # print(f"Stepper motor moves by {distance}mm, in direction {sens}")
+    start_time=time()
+    delta_1=0
     step_num = round(2*distance*200/8)
     if sens > 0:
         for i in range(step_num):
+            start_1=time()
             kit.stepper2.onestep(direction=stepper.FORWARD, style=stepper.INTERLEAVE)
+            end_1=time()
+            if abs(delta_1- (end_1-start_1))>0.0005 and i!=0:
+                print("something wrong happened")
+            else:
+                pass      
+            delta_1=end_1-start_1
     else :
         for i in range(step_num):
+            start_1=time()
             kit.stepper2.onestep(direction=stepper.BACKWARD, style=stepper.INTERLEAVE)
-    kit.stepper2.release()
+            # sleep(0.02)
+            end_1=time()
+            if abs(delta_1- (end_1-start_1))>0.0005 and i!=0:
+                print("something wrong happened")
+            else:
+                pass      
+            delta_1=end_1-start_1
+            
+    kit.stepper1.release()
+    end_time=time()
+    print(f"Time to reach the position : {end_time-start_time}s")                               #used as control of the stepper motor movement and code performance
+
     
     
 ## SET initial position 

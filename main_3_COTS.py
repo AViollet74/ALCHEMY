@@ -163,7 +163,7 @@ for j in range(0,nb_layers, subset_imagetk):                                    
     #Consider state of particles and compare to instructions
         if layers_state_values[layer_index] != Particles_state:
             motor.move_dist_dir_1(24, 1)                                                                    #Move table up to empty the contianer       
-
+            sleep(2)
             if Particles_state==1:
                 # motor.move_dist_dir_2((210/2+l_container/2)/4,1)
                 motor.move_dist_dir_2((210/2+l_container/2),1)                                              #Move to the other size of the resin container
@@ -176,13 +176,7 @@ for j in range(0,nb_layers, subset_imagetk):                                    
             else:
                 # motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
                 motor.move_dist_time_dir_released_2((210/2+l_container/2-l_container),-1)
-                sleep(2)
-                # motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
-                # sleep(2)   
-                # motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
-                # sleep(2)   
-                # motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
-                # sleep(2)        
+                sleep(2)      
                 vibration.activate_v(motors, time_on)
                 Particles_state=1    
 
