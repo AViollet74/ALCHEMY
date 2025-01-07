@@ -43,7 +43,7 @@ else :
     pass
 
 # Layer thickness definition
-layer_thickness=(input("layer thickness in mm (ENTER for default value)"))
+layer_thickness=(input("layer thickness in mm (ENTER for default value(72))"))
 if not layer_thickness:
     layer_thickness=0.08
 else :
@@ -62,7 +62,7 @@ Particles_state=1                                                               
 #Motor magnets 
 l_container=(input("size of resin container in mm (for magnet movement definition)"))
 if not l_container:
-    l_container=74
+    l_container=72
 else:
     l_container=float(l_container)
 # while True:
@@ -165,14 +165,22 @@ for j in range(0,nb_layers, subset_imagetk):                                    
             motor.move_dist_dir_1(24, 1)                                                                    #Move table up to empty the contianer       
             sleep(2)
             if Particles_state==1:
-                # motor.move_dist_dir_2((210/2+l_container/2)/4,1)
                 motor.move_dist_dir_2((210/2+l_container/2),1)                                              #Move to the other size of the resin container
                 sleep(attract_time)                                                                                   #Time to slepp to gather particlesto side
-                motor.move_dist_dir_2(l_container/2, -1)                                                    #Move table back on side of container in 2 times with sleep time between them
-                sleep(attract_time) 
-                motor.move_dist_dir_2(l_container/2, -1)                                                    #Move table back on side of container in 2 times with sleep time between them
-                sleep(attract_time)
-                Particles_state=0
+                temp_position=0
+                while temp_position<l_container:
+                    motor.move_dist_dir_2(9,-1)
+                    sleep(15)
+                    motor.move_dist_dir_2(3,1)
+                    sleep(15)
+                    temp_position+=6
+                    
+                    
+                # motor.move_dist_dir_2(l_container/2, -1)                                                    #Move table back on side of container in 2 times with sleep time between them
+                # sleep(attract_time) 
+                # motor.move_dist_dir_2(l_container/2, -1)                                                    #Move table back on side of container in 2 times with sleep time between them
+                # sleep(attract_time)
+                # Particles_state=0
             else:
                 # motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
                 motor.move_dist_time_dir_released_2((210/2+l_container/2-l_container),-1)
