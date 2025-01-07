@@ -18,10 +18,11 @@ root.geometry(f"{w_root}x{h_root}+{x_shift}+{y_shift}")                         
 cnv = tk.Canvas(root, bg="black", highlightthickness=0)
 cnv.pack(fill=tk.BOTH, expand=True)
 
+time_test=float(input("time tested"))
 black_image_tk  = display.convert_full_0("/home/alchemy/square.png", w_root, h_root, monitors)
 
 uv_pin = 27
-time_test=float(input("time tested"))
+
 
 uv.switch_on(uv_pin)
 display.show_image(cnv, w_root, h_root, black_image_tk)
