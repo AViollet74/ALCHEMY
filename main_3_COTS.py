@@ -158,7 +158,7 @@ for j in range(0,nb_layers, subset_imagetk):                                    
             cure_time =60                                                                           # 12 for commercial resin, 96 for custom resin 1, 
         else:
             cure_time=24                                                                            # 2.8 for commercial resin, 25 for custom resin 1, 
-        attract_time =30                                                                                #time in seconds
+        attract_time =600                                                                              #time in seconds
     ##  PARTICLES ACTUATION IN THE CONTAINER
     #Consider state of particles and compare to instructions
         if layers_state_values[layer_index] != Particles_state:
