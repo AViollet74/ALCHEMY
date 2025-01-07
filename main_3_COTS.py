@@ -183,7 +183,7 @@ for j in range(0,nb_layers, subset_imagetk):                                    
                 # Particles_state=0
             else:
                 # motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
-                motor.move_dist_time_dir_released_2((210/2+l_container/2-l_container),-1)
+                motor.move_dist_dir_2((210/2+l_container/2-l_container),-1)
                 sleep(2)      
                 vibration.activate_v(motors, time_on)
                 Particles_state=1    
