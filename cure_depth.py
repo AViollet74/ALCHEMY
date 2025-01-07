@@ -5,7 +5,7 @@ import functions.function_display as display
 from time import sleep
 import tkinter as tk 
 from screeninfo import get_monitors
-
+time_test=float(input("time tested"))
 monitors = get_monitors()
 monitor = display.name_selection('HDMI-1')
 x_shift = monitor.x
