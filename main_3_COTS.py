@@ -158,21 +158,21 @@ for j in range(0,nb_layers, subset_imagetk):                                    
             cure_time =60                                                                           # 12 for commercial resin, 96 for custom resin 1, 
         else:
             cure_time=24                                                                            # 2.8 for commercial resin, 25 for custom resin 1, 
-        attract_time =600                                                                              #time in seconds
+        attract_time =120                                                                              #time in seconds
     ##  PARTICLES ACTUATION IN THE CONTAINER
     #Consider state of particles and compare to instructions
         if layers_state_values[layer_index] != Particles_state:
-            motor.move_dist_dir_1(24, 1)                                                                    #Move table up to empty the contianer       
+            motor.move_dist_dir_1(24, 1)                                                            #Move table up to empty the contianer       
             sleep(2)
             if Particles_state==1:
-                motor.move_dist_dir_2((210/2+l_container/2),1)                                              #Move to the other size of the resin container
-                sleep(attract_time)                                                                                   #Time to slepp to gather particlesto side
+                motor.move_dist_dir_2((210/2+l_container/2),1)                                      #Move to the other size of the resin container
+                sleep(attract_time)                                                                 #Time to slepp to gather particlesto side
                 temp_position=0
-                while temp_position<l_container:
+                while temp_position<l_container:                                                    # back and forth movement to gather most of the particles with the magnet
                     motor.move_dist_dir_2(9,-1)
-                    sleep(15)
+                    sleep(40)
                     motor.move_dist_dir_2(3,1)
-                    sleep(15)
+                    sleep(40)
                     temp_position+=6
                     
                     
@@ -189,9 +189,7 @@ for j in range(0,nb_layers, subset_imagetk):                                    
                 Particles_state=1    
 
             motor.move_dist_dir_1(24, -1 )                                                            #Move table down to initial position
-        # elif layers_state_values[layer_index]==0:
-        #     vibration.activate_v(motors, time_on)                                                     #activate vibration if particles are dispersed to confirm dispersion
-        else :  
+           else :  
             pass
 
 
