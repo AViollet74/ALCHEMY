@@ -162,7 +162,7 @@ for j in range(0,nb_layers, subset_imagetk):                                    
     ##  PARTICLES ACTUATION IN THE CONTAINER
     #Consider state of particles and compare to instructions
         if layers_state_values[layer_index] != Particles_state:
-            motor.move_dist_dir_1(24, 1)                                                            #Move table up to empty the contianer       
+            motor.move_dist_dir_1(8, 1)                                                            #Move table up to empty the contianer       
             sleep(2)
             if Particles_state==1:
                 motor.move_dist_dir_2((210/2+l_container/2),1)                                      #Move to the other size of the resin container
