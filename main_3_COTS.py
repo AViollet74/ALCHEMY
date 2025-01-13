@@ -42,7 +42,7 @@ else :
     pass
 
 # Layer thickness definition
-layer_thickness=(input("layer thickness in mm (ENTER for default value(0.08))"))
+layer_thickness=(input("layer thickness in mm (ENTER for default value (0.08))"))
 if not layer_thickness:
     layer_thickness=0.08
 else :
@@ -59,7 +59,7 @@ Particles_state=1                                                               
 ### Initialisation of the hardware components (GPIO pins assignation)
 
 #Motor magnets 
-l_container=(input("size of resin container in mm (default value 72mm)"))
+l_container=(input("size of resin container in mm (ENTER for default value (72))"))
 if not l_container:
     l_container=72
 else:
