@@ -20,7 +20,6 @@ print("Object properties")
 origin_path = "/home/alchemy/PRINT/"
 origin_path_layers="/home/alchemy/LAYERS" 
 file_name=input("Name of the folder containing images (Need to be stored in PRINTS)")
-# continue_condition=input("did the print already start (press ENTER for NO)?")
 base_path=origin_path + file_name                                                                       #Folder path   
 black_image_path = "/home/alchemy/black_image.png"                                                      #Black image path
 
@@ -43,7 +42,7 @@ else :
     pass
 
 # Layer thickness definition
-layer_thickness=(input("layer thickness in mm (ENTER for default value(72))"))
+layer_thickness=(input("layer thickness in mm (ENTER for default value(0.08))"))
 if not layer_thickness:
     layer_thickness=0.08
 else :
@@ -60,13 +59,13 @@ Particles_state=1                                                               
 ### Initialisation of the hardware components (GPIO pins assignation)
 
 #Motor magnets 
-l_container=(input("size of resin container in mm (for magnet movement definition)"))
+l_container=(input("size of resin container in mm (default value 72mm)"))
 if not l_container:
     l_container=72
 else:
     l_container=float(l_container)
 # while True:
-response = input("rotate lead screw to place Magnet and press enter").strip().lower()
+response = input("rotate lead screw to place Magnet and press ENTER").strip().lower()
 print("Magnets setting success")
 
 # Dispersion elements - vibration motors
@@ -108,7 +107,7 @@ cnv.pack(fill=tk.BOTH, expand=True)
 ###Conversion of the images paths to Image Objects
 black_image_tk  = display.convert_full_0(black_image_path, w_root, h_root, monitors)                    #Convert black image path to black image object, with full screen dimensions                                         
 image_paths = display.convert_list(base_path, nb_layers)
-# images_tk = display.convert_full_1(sequence, w_root, h_root, monitors)                                #Too demandiing for memory, leads to drop in performance for high number of layers
+# images_tk = display.convert_full_1(sequence, w_root, h_root, monitors)                                #Too demanding for memory, leads to drop in performance for high number of layers
 subset_imagetk=1
 ################################################################################################################################
 
@@ -158,7 +157,8 @@ for j in range(0,nb_layers, subset_imagetk):                                    
             cure_time =60                                                                           # 12 for commercial resin, 96 for custom resin 1, 
         else:
             cure_time=24                                                                            # 2.8 for commercial resin, 25 for custom resin 1, 
-        attract_time =120                                                                              #time in seconds
+        attract_time =60                                                                              #time in seconds
+        vibration_time=300
     ##  PARTICLES ACTUATION IN THE CONTAINER
     #Consider state of particles and compare to instructions
         if layers_state_values[layer_index] != Particles_state:
@@ -168,28 +168,21 @@ for j in range(0,nb_layers, subset_imagetk):                                    
                 motor.move_dist_dir_2((210/2+l_container/2),1)                                      #Move to the other size of the resin container
                 sleep(attract_time)                                                                 #Time to slepp to gather particlesto side
                 temp_position=0
-                while temp_position<l_container:                                                    # back and forth movement to gather most of the particles with the magnet
+                while temp_position<l_container:                                                    #Back and forth movement to gather most of the particles with the magnet
                     motor.move_dist_dir_2(9,-1)
-                    sleep(40)
+                    sleep(attract_time)
                     motor.move_dist_dir_2(3,1)
-                    sleep(40)
+                    sleep(attract_time)
                     temp_position+=6
                     
-                    
-                # motor.move_dist_dir_2(l_container/2, -1)                                                    #Move table back on side of container in 2 times with sleep time between them
-                # sleep(attract_time) 
-                # motor.move_dist_dir_2(l_container/2, -1)                                                    #Move table back on side of container in 2 times with sleep time between them
-                # sleep(attract_time)
-                # Particles_state=0
             else:
                 # motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
                 motor.move_dist_dir_2((210/2+l_container/2-l_container),-1)
                 sleep(2)      
-                vibration.activate_v(motors, time_on)
+                vibration.activate_v(motors, vibration_time)                                                   # 200s of agitation
                 Particles_state=1    
 
-            motor.move_dist_dir_1(24, -1 )                                                            #Move table down to initial position
-           else :  
+            motor.move_dist_dir_1(24, -1 )                                                            #Move table down to initial position  
             pass
 
 
@@ -200,7 +193,7 @@ for j in range(0,nb_layers, subset_imagetk):                                    
         root.update()
         sleep(cure_time)
         uv.switch_off(uv_pin)
-        sleep(1)
+        sleep(2)
 
 
         end_time=time()
