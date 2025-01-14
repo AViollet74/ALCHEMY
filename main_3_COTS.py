@@ -162,28 +162,38 @@ for j in range(0,nb_layers, subset_imagetk):                                    
     ##  PARTICLES ACTUATION IN THE CONTAINER
     #Consider state of particles and compare to instructions
         if layers_state_values[layer_index] != Particles_state:
-            motor.move_dist_dir_1(24, 1)                                                            #Move table up to empty the contianer       
-            sleep(2)
-            if Particles_state==1:
-                motor.move_dist_dir_2((210/2+l_container/2),1)                                          #Move to the other size of the resin container
-                sleep(attract_time)                                                                     #Time to slepp to gather particlesto side
-                temp_position=0
-                while temp_position<l_container:                                                        #Back and forth movement to gather most of the particles with the magnet
-                    motor.move_dist_dir_2(9,-1)
-                    sleep(attract_time)
-                    motor.move_dist_dir_2(3,1)
-                    sleep(attract_time)
-                    temp_position+=6
+            motor.move_dist_dir_1(8, 1)                                                            #Move table up to empty the contianer       
+            sleep(10)
+            motor.move_dist_dir_1(8, 1)                                                            #Move table up to empty the contianer       
+            sleep(10)
+            motor.move_dist_dir_1(8, 1)                                                            #Move table up to empty the contianer       
+            sleep(10)
+            # if Particles_state==1:
+            #     motor.move_dist_dir_2((210/2+l_container/2),1)                                          #Move to the other size of the resin container
+            #     sleep(attract_time)                                                                     #Time to slepp to gather particlesto side
+            #     temp_position=0
+            #     while temp_position<l_container:                                                        #Back and forth movement to gather most of the particles with the magnet
+            #         motor.move_dist_dir_2(9,-1)
+            #         sleep(attract_time)
+            #         motor.move_dist_dir_2(3,1)
+            #         sleep(attract_time)
+            #         temp_position+=6
                     
-            else:
-                # motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
-                motor.move_dist_dir_2((210/2+l_container/2-l_container),-1)
-                sleep(2)      
-                vibration.activate_v(motors, vibration_time)                                            # 200s of agitation
-                Particles_state=1    
+            # else:
+            #     # motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
+            #     motor.move_dist_dir_2((210/2+l_container/2-l_container),-1)
+            #     sleep(2)      
+            #     vibration.activate_v(motors, vibration_time)                                            # 200s of agitation
+            #     Particles_state=1
+            input("press enter to continue")    
 
-            motor.move_dist_dir_1(24, -1 )                                                              #Move table down to initial position  
-            pass
+            motor.move_dist_dir_1(8, -1 )                                                              #Move table down to initial position  
+            sleep(10)
+            motor.move_dist_dir_1(8, -1 )                                                              #Move table down to initial position  
+            sleep(10)
+            motor.move_dist_dir_1(8, -1 )                                                              #Move table down to initial position  
+            sleep(10)
+            
 
 
 
