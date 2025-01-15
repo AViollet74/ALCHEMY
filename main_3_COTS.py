@@ -154,9 +154,9 @@ for j in range(0,nb_layers, subset_imagetk):                                    
 
         ##  PARTICLES ACTUATION IN THE CONTAINER      
         if layer_index<=3:
-            cure_time =60                                                                               # 12 for commercial resin, 96 for custom resin 1, 
+            cure_time =96                                                                               # 12 for commercial resin, 96 for custom resin 1, 
         else:
-            cure_time=24                                                                                # 2.8 for commercial resin, 25 for custom resin 1, 
+            cure_time=33                                                                                # 2.8 for commercial resin, 25 for custom resin 1, 
         attract_time =60                                                                                # steady magnet time in seconds
         vibration_time=300                                                                              # vibration time in seconds
     ##  PARTICLES ACTUATION IN THE CONTAINER
@@ -168,7 +168,11 @@ for j in range(0,nb_layers, subset_imagetk):                                    
             sleep(10)
             motor.move_dist_dir_1(8, 1)                                                            #Move table up to empty the contianer       
             sleep(10)
-            # if Particles_state==1:
+            motor.move_dist_dir_1(8, 1)                                                            #Move table up to empty the contianer       
+            sleep(10)
+
+            if Particles_state==1:
+                Particles_state=0
             #     motor.move_dist_dir_2((210/2+l_container/2),1)                                          #Move to the other size of the resin container
             #     sleep(attract_time)                                                                     #Time to slepp to gather particlesto side
             #     temp_position=0
@@ -178,13 +182,13 @@ for j in range(0,nb_layers, subset_imagetk):                                    
             #         motor.move_dist_dir_2(3,1)
             #         sleep(attract_time)
             #         temp_position+=6
-                    
-            # else:
+
+            else:
             #     # motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
             #     motor.move_dist_dir_2((210/2+l_container/2-l_container),-1)
             #     sleep(2)      
             #     vibration.activate_v(motors, vibration_time)                                            # 200s of agitation
-            #     Particles_state=1
+                Particles_state=1
             input("press enter to continue")    
 
             motor.move_dist_dir_1(8, -1 )                                                              #Move table down to initial position  
@@ -193,7 +197,8 @@ for j in range(0,nb_layers, subset_imagetk):                                    
             sleep(10)
             motor.move_dist_dir_1(8, -1 )                                                              #Move table down to initial position  
             sleep(10)
-            
+            motor.move_dist_dir_1(8, -1 )                                                              #Move table down to initial position  
+            sleep(10)
 
 
 
