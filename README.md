@@ -1,176 +1,131 @@
-# Semester project ALCHEMY
+# Master Thesis ALCHEMY
 This project aims to build a magnetic- and acoustic-field-assisted 3D printer, by developing software using the Raspberry Pi 400 and Python programming. 
 
-## Getting started
-1) Activate I2C communication
+# ALCHEMY Project
 
-The Adafruit DC & Stepper Motor HAT requires I2C communication to work. Enable the I2C Connection found under the Interfaces tab in the     Raspberry Pi Configuration menu. 
+## Getting Started with Raspberry Pi
 
-**IMPORTANT: Reboot the Raspberry Pi after the modificaiton**
+### Enable I2C Communication
+To control the Adafruit DC and stepper motor hat, enable I2C communication:
 
-2) Verify the I2C address
-   ```bash
-   sudo apt-get install i2c-tools
-   i2cdetect -y 1
-   ```
-3) Check the Python version
-   ```bash
-   python --version
-   ```
-4) Install pip
-   ```bash
-   sudo apt-get install python-pip
-   ```
-   
-## Create a virtual environment
-1) Install virtualenvwrapper
-   ```bash
-   sudo pip install virtualenvwrapper
-   ```
-2) Configure the shell to load the virtualenvwrapper commands
-   - Open an RC file (e.g. .bashrc, .bash\_profile, or .zshrc)
-     ```bash
-     sudo gedit ~/.bashrc
-     ```
-   - Add the following lines
-     ```bash
-     export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
-     export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
-     source /usr/local/bin/virtualenvwrapper.sh
-     ```
-   - Save the file
-     
-3) Check the virtualenvwrapper version
-   ```bash
-   mkvirtualenv --version
-   ```
-4) Create a new environment
-   ```bash
-   mkvirtualenv myenv
-   ```
-5) Activate the virtual environment
-   ```bash
-   workon myenv
-   ```
-6) Deactivate the virtual environment
-   ```bash
-   (myenv) deactivate
-   ```
-7) List virtual environments
-   ```bash
-   lsvirtualenv
-   ```
-8) List the packages in the virtual environment
-   ```bash
-   pip freeze
-   ```
-9) Remove the virtual environment
-   ```bash
-   rmvirtualenv myenv
-   ```
+1. Open the boot configuration file from the terminal:
+    ```bash
+    sudo nano /boot/firmware/config.txt
+    ```
+2. Add the following lines to the file, save, and then reboot the Raspberry Pi:
+    ```bash
+    dtparam=i2c_arm=on
+    dtparam=i2c_vc=on
+    ```
+
+### Verify the I2C Address
+Make sure the motor controller is connected by performing a scan to detect the I2C address:
+
+1. Install I2C tools:
+    ```bash
+    sudo apt-get install i2c-tools
+    ```
+2. Run the detection command:
+    ```bash
+    i2cdetect -y 1
+    ```
+
+The address of the first stepper motor is `0x60`. Additional controllers can be added for supplementary motors.
+
+### Check Python Version
+Ensure you have the required Python version installed:
+```bash
+python -version
+python3 -version
+```
+
+## Create Virtual Environment
+
+### Install venv and Check Version
+```bash
+sudo apt install -y python3 python3-venv
+```
+
+### Create Virtual Environment
+Create a virtual environment named `alchemy`:
+```bash
+python3 -m venv alchemy
+```
+
+### Activate Virtual Environment
+Activate the virtual environment:
+```bash
+source /home/alchemy/ALCHEMY/alchemy2/bin/activate
+```
+
+### Deactivate Virtual Environment
+To deactivate the virtual environment:
+```bash
+deactivate
+```
 
 ## Installation
-1) Clone the repository
-   ```bash
-   git clone git@github.com:mborot/ALCHEMY.git
-   ```
-2) Install the dependencies
-   ```bash
-   pip install -r requirements.txt
-   ```
-3) Test the installation process
-   ```bash
-   pip list
-   ```
 
-## Running the main_1.py script
-1) Open the ALCHEMY folder
-   ```bash
-   cd /Documents/ALCHEMY
-   ```
-2) Activate the virtual environment
-   ```bash
-   workon myenv
-   ```
-The following line should appear in the terminal:
+### Clone the Repository
+Clone the ALCHEMY repository:
 ```bash
-(myenv)@raspberrypi:~/Documents/ALCHEMY $
+git clone https://github.com/AViollet74/ALCHEMY
 ```
-3) Import the image paths
-   - Change the folder path
-     ```bash
-     base_path = "/home/mborot/Pictures/lattice/"
-     ```
-   - Change the image names 
-     ```bash
-     sequence = [base_path + "cubic_layer_0.png", base_path + "cubic_layer_1.png", ...]
-     ```
-4) Specify the number of layers for each image
-   ```bash
-   layers = [2, 3, ...]
-   ```
-5) Specify the layer thickness
-   ```bash
-   step_nb = 500
-   ```
-6) Connect the hardware components to GPIO pins
-   
-7) Run the code
-   ```bash
-   python main_1.py
-   ```
-8) Initialize the hardware elements
-   - Number of magnets and piezo elements
-   - GPIO pin numbers ([BCM](https://pinout.xyz/) convention)
-   - Activation time
-   - Frequency
-     
-9) Close the window
-   - At the end of the program: **Esc**
-   - While the code is running: **Ctrl + Esc**
-   - Stop the code execution in the terminal: **Ctrl + C**
 
+### Install Dependencies
+Install the required dependencies:
+```bash
+sudo apt install -r requirements.txt
+```
 
-## Running the main_2.py script
-The instructions required to run main_2.py are the same as those for executing main_1.py, with the exception of the following steps:
+### Test Installation Process
+Check the installed packages:
+```bash
+pip list
+```
 
-3) Import the image paths
-   - Change the folder path
-     ```bash
-     base_path = "/home/mborot/Pictures/slicing/"
-     ```
-   - Change the image names 
-     ```bash
-     sequence = [base\_path + "cubic\_layer\_0.png", base\_path + "cubic\_layer\_1.png", ...]
-     ```
-4) Specify the number of layers for each image
-   ```bash
-   nb_layers = 13
-   ```   
-7) Run the code
-   ```bash
-   python main_2.py
-   ```
-   
+## Run the `Main_3.py` Script
 
-## Working with git
-1) Show the working tree status
+### Activate Virtual Environment
+Activate the virtual environment:
 ```bash
-git status
+source /home/alchemy/ALCHEMY/alchemy2/bin/activate
 ```
-2) Add file contents to the index
+
+### Run the Script
+Run the `Main_3.py` script:
 ```bash
-git add script.py
+python3 /home/alchemy/ALCHEMY/main_3.py
 ```
-3) Record changes to the repository
-```bash
-git commit -m "commit message"
-```
-4) Update remote refs along with associated objects
-```bash
-git push
-```
-5) Fetch from and integrate with another repository or a local branch
-```bash
-git pull
-```
+
+### Follow Terminal Instructions
+Provide the following inputs as prompted:
+
+- Enter the name of the folder containing the images and the file with layer state information (both must have the same name and be stored in `/home/ALCHEMY/PRINT` and `/home/ALCHEMY/LAYERS`, respectively).
+- Enter layer thickness in mm (default: 0.08 mm).
+- Enter the size of the resin container in mm (default: 74 mm).
+- Position the magnets by rotating the lead screw manually.
+- Enter the GPIO pin number for the UV-light (default: 27).
+- Enter the GPIO pin number for the photoelectric sensor (default: 4).
+- Enter the number of vibration motors, their associated GPIO pin numbers, and their activation time in seconds.
+- If not already set, specify the initial position and orientation of the build table (yes/no).
+
+The print process is then launched, and information about the print will be displayed during the process.
+
+## Workflow Description
+The `Main_3.py` script performs the following steps:
+
+1. Specify the part name and layer thickness.
+2. Initialize the hardware components (GPIO pin numbers, activation times, etc.).
+3. Move the platform downward to the initial position and set the build table.
+4. Enter the printing loop:
+    - Move the build platform upward and downward to the layer position.
+    - Turn the LCD black.
+    - Activate the particle control system (vibration motors or magnet sliding).
+    - Display the image on the LCD.
+    - Turn on the UV light.
+    - Turn off the UV light.
+
+---
+
+For more details, refer to the repository documentation or contact [Arnaud Viollet](https://github.com/AViollet74).
