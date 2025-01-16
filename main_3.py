@@ -5,18 +5,14 @@ import functions.function_motor as motor
 import functions.function_vibration as vibration
 
 
-
-
-
-# import RPi.GPIO as GPIO
 from gpiozero import LED
 from time import sleep
 import tkinter as tk 
 from screeninfo import get_monitors
 import sys
+from time import time
 
 import os
-import random
 
 ################################################################################################################################
 ### Object properties 
@@ -29,10 +25,7 @@ black_image_path = "/home/alchemy/black_image.png"                              
 
 sequence = sorted(os.listdir(base_path), key=lambda x: int(x.split('.')[0]))
 sequence= [os.path.join(base_path,name) for name in sequence]
-print(sequence)                                                                        #List of image paths 
 nb_layers = len([f for f in os.listdir(base_path) if os.path.isfile(os.path.join(base_path, f))])       
-
-
 layers_state_path = f"/home/alchemy/LAYERS/{file_name}.txt"                                             #file containing the layer's state of the print
 try:
     with open(layers_state_path, "r") as f:
@@ -40,41 +33,39 @@ try:
         layers_state_values = [int(line.strip()) for line in f.readlines()]
 except Exception as e:
     print(f"An error occurred while reading the file: {e}")
-#layers_state_values = [random.choice([0, 1]) for _ in range(nb_layers)]
 
 # Control that the numbre of layers are matching
 if nb_layers!=len(layers_state_values):
     print(f"number of layer not consistent: {nb_layers} in print and {len(layers_state_values)} in layer definition")
     sys.exit("error")
+else :
+    pass
 
 # Layer thickness definition
-layer_thickness=float(input("layer thickness in mm"))
+layer_thickness=(input("layer thickness in mm (ENTER for default value (0.08))"))
 if not layer_thickness:
-    layer_thickness=0.2
+    layer_thickness=0.08
+else :
+    layer_thickness=float(layer_thickness)
 layer_index=0                                                                                           #Determines the current layer
-Particles_state=1                                                                                       #Determines if the particles are dispersed or not 
+Particles_state=1                                                                                       #Determines if the particles are dispersed or not (initial state : dispersed particle) 
 
 ################################################################################################################################
 
 
 
 
-###############################################################
+################################################################################################################################### 
 ### Initialisation of the hardware components (GPIO pins assignation)
 
 #Motor magnets 
-l_container=float(input("size of resin container in mm (for magnet movement definition)"))
+l_container=(input("size of resin container in mm (ENTER for default value (72))"))
+if not l_container:
+    l_container=72
+else:
+    l_container=float(l_container)
 # while True:
-response = input("rotate lead screw to place Magnet and press enter").strip().lower()
-    # break
-    # if response == "yes":
-    #     break
-    # elif response == "no":
-    #     distance=input("What distance from side in mm?")
-    #     time=distance*0.25 #-> 4mm par seconde
-    #     motor.move_dist_time_dir_2(distance, time, 1)
-    # else:
-    #    pass
+response = input("rotate lead screw to place Magnet and press ENTER").strip().lower()
 print("Magnets setting success")
 
 # Dispersion elements - vibration motors
@@ -88,7 +79,7 @@ uv_pin = uv.init_uv()
 print("UV light setup success")
 
 #Photoelctric sensor
-sensor_pin = sensor.init_sensor()                                                                       #le setup GPIO qui va faire fonctionner le sensor est présente dans la fontion start_position_1(sensor_pin)
+sensor_pin = sensor.init_sensor()                                                                                                                                                                                                                #le setup GPIO qui va faire fonctionner le sensor est présente dans la fontion start_position_1(sensor_pin)
 print("photo sensor setup success")
 
 #GUI creation with TkInter 
@@ -96,7 +87,6 @@ for m in get_monitors():
     print("INFO", str(m))
 
 monitors = get_monitors()
-# print(type(monitors))
 monitor=display.name_selection('HDMI-1')                                                                # port for the LCD screen
 x_shift = monitor.x
 y_shift = monitor.y
@@ -115,13 +105,10 @@ cnv.pack(fill=tk.BOTH, expand=True)
 
 ################################################################################################################################
 ###Conversion of the images paths to Image Objects
-print("a")
 black_image_tk  = display.convert_full_0(black_image_path, w_root, h_root, monitors)                    #Convert black image path to black image object, with full screen dimensions                                         
-print("b")
 image_paths = display.convert_list(base_path, nb_layers)
-print("c")
-images_tk = display.convert_full_1(sequence, w_root, h_root, monitors)
-print("d")     
+# images_tk = display.convert_full_1(sequence, w_root, h_root, monitors)                                #Too demanding for memory, leads to drop in performance for high number of layers
+subset_imagetk=1
 ################################################################################################################################
 
 ################################################################################################################################
@@ -141,68 +128,105 @@ while True:
         break
     else:
        pass
+
 sleep(2)
+
 ## Start MAIN 
-for i in range(len(images_tk)):
-    #move ztable by 1 layer thickness
-    print(f"printing layer {i}")
-    motor.move_dist_dir_1(layer_thickness,1) 
-    Z_table_pos+=layer_thickness
-    layer_index+=1
-    display.show_image(cnv, w_root, h_root, black_image_tk)
-    root.update_idletasks()
-    root.update()
+for j in range(0,nb_layers, subset_imagetk):                                                            # double loop over the image objects can be used to improve performance of the printer by creating a subset of image objects each time
+    images_tk=display.convert_full_1(sequence[j:j+subset_imagetk], w_root, h_root, monitors)            # by default, size of subset of image objects i set to 1
+    for i in range(len(images_tk)): 
+        start_time=time()
+        percentage=(i+j)/nb_layers*100
+        print(f"printing layer {i+j}_________________________________{percentage:.1f}% Complete")
+        motor.move_dist_dir_1(2,1)
+        sleep(3)
+        motor.move_dist_dir_1(2-layer_thickness,-1)
+        sleep(2)
+        # motor.move_dist_dir_1(layer_thickness,1)
 
-
-    ##  PARTICLES ACTUATION IN THE CONTAINER
-    #Consider state of particles and compare to instructions
-    if layers_state_values[layer_index] != Particles_state:
-        motor.move_dist_dir_1(24, 1)                                                                    #Move table up to empty the contianer       
-
-        if Particles_state==1:
-            # motor.move_dist_dir_2((210/2+l_container/2)/4,1)
-            motor.move_dist_time_dir_released_2((210/2+l_container/2),30,1)
-            sleep(2)
-            # motor.move_dist_dir_2((210/2+l_container/2)/4,1)
-            # sleep(2)
-            # motor.move_dist_dir_2((210/2+l_container/2)/4,1)
-            # sleep(2)
-            # motor.move_dist_dir_2((210/2+l_container/2)/4,1)
-            # sleep(2)
-
-            Particles_state=0
-        else:
-            # motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
-            motor.move_dist_time_dir_released_2((210/2+l_container/2),30,-1)
-            sleep(2)
-            # motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
-            # sleep(2)   
-            # motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
-            # sleep(2)   
-            # motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
-            # sleep(2)        
-            vibration.activate_v(motors, time_on)
-            Particles_state=1    
-
-        motor.move_dist_dir_1(24, -1 )                                                            #Move table down to initial position
+        Z_table_pos+=layer_thickness
+        layer_index+=1
         
-
-    uv.switch_on(uv_pin) #ici c'est paris
-    display.show_image(cnv, w_root, h_root, images_tk[i])
-    root.update_idletasks()
-    root.update()
-    sleep(4)                                                                                            #Time to polymerize layer tbd by using Jacob's equation
-    uv.switch_off(uv_pin)
-
-
-    if i == len(images_tk)-1:
-        display.show_image(cnv, w_root, h_root, black_image_tk)        
+        display.show_image(cnv, w_root, h_root, black_image_tk)
         root.update_idletasks()
         root.update()
-        print("End of the printing")
-        root.bind('<Escape>', lambda e: root.quit())   
-    else:
-        pass
+
+
+        ##  PARTICLES ACTUATION IN THE CONTAINER      
+        if layer_index<=3:
+            cure_time =96                                                                               # 12 for commercial resin, 96 for custom resin 1, 
+        else:
+            cure_time=33                                                                                # 2.8 for commercial resin, 25 for custom resin 1, 
+        attract_time =60                                                                                # steady magnet time in seconds
+        vibration_time=300                                                                              # vibration time in seconds
+    ##  PARTICLES ACTUATION IN THE CONTAINER
+    #Consider state of particles and compare to instructions
+        if layers_state_values[layer_index] != Particles_state:
+            motor.move_dist_dir_1(8, 1)                                                            #Move table up to empty the contianer       
+            sleep(10)
+            motor.move_dist_dir_1(8, 1)                                                            #Move table up to empty the contianer       
+            sleep(10)
+            motor.move_dist_dir_1(8, 1)                                                            #Move table up to empty the contianer       
+            sleep(10)
+            motor.move_dist_dir_1(8, 1)                                                            #Move table up to empty the contianer       
+            sleep(10)
+
+            if Particles_state==1:
+                Particles_state=0
+            #     motor.move_dist_dir_2((210/2+l_container/2),1)                                          #Move to the other size of the resin container
+            #     sleep(attract_time)                                                                     #Time to slepp to gather particlesto side
+            #     temp_position=0
+            #     while temp_position<l_container:                                                        #Back and forth movement to gather most of the particles with the magnet
+            #         motor.move_dist_dir_2(9,-1)
+            #         sleep(attract_time)
+            #         motor.move_dist_dir_2(3,1)
+            #         sleep(attract_time)
+            #         temp_position+=6
+
+            else:
+            #     # motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
+            #     motor.move_dist_dir_2((210/2+l_container/2-l_container),-1)
+            #     sleep(2)      
+            #     vibration.activate_v(motors, vibration_time)                                            # 200s of agitation
+                Particles_state=1
+            input("press enter to continue")    
+
+            motor.move_dist_dir_1(8, -1 )                                                              #Move table down to initial position  
+            sleep(10)
+            motor.move_dist_dir_1(8, -1 )                                                              #Move table down to initial position  
+            sleep(10)
+            motor.move_dist_dir_1(8, -1 )                                                              #Move table down to initial position  
+            sleep(10)
+            motor.move_dist_dir_1(8, -1 )                                                              #Move table down to initial position  
+            sleep(10)
+
+
+
+        uv.switch_on(uv_pin)
+        display.show_image(cnv, w_root, h_root, images_tk[i])
+        root.update_idletasks()
+        root.update()
+        sleep(cure_time)
+        uv.switch_off(uv_pin)
+        sleep(2)
+
+
+        end_time=time()
+        delta_time=end_time-start_time
+        print(f"deltatime={delta_time} seconds")
+
+
+        if i == len(images_tk)-1:
+            display.show_image(cnv, w_root, h_root, black_image_tk)        
+            root.update_idletasks()
+            root.update()
+            print("End of the printing")
+            root.bind('<Escape>', lambda e: root.quit())   
+        else:
+            pass
+
+################################################################################################################################
+
 root.mainloop()
 
 
