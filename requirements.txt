@@ -1,9 +1,0 @@
-gpiozero==2.0
-grovepi==1.0.4
-Pillow
-RPi.GPIO
-svgwrite
-scikit-learn
-ipython
-adafruit-circuitpython-motorkit
-screeninfo==0.8.1
