@@ -171,6 +171,7 @@ for j in range(0,nb_layers, subset_imagetk):                                    
             motor.move_dist_dir_1(8, 1)                                                            #Move table up to empty the contianer       
             sleep(10)
 
+
             if Particles_state==1:
                 Particles_state=0
             #     motor.move_dist_dir_2((210/2+l_container/2),1)                                          #Move to the other size of the resin container
