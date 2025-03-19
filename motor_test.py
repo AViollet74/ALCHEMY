@@ -43,8 +43,35 @@ kit = MotorKit(i2c=board.I2C())
 
 
 print("Forward SINGLE")
-for i in range(1000):
-    kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.SINGLE)          
+
+
+motor.move_dist_dir_1(80,1)
+sleep(5)
+motor.move_dist_dir_2(8,-1)
+sleep(2)
+motor.move_dist_dir_2(8,1)
+sleep(2)
+motor.move_dist_dir_2(8,-1)
+# for i in range(1000):
+#     kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.SINGLE)          
+
+# l_container=72
+# attract_time=20
+# motor.move_dist_dir_2((210/2+l_container/2),1)                                          #Move to the other size of the resin container
+# sleep(attract_time)                                                                     #Time to slepp to gather particlesto side
+# temp_position=0
+# while temp_position<l_container:                                                        #Back and forth movement to gather most of the particles with the magnet
+#     motor.move_dist_dir_2(9,-1)
+#     sleep(attract_time)
+#     motor.move_dist_dir_2(3,1)
+#     sleep(attract_time)
+#     temp_position+=6
+
+
+
+
+
+
 
 # print("ending 1")
 # kit.stepper2.release()
