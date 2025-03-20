@@ -71,60 +71,60 @@ def move_dist_time_dir_1(distance, temps, sens, ID):
     
     
     
-def forward():
-    GPIO.output(ENA, GPIO.HIGH)
-    # GPIO.output(ENAI, GPIO.HIGH)
-    # print('ENA set to HIGH - Controller Enabled')
-    #
-    sleep(.5) # pause due to a possible change direction
-    GPIO.output(DIR, GPIO.LOW)
-    # GPIO.output(DIRI, GPIO.LOW)
-    # print('DIR set to LOW - Moving Forward at ' + str(delay))
-    # print('Controller PUL being driven.')
-    for x in range(durationFwd): 
-        GPIO.output(PUL, GPIO.HIGH)
-        sleep(delay)
-        GPIO.output(PUL, GPIO.LOW)
-        sleep(delay)
-    GPIO.output(ENA, GPIO.LOW)
-    GPIO.output(ENAI, GPIO.LOW)
-    print('ENA set to LOW - Controller Disabled')
-    sleep(.5) # pause for possible change direction
-    return
-#
-#
-def reverse():
-    GPIO.output(ENA, GPIO.HIGH)
-    GPIO.output(ENAI, GPIO.HIGH)
-    print('ENA set to HIGH - Controller Enabled')
-    #
-    sleep(.5) # pause due to a possible change direction
-    GPIO.output(DIR, GPIO.HIGH)
-    GPIO.output(DIRI, GPIO.HIGH)
-    print('DIR set to HIGH - Moving Backward at ' + str(delay))
-    print('Controller PUL being driven.')
-    #
-    for y in range(durationBwd):
-        GPIO.output(PUL, GPIO.HIGH)
-        sleep(delay)
-        GPIO.output(PUL, GPIO.LOW)
-        sleep(delay)
-    GPIO.output(ENA, GPIO.LOW)
-    GPIO.output(ENAI, GPIO.LOW)
-    print('ENA set to LOW - Controller Disabled')
-    sleep(.5) # pause for possible change direction
-    return
+# def forward():
+#     GPIO.output(ENA, GPIO.HIGH)
+#     # GPIO.output(ENAI, GPIO.HIGH)
+#     # print('ENA set to HIGH - Controller Enabled')
+#     #
+#     sleep(.5) # pause due to a possible change direction
+#     GPIO.output(DIR, GPIO.LOW)
+#     # GPIO.output(DIRI, GPIO.LOW)
+#     # print('DIR set to LOW - Moving Forward at ' + str(delay))
+#     # print('Controller PUL being driven.')
+#     for x in range(durationFwd): 
+#         GPIO.output(PUL, GPIO.HIGH)
+#         sleep(delay)
+#         GPIO.output(PUL, GPIO.LOW)
+#         sleep(delay)
+#     GPIO.output(ENA, GPIO.LOW)
+#     GPIO.output(ENAI, GPIO.LOW)
+#     print('ENA set to LOW - Controller Disabled')
+#     sleep(.5) # pause for possible change direction
+#     return
+# #
 
-while cyclecount < cycles:
-    forward()
-    reverse()
-    cyclecount = (cyclecount + 1)
-    print('Number of cycles completed: ' + str(cyclecount))
-    print('Number of cycles remaining: ' + str(cycles - cyclecount))
-#
-GPIO.cleanup()
-print('Cycling Completed')
-#
+# def reverse():
+#     GPIO.output(ENA, GPIO.HIGH)
+#     GPIO.output(ENAI, GPIO.HIGH)
+#     print('ENA set to HIGH - Controller Enabled')
+#     #
+#     sleep(.5) # pause due to a possible change direction
+#     GPIO.output(DIR, GPIO.HIGH)
+#     GPIO.output(DIRI, GPIO.HIGH)
+#     print('DIR set to HIGH - Moving Backward at ' + str(delay))
+#     print('Controller PUL being driven.')
+#     #
+#     for y in range(durationBwd):
+#         GPIO.output(PUL, GPIO.HIGH)
+#         sleep(delay)
+#         GPIO.output(PUL, GPIO.LOW)
+#         sleep(delay)
+#     GPIO.output(ENA, GPIO.LOW)
+#     GPIO.output(ENAI, GPIO.LOW)
+#     print('ENA set to LOW - Controller Disabled')
+#     sleep(.5) # pause for possible change direction
+#     return
+
+# while cyclecount < cycles:
+#     forward()
+#     reverse()
+#     cyclecount = (cyclecount + 1)
+#     print('Number of cycles completed: ' + str(cyclecount))
+#     print('Number of cycles remaining: ' + str(cycles - cyclecount))
+# #
+# GPIO.cleanup()
+# print('Cycling Completed')
+# #
 
 
             
