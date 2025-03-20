@@ -18,8 +18,17 @@ ENA = 22  # Controller Enable Bit (High to Enable / LOW to Disable).
 # NOTE: Leave DIR and ENA disconnected, and the controller WILL drive the motor in Default direction if PUL is applied.
 # 
 ## MOTOR1 (Z-table)
-def move_dist_time_dir_1(distance, temps, sens):
-        # for p in piezos:
+def move_dist_time_dir_1(distance, temps, sens, ID):
+    
+    if ID==1:
+        PUL = 22  # Stepper Drive Pulses
+        DIR = 23  # Controller Direction Bit (High for Controller default / LOW to Force a Direction Change).
+        ENA = 24 
+    else:
+        PUL=6
+        DIR=12
+        ENA=16
+        
     chip=gpiod.Chip("gpiochip0")
     linePUL=chip.get_line(PUL)
     linePUL.request(consumer="piezo",type=gpiod.LINE_REQ_DIR_OUT)
@@ -29,106 +38,49 @@ def move_dist_time_dir_1(distance, temps, sens):
     lineENA.request(consumer="piezo",type=gpiod.LINE_REQ_DIR_OUT)
     
     step_num = round(distance/8*360/1.8)
-    sleep_time = temps/step_num
+    sleep_time = temps/step_num       #temps d'attente entre chaque step (diviser par deux car haut puis bas)
     
     if sens > 0:
-        start_time = monotonic()
+        # start_time = monotonic()
+        lineENA.set_value(1)
+        sleep(0.1)
+        lineDIR.set_value(0)
+        sleep(0.1)
+        for i in range(step_num):
+            linePUL.set_value(1)
+            sleep(sleep_time/2)
+            linePUL.set_value(0)
+        lineENA.set_value(0)
+
+        
+        
         """reste a implémenter et traduire le mouvement forward"""
-        # for i in range(step_num):
-        #     kit.stepper1.onestep(direction=stepper.FORWARD, style=stepper.DOUBLE)
-        #             # Wait for the delay without blocking other processes
-        #     while monotonic() - start_time < sleep_time:
-        #         pass
-        #     start_time=monotonic()
     else :
-        start_time = monotonic()
-        """reste à implémenter et traduire le mode forward"""
-        # for i in range(step_num):
-        #     kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
-        #     while monotonic() - start_time < sleep_time:
-        #         pass
-        #     start_time=monotonic()
-
-    
-    
-
-
-
-
-
-
-
-
-
-# def setup_controller(motors):
-#     """Set the pins present in the pins list as outputs"""
-#     if motors==[]:
-#         return()
-#     else:
-#         # for p in piezos:
-#         chip=gpiod.Chip("gpiochip0")
-#         line=chip.get_lines(motors)
-#         line.request(consumer="piezo",type=gpiod.LINE_REQ_DIR_OUT)
-#         return()
-
-
-# GPIO.setmode(GPIO.BCM)
-# GPIO.setup(PUL, GPIO.OUT)
-# GPIO.setup(DIR, GPIO.OUT)
-# GPIO.setup(ENA, GPIO.OUT)
-# GPIO.setup(DIRI, GPIO.OUT)
-# GPIO.setup(ENAI, GPIO.OUT)
-#
-# Could have usesd only one DURATION constant but chose two. This gives play options.
-durationFwd = 5000 # This is the duration of the motor spinning. used for forward direction
-durationBwd = 5000 # This is the duration of the motor spinning. used for reverse direction
-print('Duration Fwd set to ' + str(durationFwd))
-print('Duration Bwd set to ' + str(durationBwd))
-#
-delay = 0.0000001 # This is actualy a delay between PUL pulses - effectively sets the mtor rotation speed.
-print('Speed set to ' + str(delay))
-#
-cycles = 1000 # This is the number of cycles to be run once program is started.
-cyclecount = 0 # This is the iteration of cycles to be run once program is started.
-print('number of Cycles to Run set to ' + str(cycles))
-#
-#
-
-
-
-
-# def activate_v(motors, time_on):
-#     """Actuation of the piezo element(s) for a given time
-#        Args:   piezos: list of int GPIO pin number(s)
-#                time_on: int activation time
-#                freq: int frequency
-#     """ 
-#     if motors==[] or time_on==0  or time_on<0  or not motors:
-#         return()
-#     else:
-#         chip=gpiod.Chip("gpiochip0")
-#         line=chip.get_lines(motors)
-#         line.request(consumer="main",type=gpiod.LINE_REQ_DIR_OUT)
-#         print("vibration start")
-#         line.set_values([1 for _ in range(len(motors))])
-#         sleep(time_on) 
-#         line.set_values([0 for _ in range(len(motors))])                          #line.set_value([value]), set the line to the given value, 0 for low, 1 for high
-#         print("vibration end")
-#         return()
-    
+        # start_time = monotonic()
+        lineENA.set_value(1)
+        sleep(0.1)
+        lineDIR.set_value(1)
+        sleep(0.1)
+        for i in range(step_num):
+            linePUL.set_value(1)
+            sleep(sleep_time/2)
+            linePUL.set_value(0)
+        lineENA.set_value(0)
+        
+        """reste à implémenter et traduire le mode backward"""
     
     
     
 def forward():
     GPIO.output(ENA, GPIO.HIGH)
-    GPIO.output(ENAI, GPIO.HIGH)
-    print('ENA set to HIGH - Controller Enabled')
+    # GPIO.output(ENAI, GPIO.HIGH)
+    # print('ENA set to HIGH - Controller Enabled')
     #
     sleep(.5) # pause due to a possible change direction
     GPIO.output(DIR, GPIO.LOW)
-    GPIO.output(DIRI, GPIO.LOW)
-    print('DIR set to LOW - Moving Forward at ' + str(delay))
-    print('Controller PUL being driven.')
+    # GPIO.output(DIRI, GPIO.LOW)
+    # print('DIR set to LOW - Moving Forward at ' + str(delay))
+    # print('Controller PUL being driven.')
     for x in range(durationFwd): 
         GPIO.output(PUL, GPIO.HIGH)
         sleep(delay)
@@ -175,32 +127,6 @@ print('Cycling Completed')
 #
 
 
-
-
-## MOTOR1 (Z-table)
-def move_dist_time_dir_1(distance, temps, sens):
-    """Move the building platform
-    Args : distance in mm, time in seconds, direction in integer (1: forward, -1: backward)"""
-    
-    # print(f"Stepper motor moves by {distance}mm in {temps}s, in direction {sens}")
-    step_num = round(distance/8*360/1.8)
-    sleep_time = temps/step_num
-    if sens > 0:
-        start_time = monotonic()
-        for i in range(step_num):
-            kit.stepper1.onestep(direction=stepper.FORWARD, style=stepper.DOUBLE)
-                    # Wait for the delay without blocking other processes
-            while monotonic() - start_time < sleep_time:
-                pass
-            start_time=monotonic()
-    else :
-        start_time = monotonic()
-        for i in range(step_num):
-            kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
-            while monotonic() - start_time < sleep_time:
-                pass
-            start_time=monotonic()
-            
             
             
             
