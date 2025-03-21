@@ -17,7 +17,7 @@ ENA = 22  # Controller Enable Bit (High to Enable / LOW to Disable).
 # NOTE: Leave DIR and ENA disconnected, and the controller WILL drive the motor in Default direction if PUL is applied.
 # 
 ## MOTOR1 (Z-table)
-def move_dist_time_dir_1(distance, temps, sens, ID):
+def move_dist_time_dir_dm(distance, temps, sens, ID):
     
     if ID==1:
         PUL = 22  # Stepper Drive Pulses
@@ -27,7 +27,7 @@ def move_dist_time_dir_1(distance, temps, sens, ID):
         PUL=6
         DIR=12
         ENA=16
-        
+    print("access funciton")
     chip=gpiod.Chip("gpiochip0")
     linePUL=chip.get_line(PUL)
     linePUL.request(consumer="piezo",type=gpiod.LINE_REQ_DIR_OUT)
@@ -67,6 +67,7 @@ def move_dist_time_dir_1(distance, temps, sens, ID):
         lineENA.set_value(0)
         
         """reste à implémenter et traduire le mode backward"""
+    return
     
     
     

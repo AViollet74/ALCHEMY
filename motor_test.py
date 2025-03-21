@@ -6,6 +6,7 @@ from adafruit_motorkit import MotorKit
 import functions.function_motor as motor
 import functions.function_photosensor as sensor
 from time import sleep
+import functions.function_motor2 as motor2
 
 # Below initialises the variable kit to be our I2C Connected Adafruit Motor HAT
 kit = MotorKit(i2c=board.I2C())
@@ -45,13 +46,25 @@ kit = MotorKit(i2c=board.I2C())
 print("Forward SINGLE")
 
 
-motor.move_dist_dir_1(80,1)
-sleep(5)
-motor.move_dist_dir_2(8,-1)
-sleep(2)
-motor.move_dist_dir_2(8,1)
-sleep(2)
-motor.move_dist_dir_2(8,-1)
+# motor.move_dist_dir_1(80,1)
+# sleep(5)
+# motor.move_dist_dir_2(8,-1)
+# sleep(2)
+# motor.move_dist_dir_2(8,1)
+# sleep(2)
+# motor.move_dist_dir_2(8,-1)
+
+
+
+
+motor2.move_dist_time_dir_dm(8, 5, 1, 1)
+
+
+
+
+
+
+
 # for i in range(1000):
 #     kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.SINGLE)          
 
