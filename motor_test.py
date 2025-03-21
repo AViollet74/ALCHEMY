@@ -57,9 +57,6 @@ print("Forward SINGLE")
 
 
 
-motor2.move_dist_time_dir_dm(8, 5, 1, 1)
-
-
 
 
 

@@ -27,7 +27,7 @@ def move_dist_time_dir_dm(distance, temps, sens, ID):
         PUL=6
         DIR=12
         ENA=16
-    print("access funciton")
+        
     chip=gpiod.Chip("gpiochip0")
     linePUL=chip.get_line(PUL)
     linePUL.request(consumer="piezo",type=gpiod.LINE_REQ_DIR_OUT)
@@ -36,27 +36,32 @@ def move_dist_time_dir_dm(distance, temps, sens, ID):
     lineENA=chip.get_line(ENA)
     lineENA.request(consumer="piezo",type=gpiod.LINE_REQ_DIR_OUT)
     
-    step_num = round(distance/8*360/1.8)
+    stepfactor=2
+    step_num = round(distance/8*360/1.8*stepfactor)
+    
     sleep_time = temps/step_num       #temps d'attente entre chaque step (diviser par deux car haut puis bas)
     
+    on=0
+    off=1
     if sens > 0:
         # start_time = monotonic()
-        lineENA.set_value(1)
+        lineENA.set_value(on)
         sleep(0.1)
         lineDIR.set_value(0)
         sleep(0.1)
         for i in range(step_num):
             linePUL.set_value(1)
+            print("val")
             sleep(sleep_time/2)
             linePUL.set_value(0)
-        lineENA.set_value(0)
+        lineENA.set_value(off)
 
         
         
         """reste a implémenter et traduire le mouvement forward"""
     else :
         # start_time = monotonic()
-        lineENA.set_value(1)
+        lineENA.set_value(on)
         sleep(0.1)
         lineDIR.set_value(1)
         sleep(0.1)
@@ -64,7 +69,7 @@ def move_dist_time_dir_dm(distance, temps, sens, ID):
             linePUL.set_value(1)
             sleep(sleep_time/2)
             linePUL.set_value(0)
-        lineENA.set_value(0)
+        lineENA.set_value(off)
         
         """reste à implémenter et traduire le mode backward"""
     return
