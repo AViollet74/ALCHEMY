@@ -2,7 +2,6 @@
 # Route 3.3 VDC to the controller "+" input for each: ENA, PUL, and DIR
 #
 from time import sleep
-import RPi.GPIO as GPIO
 import gpiod
 from time import sleep
 import time
