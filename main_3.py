@@ -1,9 +1,9 @@
 import functions.function_display as display
 import functions.function_UV as uv
 import functions.function_photosensor as sensor
-import functions.function_motor as motor
+# import functions.function_motor as motor
 import functions.function_vibration as vibration
-
+import functions.function_motor2 as motor2
 
 from gpiozero import LED
 from time import sleep
@@ -117,12 +117,12 @@ subset_imagetk=1
 while True:
     response = input("Is 0-position set? (yes/no): ").strip().lower()
     if response == "yes":
-        motor.start_position_1(sensor_pin)
+        motor2.start_position_1(sensor_pin)
         Z_table_pos=0
         break
     elif response == "no":
         print("setting")
-        motor.start_position_1(sensor_pin)                                                               # go down to the screen
+        motor2.start_position_1(sensor_pin)                                                               # go down to the screen
         Z_table_pos=0
         input("After settting: Press Enter to continue...")
         break
@@ -138,12 +138,10 @@ for j in range(0,nb_layers, subset_imagetk):                                    
         start_time=time()
         percentage=(i+j)/nb_layers*100
         print(f"printing layer {i+j}_________________________________{percentage:.1f}% Complete")
-        motor.move_dist_dir_1(2,1)
-        sleep(3)
-        motor.move_dist_dir_1(2-layer_thickness,-1)
+        motor2.move_dist_time_dir_dm(2,0.5, 1,1)
         sleep(2)
-        # motor.move_dist_dir_1(layer_thickness,1)
-
+        motor2.move_dist_time_dir_dm(2-layer_thickness,0.5,-1,1)
+        sleep(2)
         Z_table_pos+=layer_thickness
         layer_index+=1
         
@@ -157,49 +155,30 @@ for j in range(0,nb_layers, subset_imagetk):                                    
             cure_time =96                                                                               # 12 for commercial resin, 96 for custom resin 1, 
         else:
             cure_time=33                                                                                # 2.8 for commercial resin, 25 for custom resin 1, 
-        attract_time =60                                                                                # steady magnet time in seconds
-        vibration_time=300                                                                              # vibration time in seconds
+        attract_time =500                                                                                # steady magnet time in seconds
+        vibration_time=400                                                                              # vibration time in seconds
     ##  PARTICLES ACTUATION IN THE CONTAINER
     #Consider state of particles and compare to instructions
         if layers_state_values[layer_index] != Particles_state:
-            motor.move_dist_dir_1(8, 1)                                                            #Move table up to empty the contianer       
-            sleep(10)
-            motor.move_dist_dir_1(8, 1)                                                            #Move table up to empty the contianer       
-            sleep(10)
-            motor.move_dist_dir_1(8, 1)                                                            #Move table up to empty the contianer       
-            sleep(10)
-            motor.move_dist_dir_1(8, 1)                                                            #Move table up to empty the contianer       
-            sleep(10)
+            motor2.move_dist_time_dir_dm(32, 8, 1, 1)
 
 
             if Particles_state==1:
                 Particles_state=0
-            #     motor.move_dist_dir_2((210/2+l_container/2),1)                                          #Move to the other size of the resin container
-            #     sleep(attract_time)                                                                     #Time to slepp to gather particlesto side
-            #     temp_position=0
-            #     while temp_position<l_container:                                                        #Back and forth movement to gather most of the particles with the magnet
-            #         motor.move_dist_dir_2(9,-1)
-            #         sleep(attract_time)
-            #         motor.move_dist_dir_2(3,1)
-            #         sleep(attract_time)
-            #         temp_position+=6
-
+                motor2.move_dist_time_dir_dm((210/2-l_container/2), 10,1,2)                                #Move to the side of the resin container
+                sleep(1)
+                motor2.move_dist_time_dir_dm(l_container, attract_time,1, 2)                              #ove to the other side of the resin container
             else:
-            #     # motor.move_dist_dir_2((210/2+l_container/2)/4,-1)
-            #     motor.move_dist_dir_2((210/2+l_container/2-l_container),-1)
-            #     sleep(2)      
-            #     vibration.activate_v(motors, vibration_time)                                            # 200s of agitation
+                motor2.move_dist_time_dir_dm(l_container/2,30,-1,2)
+                sleep(1)    
+                motor2.move_dist_time_dir_dm((210/2-l_container/2), 10,-1,2)
+                sleep(1)
+                vibration.activate_v(motors, vibration_time)                                            # 200s of agitation
                 Particles_state=1
-            input("press enter to continue")    
-
-            motor.move_dist_dir_1(8, -1 )                                                              #Move table down to initial position  
-            sleep(10)
-            motor.move_dist_dir_1(8, -1 )                                                              #Move table down to initial position  
-            sleep(10)
-            motor.move_dist_dir_1(8, -1 )                                                              #Move table down to initial position  
-            sleep(10)
-            motor.move_dist_dir_1(8, -1 )                                                              #Move table down to initial position  
-            sleep(10)
+            # input("press enter to continue") 
+            motor2.move_dist_time_dir_dm(32, 8, -1, 1)   
+        else:
+            pass
 
 
 

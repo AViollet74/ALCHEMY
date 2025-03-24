@@ -28,7 +28,6 @@ def move_dist_time_dir_dm(distance, temps, sens, ID):
         DIR=20
         ENA=26
     
-    print(PUL, ENA, DIR)
     chip=gpiod.Chip("gpiochip0")
     linePUL=chip.get_line(PUL)
     linePUL.request(consumer="piezo",type=gpiod.LINE_REQ_DIR_OUT)
@@ -70,3 +69,35 @@ def move_dist_time_dir_dm(distance, temps, sens, ID):
             sleep(sleep_time/2)
         lineENA.set_value(off)
     return
+
+
+
+
+################################################################################################################################################################################
+
+
+
+def start_position_1(sensor_pin):
+    """Move the building platform downward, to the starting position (until the photosensor is not reached) by activating the stepper motor in the backrward direction
+    Args : GPIO pin number of the photosensor."""
+    
+    print("Stepper motor goes to start position")
+    chip=gpiod.Chip("gpiochip0")
+    line=chip.get_line(sensor_pin)
+    line.request(consumer="sensor",type=gpiod.LINE_REQ_DIR_IN)
+    linePUL=chip.get_line(22)
+    linePUL.request(consumer="piezo",type=gpiod.LINE_REQ_DIR_OUT)
+    lineDIR=chip.get_line(23)
+    lineDIR.request(consumer="piezo",type=gpiod.LINE_REQ_DIR_OUT)
+    lineENA=chip.get_line(24)
+    lineENA.request(consumer="piezo",type=gpiod.LINE_REQ_DIR_OUT)
+    lineENA.set_value(1)
+    sleep(0.1)
+    lineDIR.set_value(1)
+    sleep(0.1)
+    while line.get_value() == 1:
+        linePUL.set_value(1)
+        sleep(1/400)
+        linePUL.set_value(0)
+        sleep(1/400)        
+    print("Start position reached")

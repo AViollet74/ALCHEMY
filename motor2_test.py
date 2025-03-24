@@ -1,10 +1,3 @@
-# Below imports all neccessary packages to make this Python Script run
-# import time
-# import board
-# from adafruit_motor import stepper #removed for some reasons
-# from adafruit_motorkit import MotorKit
-# import functions.function_motor as motor
-# import functions.function_photosensor as sensor
 from time import sleep
 import functions.function_motor2 as motor2
 ID=1
