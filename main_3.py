@@ -163,6 +163,8 @@ for j in range(0,nb_layers, subset_imagetk):                                    
             motor2.move_dist_time_dir_dm(32, 8, 1, 1)
 
 
+
+
             if Particles_state==1:
                 Particles_state=0
                 motor2.move_dist_time_dir_dm((210/2-l_container/2), 10,1,2)                                #Move to the side of the resin container
