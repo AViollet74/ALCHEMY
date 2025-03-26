@@ -7,7 +7,7 @@ import tkinter as tk
 from screeninfo import get_monitors
 time_test=float(input("time tested"))
 monitors = get_monitors()
-monitor = display.name_selection('HDMI-1')
+monitor = display.name_selection('HDMI-2')
 x_shift = monitor.x
 y_shift = monitor.y
 w_root = monitor.width
