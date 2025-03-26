@@ -20,7 +20,7 @@ cnv.pack(fill=tk.BOTH, expand=True)
 
 # time_test=float(input("time tested"))
 # black_image_tk  = display.convert_full_0("/home/alchemy/square.png", w_root, h_root, monitors)
-black_image_tk  = display.convert_full_0("/home/alchemy/rectangle.png", w_root, h_root, monitors)
+black_image_tk  = display.convert_full_0("/home/alchemy/square.png", w_root, h_root, monitors)
 
 
 uv_pin = 27

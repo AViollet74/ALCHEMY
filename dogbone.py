@@ -154,33 +154,33 @@ for j in range(0,nb_layers, subset_imagetk):                                    
         if layer_index<=3:
             cure_time =96                                                                               # 12 for commercial resin, 96 for custom resin 1, 
         else:
-            cure_time=63                                                                                # 2.8 for commercial resin, 25 for custom resin 1, 
+            cure_time=33                                                                                # 2.8 for commercial resin, 25 for custom resin 1, 
         attract_time =500                                                                                # steady magnet time in seconds
         vibration_time=400                                                                              # vibration time in seconds
     ##  PARTICLES ACTUATION IN THE CONTAINER
     #Consider state of particles and compare to instructions
-        if layers_state_values[layer_index] != Particles_state:
-            motor2.move_dist_time_dir_dm(32, 8, 1, 1)
+        # if layers_state_values[layer_index] != Particles_state:
+        #     motor2.move_dist_time_dir_dm(32, 8, 1, 1)
 
 
 
 
-            if Particles_state==1:
-                Particles_state=0
-                motor2.move_dist_time_dir_dm((210/2-l_container/2), 10,1,2)                                #Move to the side of the resin container
-                sleep(1)
-                motor2.move_dist_time_dir_dm(l_container, attract_time,1, 2)                              #ove to the other side of the resin container
-            else:
-                motor2.move_dist_time_dir_dm(l_container/2,30,-1,2)
-                sleep(1)    
-                motor2.move_dist_time_dir_dm((210/2-l_container/2), 10,-1,2)
-                sleep(1)
-                vibration.activate_v(motors, vibration_time)                                            # 200s of agitation
-                Particles_state=1
-            # input("press enter to continue") 
-            motor2.move_dist_time_dir_dm(32, 8, -1, 1)   
-        else:
-            pass
+        #     if Particles_state==1:
+        #         Particles_state=0
+        #         motor2.move_dist_time_dir_dm((210/2-l_container/2), 10,1,2)                                #Move to the side of the resin container
+        #         sleep(1)
+        #         motor2.move_dist_time_dir_dm(l_container, attract_time,1, 2)                              #ove to the other side of the resin container
+        #     else:
+        #         motor2.move_dist_time_dir_dm(l_container/2,30,-1,2)
+        #         sleep(1)    
+        #         motor2.move_dist_time_dir_dm((210/2-l_container/2), 10,-1,2)
+        #         sleep(1)
+        #         vibration.activate_v(motors, vibration_time)                                            # 200s of agitation
+        #         Particles_state=1
+        #     # input("press enter to continue") 
+        #     motor2.move_dist_time_dir_dm(32, 8, -1, 1)   
+        # else:
+        #     pass
 
 
 
