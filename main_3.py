@@ -87,7 +87,7 @@ for m in get_monitors():
     print("INFO", str(m))
 
 monitors = get_monitors()
-monitor=display.name_selection('HDMI-1')                                                                # port for the LCD screen
+monitor=display.name_selection('HDMI-2')                                                                # port for the LCD screen
 x_shift = monitor.x
 y_shift = monitor.y
 w_root = monitor.width
