@@ -202,7 +202,7 @@ for j in range(0,nb_layers, subset_imagetk):                                    
             display.show_image(cnv, w_root, h_root, black_image_tk)        
             root.update_idletasks()
             root.update()
-            print("End of the printing")
+            # print("End of the printing")
             root.bind('<Escape>', lambda e: root.quit())   
         else:
             pass
