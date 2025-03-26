@@ -20,7 +20,9 @@ print(monitors)
 #         y_shift = monitor.y
 #         w_root = monitor.width
 #         h_root = monitor.height
-monitor = display.name_selection('HDMI-1')
+monitor = display.name_selection('HDMI-2')
+print("monitor selected")
+print(monitor)
 x_shift = monitor.x
 y_shift = monitor.y
 w_root = monitor.width
