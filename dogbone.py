@@ -41,6 +41,10 @@ if nb_layers!=len(layers_state_values):
 else :
     pass
 
+
+
+
+
 # Layer thickness definition
 layer_thickness=(input("layer thickness in mm (ENTER for default value (0.08))"))
 if not layer_thickness:
@@ -101,18 +105,6 @@ cnv = tk.Canvas(root, bg="black", highlightthickness=0)
 cnv.pack(fill=tk.BOTH, expand=True)
 
 ################################################################################################################################
-
-
-################################################################################################################################
-###Conversion of the images paths to Image Objects
-black_image_tk  = display.convert_full_0(black_image_path, w_root, h_root, monitors)                    #Convert black image path to black image object, with full screen dimensions                                         
-image_paths = display.convert_list(base_path, nb_layers)
-# images_tk = display.convert_full_1(sequence, w_root, h_root, monitors)                                #Too demanding for memory, leads to drop in performance for high number of layers
-subset_imagetk=1
-################################################################################################################################
-
-################################################################################################################################
-### MAIN PRINTING
 ## Initialization and zero position of the printing bed
 while True:
     response = input("Is 0-position set? (yes/no): ").strip().lower()
@@ -128,8 +120,18 @@ while True:
         break
     else:
        pass
+################################################################################################################################
 
-sleep(2)
+################################################################################################################################
+###Conversion of the images paths to Image Objects
+black_image_tk  = display.convert_full_0(black_image_path, w_root, h_root, monitors)                    #Convert black image path to black image object, with full screen dimensions                                         
+image_paths = display.convert_list(base_path, nb_layers)
+# images_tk = display.convert_full_1(sequence, w_root, h_root, monitors)                                #Too demanding for memory, leads to drop in performance for high number of layers
+subset_imagetk=1
+################################################################################################################################
+
+################################################################################################################################
+### MAIN PRINTING
 
 ## Start MAIN 
 for j in range(0,nb_layers, subset_imagetk):                                                            # double loop over the image objects can be used to improve performance of the printer by creating a subset of image objects each time
@@ -138,9 +140,9 @@ for j in range(0,nb_layers, subset_imagetk):                                    
         start_time=time()
         percentage=(i+j)/nb_layers*100
         print(f"printing layer {i+j}_________________________________{percentage:.1f}% Complete")
-        motor2.move_dist_time_dir_dm(6,0.5, 1,1)
+        motor2.move_dist_time_dir_dm(2,0.5, 1,1)
         sleep(2)
-        motor2.move_dist_time_dir_dm(6-layer_thickness,0.5,-1,1)
+        motor2.move_dist_time_dir_dm(2-layer_thickness,0.5,-1,1)
         sleep(2)
         Z_table_pos+=layer_thickness
         layer_index+=1
@@ -152,7 +154,7 @@ for j in range(0,nb_layers, subset_imagetk):                                    
 
         ##  PARTICLES ACTUATION IN THE CONTAINER      
         if layer_index<=3:
-            cure_time =100                                                                              # 12 for commercial resin, 96 for custom resin 1, 
+            cure_time =150                                                                               # 12 for commercial resin, 96 for custom resin 1, 
         else:
             cure_time=60                                                                                # 2.8 for commercial resin, 25 for custom resin 1, 
         attract_time =500                                                                                # steady magnet time in seconds

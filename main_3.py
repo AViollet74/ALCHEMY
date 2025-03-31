@@ -101,18 +101,6 @@ cnv = tk.Canvas(root, bg="black", highlightthickness=0)
 cnv.pack(fill=tk.BOTH, expand=True)
 
 ################################################################################################################################
-
-
-################################################################################################################################
-###Conversion of the images paths to Image Objects
-black_image_tk  = display.convert_full_0(black_image_path, w_root, h_root, monitors)                    #Convert black image path to black image object, with full screen dimensions                                         
-image_paths = display.convert_list(base_path, nb_layers)
-# images_tk = display.convert_full_1(sequence, w_root, h_root, monitors)                                #Too demanding for memory, leads to drop in performance for high number of layers
-subset_imagetk=1
-################################################################################################################################
-
-################################################################################################################################
-### MAIN PRINTING
 ## Initialization and zero position of the printing bed
 while True:
     response = input("Is 0-position set? (yes/no): ").strip().lower()
@@ -130,7 +118,18 @@ while True:
        pass
 
 sleep(2)
+################################################################################################################################
 
+################################################################################################################################
+###Conversion of the images paths to Image Objects
+black_image_tk  = display.convert_full_0(black_image_path, w_root, h_root, monitors)                    #Convert black image path to black image object, with full screen dimensions                                         
+image_paths = display.convert_list(base_path, nb_layers)
+# images_tk = display.convert_full_1(sequence, w_root, h_root, monitors)                                #Too demanding for memory, leads to drop in performance for high number of layers
+subset_imagetk=1
+################################################################################################################################
+
+################################################################################################################################
+### MAIN PRINTING
 ## Start MAIN 
 for j in range(0,nb_layers, subset_imagetk):                                                            # double loop over the image objects can be used to improve performance of the printer by creating a subset of image objects each time
     images_tk=display.convert_full_1(sequence[j:j+subset_imagetk], w_root, h_root, monitors)            # by default, size of subset of image objects i set to 1
