@@ -97,12 +97,7 @@ y_shift = monitor.y
 w_root = monitor.width
 h_root = monitor.height
 
-root = tk.Tk()                                                                                          #Tinker window creation
-root.attributes('-fullscreen', True)
-root.geometry(f"{w_root}x{h_root}+{x_shift}+{y_shift}")                                                 #Create a root with width=w_root, heigth=h_root, shifted by x_shift from the left and y_shift from the top of the monitor
 
-cnv = tk.Canvas(root, bg="black", highlightthickness=0)
-cnv.pack(fill=tk.BOTH, expand=True)
 
 ################################################################################################################################
 ## Initialization and zero position of the printing bed
@@ -121,6 +116,15 @@ while True:
     else:
        pass
 ################################################################################################################################
+
+
+root = tk.Tk()                                                                                          #Tinker window creation
+root.attributes('-fullscreen', True)
+root.geometry(f"{w_root}x{h_root}+{x_shift}+{y_shift}")                                                 #Create a root with width=w_root, heigth=h_root, shifted by x_shift from the left and y_shift from the top of the monitor
+
+cnv = tk.Canvas(root, bg="black", highlightthickness=0)
+cnv.pack(fill=tk.BOTH, expand=True)
+
 
 ################################################################################################################################
 ###Conversion of the images paths to Image Objects
