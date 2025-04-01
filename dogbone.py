@@ -62,30 +62,56 @@ Particles_state=1                                                               
 ################################################################################################################################### 
 ### Initialisation of the hardware components (GPIO pins assignation)
 
-#Motor magnets 
-l_container=(input("size of resin container in mm (ENTER for default value (72))"))
-if not l_container:
+SOP=(input("STANDARD OPERATION ?"))
+if not SOP: 
+    layer_thickness=0.08
+    layer_index=0                                                                                           #Determines the current layer
+    Particles_state=1 
     l_container=72
+    
+    motors=[]
+    time_on=200
+    vibration.setup_vibration(motors)
+    uv_pin = 27
+    sensor_pin=4
 else:
-    l_container=float(l_container)
-# while True:
-response = input("rotate lead screw to place Magnet and press ENTER").strip().lower()
-print("Magnets setting success")
+    # Layer thickness definition
+    layer_thickness=(input("layer thickness in mm (ENTER for default value (0.08))"))
+    if not layer_thickness:
+        layer_thickness=0.08
+    else :
+        layer_thickness=float(layer_thickness)
+    layer_index=0                                                                                           #Determines the current layer
+    Particles_state=1                                                                                       #Determines if the particles are dispersed or not (initial state : dispersed particle) 
 
-# Dispersion elements - vibration motors
-motors, time_on=vibration.init_vibration()
-vibration.setup_vibration(motors)
-print("Vibration motors setup success")
+    ################################################################################################################################ 
+    ### Initialisation of the hardware components (GPIO pins assignation)
+
+    #Motor magnets 
+    l_container=(input("size of resin container in mm (ENTER for default value (72))"))
+    if not l_container:
+        l_container=72
+    else:
+        l_container=float(l_container)
+    # while True:
+    response = input("rotate lead screw to place Magnet and press ENTER").strip().lower()
+    print("Magnets setting success")
+
+    # Dispersion elements - vibration motors
+    motors, time_on=vibration.init_vibration()
+    vibration.setup_vibration(motors)
+    print("Vibration motors setup success")
 
 
-#UV ligth
-uv_pin = uv.init_uv()
-print("UV light setup success")
+    #UV ligth
+    uv_pin = uv.init_uv()
+    print("UV light setup success")
 
-#Photoelctric sensor
-sensor_pin = sensor.init_sensor()                                                                                                                                                                                                                #le setup GPIO qui va faire fonctionner le sensor est présente dans la fontion start_position_1(sensor_pin)
-print("photo sensor setup success")
+    #Photoelctric sensor
+    sensor_pin = sensor.init_sensor()                                                                                                                                                                                                                #le setup GPIO qui va faire fonctionner le sensor est présente dans la fontion start_position_1(sensor_pin)
+    print("photo sensor setup success")
 
+###################################################################################################################################
 #GUI creation with TkInter 
 for m in get_monitors():
     print("INFO", str(m))
@@ -96,7 +122,7 @@ x_shift = monitor.x
 y_shift = monitor.y
 w_root = monitor.width
 h_root = monitor.height
-
+###################################################################################################################################
 
 
 ################################################################################################################################
@@ -213,7 +239,7 @@ for j in range(0,nb_layers, subset_imagetk):                                    
         else:
             pass
 
-motor2.move_dist_time_dir_dm(50,20,1,1)
+motor2.move_dist_time_dir_dm(100,30,1,1)
 ################################################################################################################################
 
 root.mainloop()
