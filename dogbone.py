@@ -42,25 +42,13 @@ else :
     pass
 
 
-
-
-
-# Layer thickness definition
-layer_thickness=(input("layer thickness in mm (ENTER for default value (0.08))"))
-if not layer_thickness:
-    layer_thickness=0.08
-else :
-    layer_thickness=float(layer_thickness)
-layer_index=0                                                                                           #Determines the current layer
-Particles_state=1                                                                                       #Determines if the particles are dispersed or not (initial state : dispersed particle) 
-
 ################################################################################################################################
 
 
 
 
 ################################################################################################################################### 
-### Initialisation of the hardware components (GPIO pins assignation)
+### Initialization of printing parameters
 
 SOP=(input("STANDARD OPERATION ?"))
 if not SOP: 
