@@ -92,8 +92,8 @@ else:
     
 ###################################################################################################################################
 #GUI creation with TkInter 
-for m in get_monitors():
-    print("INFO", str(m))
+# for m in get_monitors():
+#     print("INFO", str(m))
 
 monitors = get_monitors()
 monitor=display.name_selection('HDMI-2')                                                                # port for the LCD screen
@@ -168,25 +168,21 @@ for j in range(0,nb_layers, subset_imagetk):                                    
     ##  PARTICLES ACTUATION IN THE CONTAINER
     #Consider state of particles and compare to instructions
         if layers_state_values[layer_index] != Particles_state:
-            motor2.move_dist_time_dir_dm(32, 8, 1, 1)
-
-
-
-
+            motor2.move_dist_time_dir_dm(50, 8, 1, 1)
             if Particles_state==1:
                 Particles_state=0
                 motor2.move_dist_time_dir_dm((210/2-l_container/2), 10,1,2)                                #Move to the side of the resin container
                 sleep(1)
-                motor2.move_dist_time_dir_dm(l_container, attract_time,1, 2)                              #ove to the other side of the resin container
+                motor2.move_dist_time_dir_dm(l_container+5, attract_time,1, 2)                              #ove to the other side of the resin container
             else:
-                motor2.move_dist_time_dir_dm(l_container/2,30,-1,2)
+                motor2.move_dist_time_dir_dm(l_container+5,30,-1,2)
                 sleep(1)    
                 motor2.move_dist_time_dir_dm((210/2-l_container/2), 10,-1,2)
                 sleep(1)
                 vibration.activate_v(motors, vibration_time)                                            # 200s of agitation
                 Particles_state=1
             # input("press enter to continue") 
-            motor2.move_dist_time_dir_dm(32, 8, -1, 1)   
+            motor2.move_dist_time_dir_dm(50, 8, -1, 1)   
         else:
             pass
 

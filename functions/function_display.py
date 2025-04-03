@@ -44,7 +44,7 @@ def convert_full_0 (image_path, w_root, h_root, monitors):
     factor_w = w_root / w
     factor_h = h_root / h
     factor = min(factor_w, factor_h)                        #factor to adapt image to full screen without distorting it
-    print(factor_h, "\n", factor_w)
+    # print(factor_h, "\n", factor_w)
 
     new_w = int(w*factor)
     if len(monitors) > 1: 

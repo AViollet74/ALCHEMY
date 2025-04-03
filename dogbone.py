@@ -172,9 +172,9 @@ for j in range(0,nb_layers, subset_imagetk):                                    
 
         ##  PARTICLES ACTUATION IN THE CONTAINER      
         if layer_index<=3:
-            cure_time =120                                                                               # 12 for commercial resin, 96 for custom resin 1, 
+            cure_time =40                                                                               # 12 for commercial resin, 96 for custom resin 1, 
         else:
-            cure_time=60                                                                                # 2.8 for commercial resin, 25 for custom resin 1, 
+            cure_time=20                                                                                # 2.8 for commercial resin, 25 for custom resin 1, 
         attract_time =500                                                                                # steady magnet time in seconds
         vibration_time=400                                                                              # vibration time in seconds
     ##  PARTICLES ACTUATION IN THE CONTAINER
@@ -228,9 +228,9 @@ for j in range(0,nb_layers, subset_imagetk):                                    
             pass
 
 motor2.move_dist_time_dir_dm(100,30,1,1)
+print("PRINTED")
 ################################################################################################################################
 
-root.mainloop()
 
 
 
