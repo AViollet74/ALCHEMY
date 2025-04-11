@@ -11,6 +11,7 @@ import tkinter as tk
 from screeninfo import get_monitors
 import sys
 from time import time
+from tqdm import tqdm
 
 import os
 
@@ -152,12 +153,16 @@ subset_imagetk=1
 ### MAIN PRINTING
 
 ## Start MAIN 
+progress_bar = tqdm(total=nb_layers, desc="Impression en cours", position=0,leave=True)
+
 for j in range(0,nb_layers, subset_imagetk):                                                            # double loop over the image objects can be used to improve performance of the printer by creating a subset of image objects each time
     images_tk=display.convert_full_1(sequence[j:j+subset_imagetk], w_root, h_root, monitors)            # by default, size of subset of image objects i set to 1
     for i in range(len(images_tk)): 
         start_time=time()
         percentage=(i+j)/nb_layers*100
-        print(f"printing layer {i+j}_________________________________{percentage:.1f}% Complete")
+        # print(f"printing layer {i+j}_________________________________{percentage:.1f}% Complete")
+        progress_bar.update(1)
+        
         motor2.move_dist_time_dir_dm(2,0.4, 1,1)
         # motor2.move_dist_time_dir_dm(60,5, 1,1)
         sleep(2)
@@ -178,7 +183,7 @@ for j in range(0,nb_layers, subset_imagetk):                                    
         else:
             cure_time=180                                                                                # 2.8 for commercial resin, 25 for custom resin 1, 
         attract_time =500                                                                                # steady magnet time in seconds
-        vibration_time=400                                                                              # vibration time in seconds
+        vibration_time=400                                                                               # vibration time in seconds
     ##  PARTICLES ACTUATION IN THE CONTAINER
     #Consider state of particles and compare to instructions
         # if layers_state_values[layer_index] != Particles_state:
@@ -210,7 +215,8 @@ for j in range(0,nb_layers, subset_imagetk):                                    
         display.show_image(cnv, w_root, h_root, images_tk[i])
         root.update_idletasks()
         root.update()
-        sleep(cure_time)
+        for i in tqdm(range(100), desc="Illumination", position=1, leave=False):        
+            sleep(cure_time/100)
         uv.switch_off(uv_pin)
         sleep(2)
 
