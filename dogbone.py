@@ -153,7 +153,7 @@ subset_imagetk=1
 ### MAIN PRINTING
 
 ## Start MAIN 
-progress_bar = tqdm(total=nb_layers, desc="Impression en cours", position=0,leave=True)
+progress_bar = tqdm(total=nb_layers, desc="PRINT", bar_format='{desc}: {percentage:3.0f}% |{bar}| {n_fmt}/{total_fmt}', position=0,leave=True)
 
 for j in range(0,nb_layers, subset_imagetk):                                                            # double loop over the image objects can be used to improve performance of the printer by creating a subset of image objects each time
     images_tk=display.convert_full_1(sequence[j:j+subset_imagetk], w_root, h_root, monitors)            # by default, size of subset of image objects i set to 1
@@ -215,7 +215,7 @@ for j in range(0,nb_layers, subset_imagetk):                                    
         display.show_image(cnv, w_root, h_root, images_tk[i])
         root.update_idletasks()
         root.update()
-        for i in tqdm(range(100), desc="Illumination", position=1, leave=False):        
+        for i in tqdm(range(100), desc="UV", bar_format='{desc}: {percentage:3.0f}% |{bar}|', position=1, leave=False):        
             sleep(cure_time/100)
         uv.switch_off(uv_pin)
         sleep(2)
