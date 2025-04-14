@@ -179,9 +179,9 @@ for j in range(0,nb_layers, subset_imagetk):                                    
 
         ##  PARTICLES ACTUATION IN THE CONTAINER      
         if layer_index<=3:
-            cure_time =1                                                                               # 12 for commercial resin, 96 for custom resin 1, 
+            cure_time =200                                                                               # 12 for commercial resin, 96 for custom resin 1, 
         else:
-            cure_time=1                                                                                # 2.8 for commercial resin, 25 for custom resin 1, 
+            cure_time=180                                                                                # 2.8 for commercial resin, 25 for custom resin 1, 
         attract_time =500                                                                                # steady magnet time in seconds
         vibration_time=400                                                                               # vibration time in seconds
     ##  PARTICLES ACTUATION IN THE CONTAINER
