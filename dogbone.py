@@ -13,6 +13,7 @@ from screeninfo import get_monitors
 import sys
 from time import time
 from tqdm import tqdm
+import questionary
 
 import os
 
@@ -53,7 +54,7 @@ else :
 ################################################################################################################################### 
 ### Initialization of printing parameters
 
-SOP=(input("STANDARD OPERATION ?"))
+SOP=(input("STANDARD OPERATION ? (ENTER for default)"))
 if not SOP: 
     layer_thickness=0.08
     layer_index=0                                                                                           #Determines the current layer
@@ -121,20 +122,18 @@ h_root = monitor.height
 
 ################################################################################################################################
 ## Initialization and zero position of the printing bed
-while True:
-    response = input("Is 0-position set? (yes/no): ").strip().lower()
-    if response == "yes":
-        motor2.start_position_1(sensor_pin)
-        Z_table_pos=0
-        break
-    elif response == "no":
-        print("setting")
-        motor2.start_position_1(sensor_pin)                                                               # go down to the screen
-        Z_table_pos=0
-        input("After settting: Press Enter to continue...")
-        break
-    else:
-       pass
+response = questionary.select(
+"Select resin:",
+choices=["Yes", "No"]).ask()
+if response == "Yes":
+    motor2.start_position_1(sensor_pin)
+    Z_table_pos=0
+else:
+    print("setting")
+    motor2.start_position_1(sensor_pin)                                                               # go down to the screen
+    Z_table_pos=0
+    input("After settting: Press Enter to continue...")
+
 ################################################################################################################################
 
 

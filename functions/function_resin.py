@@ -28,13 +28,10 @@ def resin_selection():
     else:
         exp_time=int(input("exposure_time"))
         exp_time_first=int(input("exposure_time first layer"))        
-    
     return exp_time, exp_time_first
 
 # exp_time, exp_time_first=resin_selection()
 # print(exp_time, exp_time_first)
-
-
 
 
 def file_def(directory):
