@@ -4,6 +4,7 @@ import functions.function_photosensor as sensor
 # import functions.function_motor as motor
 import functions.function_vibration as vibration
 import functions.function_motor2 as motor2
+import functions.function_resin as selection
 
 from gpiozero import LED
 from time import sleep
@@ -19,8 +20,9 @@ import os
 ### Object properties 
 print("Object properties")
 origin_path = "/home/alchemy/PRINT/"
-origin_path_layers="/home/alchemy/LAYERS" 
-file_name=input("Name of the folder containing images (Need to be stored in PRINTS)")
+origin_path_layers="/home/alchemy/LAYERS/" 
+file_name=selection.file_def(origin_path)
+# file_name=input("Name of the folder containing images (Need to be stored in PRINTS)")
 base_path=origin_path + file_name                                                                       #Folder path   
 black_image_path = "/home/alchemy/black_image.png"                                                      #Black image path
 
@@ -100,6 +102,9 @@ else:
     sensor_pin = sensor.init_sensor()                                                                                                                                                                                                                #le setup GPIO qui va faire fonctionner le sensor est présente dans la fontion start_position_1(sensor_pin)
     print("photo sensor setup success")
 
+
+
+exp_time, exp_time_first=selection.resin_selection()
 ###################################################################################################################################
 #GUI creation with TkInter 
 # for m in get_monitors():
@@ -179,9 +184,9 @@ for j in range(0,nb_layers, subset_imagetk):                                    
 
         ##  PARTICLES ACTUATION IN THE CONTAINER      
         if layer_index<=3:
-            cure_time =200                                                                               # 12 for commercial resin, 96 for custom resin 1, 
+            cure_time =exp_time                                                                               # 12 for commercial resin, 96 for custom resin 1, 
         else:
-            cure_time=180                                                                                # 2.8 for commercial resin, 25 for custom resin 1, 
+            cure_time=exp_time_first                                                                                # 2.8 for commercial resin, 25 for custom resin 1, 
         attract_time =500                                                                                # steady magnet time in seconds
         vibration_time=400                                                                               # vibration time in seconds
     ##  PARTICLES ACTUATION IN THE CONTAINER
