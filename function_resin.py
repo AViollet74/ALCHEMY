@@ -14,7 +14,7 @@ def resin_selection():
     ]
     ).ask()
     if answer=="BA/HEMA 1":
-        exp_time=160
+        exp_time=180
         exp_time_first=200 
     elif answer=="BA/HEMA 2":
         exp_time=160
