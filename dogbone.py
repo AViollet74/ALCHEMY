@@ -167,10 +167,10 @@ for j in range(0,nb_layers, subset_imagetk):                                    
         # print(f"printing layer {i+j}_________________________________{percentage:.1f}% Complete")
         progress_bar.update(1)
         
-        motor2.move_dist_time_dir_dm(2,0.6, 1,1)
+        motor2.move_dist_time_dir_dm(2,1, 1,1)
         # motor2.move_dist_time_dir_dm(60,5, 1,1)
         sleep(2)
-        motor2.move_dist_time_dir_dm(2-layer_thickness,0.6,-1,1)
+        motor2.move_dist_time_dir_dm(2-layer_thickness,1,-1,1)
         # motor2.move_dist_time_dir_dm(60,5, -1,1)
         sleep(2)
         Z_table_pos+=layer_thickness
