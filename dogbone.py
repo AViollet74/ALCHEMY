@@ -149,7 +149,6 @@ cnv.pack(fill=tk.BOTH, expand=True)
 black_image_tk  = display.convert_full_0(black_image_path, w_root, h_root, monitors)                    #Convert black image path to black image object, with full screen dimensions                                         
 image_paths = display.convert_list(base_path, nb_layers)
 # images_tk = display.convert_full_1(sequence, w_root, h_root, monitors)                                #Too demanding for memory, leads to drop in performance for high number of layers
-subset_imagetk=1
 ################################################################################################################################
 
 ################################################################################################################################
@@ -158,85 +157,79 @@ subset_imagetk=1
 ## Start MAIN 
 progress_bar = tqdm(total=nb_layers, desc="PRINT", bar_format='{desc}: {percentage:3.0f}% |{bar}| {n_fmt}/{total_fmt}', position=0,leave=True)
 
-for j in range(0,nb_layers, subset_imagetk):                                                            # double loop over the image objects can be used to improve performance of the printer by creating a subset of image objects each time
-    images_tk=display.convert_full_1(sequence[j:j+subset_imagetk], w_root, h_root, monitors)            # by default, size of subset of image objects i set to 1
-    for i in range(len(images_tk)): 
-        # start_time=time()
-        percentage=(i+j)/nb_layers*100
-        # print(f"printing layer {i+j}_________________________________{percentage:.1f}% Complete")
-        progress_bar.update(1)
-        
-        motor2.move_dist_time_dir_dm(2,1, 1,1)
-        # motor2.move_dist_time_dir_dm(60,5, 1,1)
-        sleep(2)
-        motor2.move_dist_time_dir_dm(2-layer_thickness,1,-1,1)
-        # motor2.move_dist_time_dir_dm(60,5, -1,1)
-        sleep(2)
-        Z_table_pos+=layer_thickness
-        layer_index+=1
-        
-        display.show_image(cnv, w_root, h_root, black_image_tk)
-        root.update_idletasks()
-        root.update()
+for j in range(nb_layers):                                                            # double loop over the image objects can be used to improve performance of the printer by creating a subset of image objects each time
+    images_tk=display.convert_full_1(sequence[j], w_root, h_root, monitors)            # by default, size of subset of image objects i set to 1
+    progress_bar.update(1)
+    
+    motor2.move_dist_time_dir_dm(2,1, 1,1)
+    # motor2.move_dist_time_dir_dm(60,5, 1,1)
+    sleep(2)
+    motor2.move_dist_time_dir_dm(2-layer_thickness,1,-1,1)
+    # motor2.move_dist_time_dir_dm(60,5, -1,1)
+    sleep(2)
+    Z_table_pos+=layer_thickness
+    layer_index+=1
+    
+    display.show_image(cnv, w_root, h_root, black_image_tk)
+    root.update_idletasks()
+    root.update()
 
-
-        ##  PARTICLES ACTUATION IN THE CONTAINER      
-        if layer_index<=3:
-            cure_time =exp_time 
-        else:
-            cure_time=exp_time_first 
-        attract_time =500                                                                                # steady magnet time in seconds
-        vibration_time=400                                                                               # vibration time in seconds
+    ##  PARTICLES ACTUATION IN THE CONTAINER      
+    if layer_index<=3:
+        cure_time =exp_time 
+    else:
+        cure_time=exp_time_first 
+    attract_time =500                                                                                # steady magnet time in seconds
+    vibration_time=400                                                                               # vibration time in seconds
     ##  PARTICLES ACTUATION IN THE CONTAINER
-    #Consider state of particles and compare to instructions
-        # if layers_state_values[layer_index] != Particles_state:
-        #     motor2.move_dist_time_dir_dm(32, 8, 1, 1)
+    ##  Consider state of particles and compare to instructions
+    
+
+    # if layers_state_values[layer_index] != Particles_state:
+    #     motor2.move_dist_time_dir_dm(32, 8, 1, 1)
+
+    #     if Particles_state==1:
+    #         Particles_state=0
+    #         motor2.move_dist_time_dir_dm((210/2-l_container/2), 10,1,2)                                #Move to the side of the resin container
+    #         sleep(1)
+    #         motor2.move_dist_time_dir_dm(l_container, attract_time,1, 2)                              #ove to the other side of the resin container
+    #     else:
+    #         motor2.move_dist_time_dir_dm(l_container/2,30,-1,2)
+    #         sleep(1)    
+    #         motor2.move_dist_time_dir_dm((210/2-l_container/2), 10,-1,2)
+    #         sleep(1)
+    #         vibration.activate_v(motors, vibration_time)                                            # 200s of agitation
+    #         Particles_state=1
+    #     # input("press enter to continue") 
+    
+    #     motor2.move_dist_time_dir_dm(32, 8, -1, 1)   
+    # else:
+    #     pass
 
 
+    uv.switch_on(uv_pin)
+    display.show_image(cnv, w_root, h_root, images_tk[i])
+    root.update_idletasks()
+    root.update()
+    for i in tqdm(range(100), desc="UV-Light", bar_format='{desc}: {percentage:3.0f}% |{bar}|', position=1, leave=False):        
+        sleep(cure_time/100)
+    uv.switch_off(uv_pin)
+    sleep(2)
 
 
-        #     if Particles_state==1:
-        #         Particles_state=0
-        #         motor2.move_dist_time_dir_dm((210/2-l_container/2), 10,1,2)                                #Move to the side of the resin container
-        #         sleep(1)
-        #         motor2.move_dist_time_dir_dm(l_container, attract_time,1, 2)                              #ove to the other side of the resin container
-        #     else:
-        #         motor2.move_dist_time_dir_dm(l_container/2,30,-1,2)
-        #         sleep(1)    
-        #         motor2.move_dist_time_dir_dm((210/2-l_container/2), 10,-1,2)
-        #         sleep(1)
-        #         vibration.activate_v(motors, vibration_time)                                            # 200s of agitation
-        #         Particles_state=1
-        #     # input("press enter to continue") 
-        #     motor2.move_dist_time_dir_dm(32, 8, -1, 1)   
-        # else:
-        #     pass
+    # end_time=time()
+    # delta_time=end_time-start_time,
+    # print(f"deltatime={delta_time} seconds")
 
 
-
-        uv.switch_on(uv_pin)
-        display.show_image(cnv, w_root, h_root, images_tk[i])
+    if i == len(images_tk)-1:
+        display.show_image(cnv, w_root, h_root, black_image_tk)        
         root.update_idletasks()
         root.update()
-        for i in tqdm(range(100), desc="UV-Light", bar_format='{desc}: {percentage:3.0f}% |{bar}|', position=1, leave=False):        
-            sleep(cure_time/100)
-        uv.switch_off(uv_pin)
-        sleep(2)
-
-
-        # end_time=time()
-        # delta_time=end_time-start_time,
-        # print(f"deltatime={delta_time} seconds")
-
-
-        if i == len(images_tk)-1:
-            display.show_image(cnv, w_root, h_root, black_image_tk)        
-            root.update_idletasks()
-            root.update()
-            # print("End of the printing")
-            root.bind('<Escape>', lambda e: root.quit())   
-        else:
-            pass
+        # print("End of the printing")
+        root.bind('<Escape>', lambda e: root.quit())   
+    else:
+        pass
 
 motor2.move_dist_time_dir_dm(60,30,1,1)
 print("PRINTED")
