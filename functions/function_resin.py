@@ -17,8 +17,8 @@ def resin_selection():
         exp_time=180
         exp_time_first=200 
     elif answer=="BA/HEMA 2":
-        exp_time=160
-        exp_time_first=200        
+        exp_time=200
+        exp_time_first=220        
     elif answer=="PEGDA/Water":
         exp_time=25
         exp_time_first=96        
