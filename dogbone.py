@@ -49,6 +49,7 @@ else :
 ################################################################################################################################
 
 
+exp_time, exp_time_first=selection.resin_selection()
 
 
 ################################################################################################################################### 
@@ -56,7 +57,7 @@ else :
 
 SOP=(input("STANDARD OPERATION ? (ENTER for default)"))
 if not SOP: 
-    layer_thickness=0.08
+    layer_thickness=0.20
     layer_index=0                                                                                           #Determines the current layer
     Particles_state=1 
     l_container=72
@@ -68,9 +69,9 @@ if not SOP:
     sensor_pin=4
 else:
     # Layer thickness definition
-    layer_thickness=(input("layer thickness in mm (ENTER for default value (0.08))"))
+    layer_thickness=(input("layer thickness in mm (ENTER for default value (0.20))"))
     if not layer_thickness:
-        layer_thickness=0.08
+        layer_thickness=0.20
     else :
         layer_thickness=float(layer_thickness)
     layer_index=0                                                                                           #Determines the current layer
@@ -104,8 +105,6 @@ else:
     print("photo sensor setup success")
 
 
-
-exp_time, exp_time_first=selection.resin_selection()
 ###################################################################################################################################
 #GUI creation with TkInter 
 # for m in get_monitors():
@@ -123,7 +122,7 @@ h_root = monitor.height
 ################################################################################################################################
 ## Initialization and zero position of the printing bed
 response = questionary.select(
-"Select resin:",
+"Build head calibrated?",
 choices=["Yes", "No"]).ask()
 if response == "Yes":
     motor2.start_position_1(sensor_pin)
@@ -162,7 +161,7 @@ progress_bar = tqdm(total=nb_layers, desc="PRINT", bar_format='{desc}: {percenta
 for j in range(0,nb_layers, subset_imagetk):                                                            # double loop over the image objects can be used to improve performance of the printer by creating a subset of image objects each time
     images_tk=display.convert_full_1(sequence[j:j+subset_imagetk], w_root, h_root, monitors)            # by default, size of subset of image objects i set to 1
     for i in range(len(images_tk)): 
-        start_time=time()
+        # start_time=time()
         percentage=(i+j)/nb_layers*100
         # print(f"printing layer {i+j}_________________________________{percentage:.1f}% Complete")
         progress_bar.update(1)
@@ -183,9 +182,9 @@ for j in range(0,nb_layers, subset_imagetk):                                    
 
         ##  PARTICLES ACTUATION IN THE CONTAINER      
         if layer_index<=3:
-            cure_time =exp_time                                                                               # 12 for commercial resin, 96 for custom resin 1, 
+            cure_time =exp_time 
         else:
-            cure_time=exp_time_first                                                                                # 2.8 for commercial resin, 25 for custom resin 1, 
+            cure_time=exp_time_first 
         attract_time =500                                                                                # steady magnet time in seconds
         vibration_time=400                                                                               # vibration time in seconds
     ##  PARTICLES ACTUATION IN THE CONTAINER
@@ -219,14 +218,14 @@ for j in range(0,nb_layers, subset_imagetk):                                    
         display.show_image(cnv, w_root, h_root, images_tk[i])
         root.update_idletasks()
         root.update()
-        for i in tqdm(range(100), desc="UV", bar_format='{desc}: {percentage:3.0f}% |{bar}|', position=1, leave=False):        
+        for i in tqdm(range(100), desc="UV-Light", bar_format='{desc}: {percentage:3.0f}% |{bar}|', position=1, leave=False):        
             sleep(cure_time/100)
         uv.switch_off(uv_pin)
         sleep(2)
 
 
-        end_time=time()
-        delta_time=end_time-start_time,
+        # end_time=time()
+        # delta_time=end_time-start_time,
         # print(f"deltatime={delta_time} seconds")
 
 
@@ -239,7 +238,7 @@ for j in range(0,nb_layers, subset_imagetk):                                    
         else:
             pass
 
-motor2.move_dist_time_dir_dm(100,30,1,1)
+motor2.move_dist_time_dir_dm(60,30,1,1)
 print("PRINTED")
 ################################################################################################################################
 
