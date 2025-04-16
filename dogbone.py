@@ -57,7 +57,7 @@ exp_time, exp_time_first=selection.resin_selection()
 
 SOP=(input("STANDARD OPERATION ? (ENTER for default)"))
 if not SOP: 
-    layer_thickness=0.20
+    layer_thickness=0.10
     layer_index=0                                                                                           #Determines the current layer
     Particles_state=1 
     l_container=72
@@ -158,8 +158,9 @@ image_paths = display.convert_list(base_path, nb_layers)
 progress_bar = tqdm(total=nb_layers, desc="PRINT", bar_format='{desc}: {percentage:3.0f}% |{bar}| {n_fmt}/{total_fmt}', position=0,leave=True)
 
 for j in range(nb_layers):                                                            # double loop over the image objects can be used to improve performance of the printer by creating a subset of image objects each time
-    images_tk=display.convert_full_1(sequence[j], w_root, h_root, monitors)            # by default, size of subset of image objects i set to 1
+    images_tk=display.convert_full_1(sequence[j:j+1], w_root, h_root, monitors)            # by default, size of subset of image objects i set to 1
     progress_bar.update(1)
+    print(images_tk)
     
     motor2.move_dist_time_dir_dm(2,1, 1,1)
     # motor2.move_dist_time_dir_dm(60,5, 1,1)
@@ -208,7 +209,7 @@ for j in range(nb_layers):                                                      
 
 
     uv.switch_on(uv_pin)
-    display.show_image(cnv, w_root, h_root, images_tk[i])
+    display.show_image(cnv, w_root, h_root, images_tk[0])
     root.update_idletasks()
     root.update()
     for i in tqdm(range(100), desc="UV-Light", bar_format='{desc}: {percentage:3.0f}% |{bar}|', position=1, leave=False):        
