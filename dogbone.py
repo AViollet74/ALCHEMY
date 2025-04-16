@@ -166,10 +166,10 @@ for j in range(nb_layers):                                                      
     images_tk=display.convert_full_1(sequence[j:j+1], w_root, h_root, monitors)            # possible to switch to convert_full_0 by changing indices
     progress_bar.update(1)
     
-    motor2.move_dist_time_dir_dm(2,1, 1,1)
+    motor2.move_dist_time_dir_dm(3,1, 1,1)
     # motor2.move_dist_time_dir_dm(60,5, 1,1)
     sleep(2)
-    motor2.move_dist_time_dir_dm(2-layer_thickness,1,-1,1)
+    motor2.move_dist_time_dir_dm(3-layer_thickness,1,-1,1)
     # motor2.move_dist_time_dir_dm(60,5, -1,1)
     sleep(2)
     Z_table_pos+=layer_thickness
