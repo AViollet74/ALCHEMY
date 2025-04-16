@@ -36,8 +36,8 @@ def move_dist_time_dir_dm(distance, temps, sens, ID):
     lineENA=chip.get_line(ENA)
     lineENA.request(consumer="piezo",type=gpiod.LINE_REQ_DIR_OUT)
     
-    stepfactor=1
-    step_num = round(distance/8*360/1.8*stepfactor)
+    # stepfactor=2
+    step_num = round(distance/8*400)
     
     sleep_time = temps/step_num       #temps d'attente entre chaque step (diviser par deux car haut puis bas)
     

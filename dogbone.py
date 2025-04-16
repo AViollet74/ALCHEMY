@@ -56,8 +56,13 @@ vibration_time=400                                                              
 ################################################################################################################################### 
 ### Initialization of printing parameters
 
-SOP=(input("STANDARD OPERATION ? (ENTER for default)"))
-if not SOP: 
+# SOP=(input("STANDARD OPERATION ? (ENTER for default)"))
+SOP = questionary.select(
+"Settigns: ",
+choices=["Standard Operation", "custom settings"]).ask()
+
+
+if SOP=="Standard Operation": 
     layer_thickness=0.10
     layer_index=0                                                                                           #Determines the current layer
     Particles_state=1 
