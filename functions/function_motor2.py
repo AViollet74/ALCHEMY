@@ -54,7 +54,7 @@ def move_dist_time_dir_dm(distance, temps, sens, ID):
             sleep(sleep_time/2)
             linePUL.set_value(0)
             sleep(sleep_time/2)
-        lineENA.set_value(off)
+        # lineENA.set_value(off)
 
     else :
         # start_time = monotonic()
@@ -67,7 +67,7 @@ def move_dist_time_dir_dm(distance, temps, sens, ID):
             sleep(sleep_time/2)
             linePUL.set_value(0)
             sleep(sleep_time/2)
-        lineENA.set_value(off)
+        # lineENA.set_value(off)
     return
 
 
@@ -101,3 +101,23 @@ def start_position_1(sensor_pin):
         linePUL.set_value(0)
         sleep(1/400)        
     print("Start position reached")
+    
+    
+      
+    
+    
+    
+def motor_release(ID):
+    off=0
+    if ID==1:
+        PUL = 22  # Stepper Drive Pulses
+        DIR = 23  # Controller Direction Bit (High for Controller default / LOW to Force a Direction Change).
+        ENA = 24 
+    else:
+        PUL=21
+        DIR=20
+        ENA=26  
+    chip=gpiod.Chip("gpiochip0")
+    lineENA=chip.get_line(ENA)
+    lineENA.request(consumer="piezo",type=gpiod.LINE_REQ_DIR_OUT)        
+        

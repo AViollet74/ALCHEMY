@@ -50,7 +50,8 @@ else :
 
 
 exp_time, exp_time_first=selection.resin_selection()
-
+attract_time =500                                                                                # steady magnet time in seconds
+vibration_time=400                                                                               # vibration time in seconds
 
 ################################################################################################################################### 
 ### Initialization of printing parameters
@@ -148,7 +149,6 @@ cnv.pack(fill=tk.BOTH, expand=True)
 ###Conversion of the images paths to Image Objects
 black_image_tk  = display.convert_full_0(black_image_path, w_root, h_root, monitors)                    #Convert black image path to black image object, with full screen dimensions                                         
 image_paths = display.convert_list(base_path, nb_layers)
-# images_tk = display.convert_full_1(sequence, w_root, h_root, monitors)                                #Too demanding for memory, leads to drop in performance for high number of layers
 ################################################################################################################################
 
 ################################################################################################################################
@@ -157,10 +157,9 @@ image_paths = display.convert_list(base_path, nb_layers)
 ## Start MAIN 
 progress_bar = tqdm(total=nb_layers, desc="PRINT", bar_format='{desc}: {percentage:3.0f}% |{bar}| {n_fmt}/{total_fmt}', position=0,leave=True)
 
-for j in range(nb_layers):                                                            # double loop over the image objects can be used to improve performance of the printer by creating a subset of image objects each time
-    images_tk=display.convert_full_1(sequence[j:j+1], w_root, h_root, monitors)            # by default, size of subset of image objects i set to 1
+for j in range(nb_layers):                                                            #  loop over the image objects 
+    images_tk=display.convert_full_1(sequence[j:j+1], w_root, h_root, monitors)            # possible to switch to convert_full_0 by changing indices
     progress_bar.update(1)
-    print(images_tk)
     
     motor2.move_dist_time_dir_dm(2,1, 1,1)
     # motor2.move_dist_time_dir_dm(60,5, 1,1)
@@ -180,8 +179,7 @@ for j in range(nb_layers):                                                      
         cure_time =exp_time 
     else:
         cure_time=exp_time_first 
-    attract_time =500                                                                                # steady magnet time in seconds
-    vibration_time=400                                                                               # vibration time in seconds
+
     ##  PARTICLES ACTUATION IN THE CONTAINER
     ##  Consider state of particles and compare to instructions
     
@@ -218,11 +216,6 @@ for j in range(nb_layers):                                                      
     sleep(2)
 
 
-    # end_time=time()
-    # delta_time=end_time-start_time,
-    # print(f"deltatime={delta_time} seconds")
-
-
     if i == len(images_tk)-1:
         display.show_image(cnv, w_root, h_root, black_image_tk)        
         root.update_idletasks()
@@ -233,6 +226,9 @@ for j in range(nb_layers):                                                      
         pass
 
 motor2.move_dist_time_dir_dm(60,30,1,1)
+
+motor2.motor_release(1)
+motor2.motor_release(2)
 print("PRINTED")
 ################################################################################################################################
 
