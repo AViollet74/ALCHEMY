@@ -158,7 +158,7 @@ image_paths = display.convert_list(base_path, nb_layers)
 
 ################################################################################################################################
 ### MAIN PRINTING
-
+print(layer_thickness)
 ## Start MAIN 
 progress_bar = tqdm(total=nb_layers, desc="PRINT", bar_format='{desc}: {percentage:3.0f}% |{bar}| {n_fmt}/{total_fmt}', position=0,leave=True)
 
@@ -166,10 +166,10 @@ for j in range(nb_layers):                                                      
     images_tk=display.convert_full_1(sequence[j:j+1], w_root, h_root, monitors)            # possible to switch to convert_full_0 by changing indices
     progress_bar.update(1)
     
-    motor2.move_dist_time_dir_dm(3,1, 1,1)
+    motor2.move_dist_time_dir_dm(6,1, 1,1)
     # motor2.move_dist_time_dir_dm(60,5, 1,1)
     sleep(2)
-    motor2.move_dist_time_dir_dm(3-layer_thickness,1,-1,1)
+    motor2.move_dist_time_dir_dm(6-layer_thickness,1,-1,1)
     # motor2.move_dist_time_dir_dm(60,5, -1,1)
     sleep(2)
     Z_table_pos+=layer_thickness
