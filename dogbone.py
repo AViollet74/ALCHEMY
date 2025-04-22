@@ -63,7 +63,7 @@ choices=["Standard Operation", "custom settings"]).ask()
 
 
 if SOP=="Standard Operation": 
-    layer_thickness=0.10
+    # layer_thickness=0.10
     layer_index=0                                                                                           #Determines the current layer
     Particles_state=1 
     l_container=72
@@ -75,11 +75,11 @@ if SOP=="Standard Operation":
     sensor_pin=4
 else:
     # Layer thickness definition
-    layer_thickness=(input("layer thickness in mm (ENTER for default value (0.20))"))
-    if not layer_thickness:
-        layer_thickness=0.20
-    else :
-        layer_thickness=float(layer_thickness)
+    # layer_thickness=(input("layer thickness in mm (ENTER for default value (0.20))"))
+    # if not layer_thickness:
+    #     layer_thickness=0.20
+    # else :
+    #     layer_thickness=float(layer_thickness)
     layer_index=0                                                                                           #Determines the current layer
     Particles_state=1                                                                                       #Determines if the particles are dispersed or not (initial state : dispersed particle) 
 
@@ -155,10 +155,14 @@ cnv.pack(fill=tk.BOTH, expand=True)
 black_image_tk  = display.convert_full_0(black_image_path, w_root, h_root, monitors)                    #Convert black image path to black image object, with full screen dimensions                                         
 image_paths = display.convert_list(base_path, nb_layers)
 ################################################################################################################################
+### Layer thickness definition for fine tuning
+thickness=questionary.select(
+"Select layer thickness",
+choices=["0.08 mm", "0.10 mm", "0.16 mm", "0.20 mm"]).ask()
+layer_thickness=float(thickness[:4])
 
 ################################################################################################################################
 ### MAIN PRINTING
-print(layer_thickness)
 ## Start MAIN 
 progress_bar = tqdm(total=nb_layers, desc="PRINT", bar_format='{desc}: {percentage:3.0f}% |{bar}| {n_fmt}/{total_fmt}', position=0,leave=True)
 
@@ -185,32 +189,30 @@ for j in range(nb_layers):                                                      
     else:
         cure_time=exp_time_first 
 
-    ##  PARTICLES ACTUATION IN THE CONTAINER
+    ##  PARTICLES ACTUATION IN THE VAT
     ##  Consider state of particles and compare to instructions
+    if layers_state_values[layer_index] != Particles_state:
+        motor2.move_dist_time_dir_dm(32, 8, 1, 1)
+
+        if Particles_state==1:
+            Particles_state=0
+            motor2.move_dist_time_dir_dm((210/2-l_container/2), 10,1,2)                                #Move to the side of the resin container
+            sleep(1)
+            motor2.move_dist_time_dir_dm(l_container, attract_time,1, 2)                              #ove to the other side of the resin container
+        else:
+            motor2.move_dist_time_dir_dm(l_container/2,30,-1,2)
+            sleep(1)    
+            motor2.move_dist_time_dir_dm((210/2-l_container/2), 10,-1,2)
+            sleep(1)
+            vibration.activate_v(motors, vibration_time)
+            Particles_state=1
+        # input("press enter to continue") 
     
+        motor2.move_dist_time_dir_dm(32, 8, -1, 1)   
+    else:
+        pass
 
-    # if layers_state_values[layer_index] != Particles_state:
-    #     motor2.move_dist_time_dir_dm(32, 8, 1, 1)
-
-    #     if Particles_state==1:
-    #         Particles_state=0
-    #         motor2.move_dist_time_dir_dm((210/2-l_container/2), 10,1,2)                                #Move to the side of the resin container
-    #         sleep(1)
-    #         motor2.move_dist_time_dir_dm(l_container, attract_time,1, 2)                              #ove to the other side of the resin container
-    #     else:
-    #         motor2.move_dist_time_dir_dm(l_container/2,30,-1,2)
-    #         sleep(1)    
-    #         motor2.move_dist_time_dir_dm((210/2-l_container/2), 10,-1,2)
-    #         sleep(1)
-    #         vibration.activate_v(motors, vibration_time)                                            # 200s of agitation
-    #         Particles_state=1
-    #     # input("press enter to continue") 
-    
-    #     motor2.move_dist_time_dir_dm(32, 8, -1, 1)   
-    # else:
-    #     pass
-
-
+    # vibration.activate_v(motors, 20)
     uv.switch_on(uv_pin)
     display.show_image(cnv, w_root, h_root, images_tk[0])
     root.update_idletasks()
@@ -234,7 +236,7 @@ motor2.move_dist_time_dir_dm(60,30,1,1)
 
 motor2.motor_release(1)
 motor2.motor_release(2)
-print("PRINTED")
+print("\n PRINTED")
 ################################################################################################################################
 
 

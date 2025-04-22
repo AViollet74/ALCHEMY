@@ -81,7 +81,7 @@ def start_position_1(sensor_pin):
     """Move the building platform downward, to the starting position (until the photosensor is not reached) by activating the stepper motor in the backrward direction
     Args : GPIO pin number of the photosensor."""
     
-    print("Stepper motor goes to start position")
+    # print("Stepper motor goes to start position")
     chip=gpiod.Chip("gpiochip0")
     line=chip.get_line(sensor_pin)
     line.request(consumer="sensor",type=gpiod.LINE_REQ_DIR_IN)
@@ -100,7 +100,7 @@ def start_position_1(sensor_pin):
         sleep(1/400)
         linePUL.set_value(0)
         sleep(1/400)        
-    print("Start position reached")
+    print("Start Print")
     
     
       
