@@ -50,11 +50,11 @@ def activate_v(motors, time_on):
         chip=gpiod.Chip("gpiochip0")
         line=chip.get_lines(motors)
         line.request(consumer="main",type=gpiod.LINE_REQ_DIR_OUT)
-        print("vibration start")
+        # print("vibration start")
         line.set_values([1 for _ in range(len(motors))])
         sleep(time_on) 
         line.set_values([0 for _ in range(len(motors))])                          #line.set_value([value]), set the line to the given value, 0 for low, 1 for high
-        print("vibration end")
+        # print("vibration end")
         return()
 
 
