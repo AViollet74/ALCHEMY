@@ -161,6 +161,16 @@ thickness=questionary.select(
 choices=["0.08 mm", "0.10 mm", "0.16 mm", "0.20 mm"]).ask()
 layer_thickness=float(thickness[:4])
 
+composite_printing=questionary.select(
+"Composite resin",
+choices=["Pure Resin", "Composite Resin"]).ask()
+if composite_printing=="Pure Resin":
+    motors=[]
+else:
+    motors=[5, 13, 17, 25]
+    vibration.setup_vibration(motors)
+
+
 ################################################################################################################################
 ### MAIN PRINTING
 ## Start MAIN 
@@ -173,6 +183,10 @@ for j in range(nb_layers):                                                      
     motor2.move_dist_time_dir_dm(6,1, 1,1)
     # motor2.move_dist_time_dir_dm(60,5, 1,1)
     sleep(2)
+    if composite_printing=="Composite Resin":
+        vibration.activate_v(motors, 15)   
+    else:
+        pass
     motor2.move_dist_time_dir_dm(6-layer_thickness,1,-1,1)
     # motor2.move_dist_time_dir_dm(60,5, -1,1)
     sleep(2)
