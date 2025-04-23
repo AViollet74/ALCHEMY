@@ -100,7 +100,6 @@ def start_position_1(sensor_pin):
         sleep(1/400)
         linePUL.set_value(0)
         sleep(1/400)        
-    print("Start Print")
     
     
       
