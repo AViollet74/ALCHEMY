@@ -5,17 +5,54 @@ import functions.function_photosensor as sensor
 import functions.function_vibration as vibration
 import functions.function_motor2 as motor2
 import functions.function_resin as selection
-
-from gpiozero import LED
+# from gpiozero import LED
 from time import sleep
 import tkinter as tk 
 from screeninfo import get_monitors
 import sys
-from time import time
+# from time import time
 from tqdm import tqdm
 import questionary
-
 import os
+import signal
+
+################################################################################################################################
+### Clean up gpio pins when interupting
+
+
+
+# Global list to keep track of all gpiod lines/motors/etc
+registered_cleanup = [2,3,4,5,6,7,8,9,10, 11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27]
+
+
+def cleanup_all(signum=None, frame=None):
+    print("\nCleaning up GPIO and exiting...")
+    try:
+        # Release all registered hardware
+        for item in registered_cleanup:
+            try:
+                if hasattr(item, 'release'):
+                    item.release()
+                elif hasattr(item, 'close'):
+                    item.close()
+            except Exception as e:
+                print(f"Cleanup error: {e}")
+        # Additional manual cleanups
+        uv.switch_off(uv_pin)
+        motor2.motor_release(1)
+        motor2.motor_release(2)
+    except Exception as e:
+        print(f"Exception during cleanup: {e}")
+    finally:
+        try:
+            root.destroy()
+        except:
+            pass
+        sys.exit(0)
+
+# Attach signal handlers at the top of your script
+signal.signal(signal.SIGINT, cleanup_all)
+signal.signal(signal.SIGTERM, cleanup_all)
 
 ################################################################################################################################
 ### Object properties 
