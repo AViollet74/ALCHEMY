@@ -45,4 +45,3 @@ def file_def(directory):
 
 # a=file_def("C:/Users/arnau/OneDrive/Desktop/PDM - Master thesis/")
 # print(a)
-    
