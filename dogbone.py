@@ -86,7 +86,7 @@ else :
 ### Selection of resin properties
 exp_time, exp_time_first=selection.resin_selection()
 attract_time =500                                                                                # steady magnet time in seconds
-vibration_time=400                                                                               # vibration time in seconds
+vibration_time=500                                                                               # vibration time in seconds
 
 ################################################################################################################################### 
 ### Initialization of printing parameters
@@ -104,7 +104,7 @@ if SOP=="Standard Operation":
     l_container=72
     
     motors=[]
-    time_on=200
+    time_on=300
     vibration.setup_vibration(motors)
     uv_pin = 27
     sensor_pin=4
