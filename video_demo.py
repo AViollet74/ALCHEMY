@@ -16,6 +16,6 @@ motor2.move_dist_time_dir_dm((210/2-l_container/2), 10,-1,2)                    
 
 
 motors=[5,13,17,25]
-time_on=450
+time_on=600
 vibration.setup_vibration(motors)     
 vibration.activate_v(motors, time_on)
