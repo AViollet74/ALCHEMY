@@ -187,6 +187,7 @@ cnv.pack(fill=tk.BOTH, expand=True)
 ###Conversion of the images paths to Image Objects
 black_image_tk  = display.convert_full_0(black_image_path, w_root, h_root, monitors)                    #Convert black image path to black image object, with full screen dimensions                                         
 image_paths = display.convert_list(base_path, nb_layers)
+
 ################################################################################################################################
 ### Layer thickness definition for fine tuning
 thickness=questionary.select(
@@ -217,7 +218,7 @@ for j in range(nb_layers):                                                      
     # motor2.move_dist_time_dir_dm(60,5, 1,1)
     sleep(2)
     if composite_printing=="Composite Resin":
-        vibration.activate_v(motors, 60)   
+        vibration.activate_v(motors, 45)   
     else:
         pass
     motor2.move_dist_time_dir_dm(6-layer_thickness,1,-1,1)
@@ -238,25 +239,28 @@ for j in range(nb_layers):                                                      
 
     ##  PARTICLES ACTUATION IN THE VAT
     ##  Consider state of particles and compare to instructions
-    if layers_state_values[layer_index] != Particles_state:
-        motor2.move_dist_time_dir_dm(32, 8, 1, 1)
+    try:
+        if layers_state_values[layer_index] != Particles_state:
+            motor2.move_dist_time_dir_dm(32, 8, 1, 1)
 
-        if Particles_state==1:
-            Particles_state=0
-            motor2.move_dist_time_dir_dm((210/2-l_container/2), 10,1,2)                                #Move to the side of the resin container
-            sleep(1)
-            motor2.move_dist_time_dir_dm(l_container, attract_time,1, 2)                              #ove to the other side of the resin container
+            if Particles_state==1:
+                Particles_state=0
+                motor2.move_dist_time_dir_dm((210/2-l_container/2), 10,1,2)                                #Move to the side of the resin container
+                sleep(1)
+                motor2.move_dist_time_dir_dm(l_container, attract_time,1, 2)                              #ove to the other side of the resin container
+            else:
+                motor2.move_dist_time_dir_dm(l_container/2,30,-1,2)
+                sleep(1)    
+                motor2.move_dist_time_dir_dm((210/2-l_container/2), 10,-1,2)
+                sleep(1)
+                vibration.activate_v(motors, vibration_time)
+                Particles_state=1
+            # input("press enter to continue") 
+        
+            motor2.move_dist_time_dir_dm(32, 8, -1, 1)   
         else:
-            motor2.move_dist_time_dir_dm(l_container/2,30,-1,2)
-            sleep(1)    
-            motor2.move_dist_time_dir_dm((210/2-l_container/2), 10,-1,2)
-            sleep(1)
-            vibration.activate_v(motors, vibration_time)
-            Particles_state=1
-        # input("press enter to continue") 
-    
-        motor2.move_dist_time_dir_dm(32, 8, -1, 1)   
-    else:
+            pass
+    except:
         pass
 
     # vibration.activate_v(motors, 20)
