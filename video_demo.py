@@ -11,7 +11,7 @@ motor2.move_dist_time_dir_dm(l_container, attract_time,1, 2)
 sleep(5)
 motor2.move_dist_time_dir_dm(l_container, 20,-1, 2)     
 sleep(0.5)
-motor2.move_dist_time_dir_dm((210/2-l_container/2), 10,-1,2)                                #Move to the side of the resin container
+motor2.move_dist_time_dir_dm((210/2-l_container/2), 20,-1,2)                                #Move to the side of the resin container
 
 
 
