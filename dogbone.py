@@ -22,21 +22,19 @@ import signal
 
 
 # Global list to keep track of all gpiod lines/motors/etc
-registered_cleanup = [2,3,4,5,6,7,8,9,10, 11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27]
-
-
+# registered_cleanup = [2,3,4,5,6,7,8,9,10, 11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27]
 def cleanup_all(signum=None, frame=None):
     print("\nCleaning up GPIO and exiting...")
     try:
         # Release all registered hardware
-        for item in registered_cleanup:
-            try:
-                if hasattr(item, 'release'):
-                    item.release()
-                elif hasattr(item, 'close'):
-                    item.close()
-            except Exception as e:
-                print(f"Cleanup error: {e}")
+        # for item in registered_cleanup:
+        #     try:
+        #         if hasattr(item, 'release'):
+        #             item.release()
+        #         elif hasattr(item, 'close'):
+        #             item.close()
+        #     except Exception as e:
+        #         print(f"Cleanup error: {e}")
         # Additional manual cleanups
         uv.switch_off(uv_pin)
         motor2.motor_release(1)
