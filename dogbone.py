@@ -85,13 +85,11 @@ else :
 
 ### Selection of resin properties
 exp_time, exp_time_first=selection.resin_selection()
-attract_time =500                                                                                # steady magnet time in seconds
-vibration_time=500                                                                               # vibration time in seconds
+attract_time =300                                                                                # steady magnet time in seconds
+vibration_time=450                                                                               # vibration time in seconds
 
 ################################################################################################################################### 
 ### Initialization of printing parameters
-
-# SOP=(input("STANDARD OPERATION ? (ENTER for default)"))
 SOP = questionary.select(
 "Settigns: ",
 choices=["Standard Operation", "custom settings"]).ask()
@@ -219,7 +217,7 @@ for j in range(nb_layers):                                                      
     # motor2.move_dist_time_dir_dm(60,5, 1,1)
     sleep(2)
     if composite_printing=="Composite Resin":
-        vibration.activate_v(motors, 15)   
+        vibration.activate_v(motors, 45)   
     else:
         pass
     motor2.move_dist_time_dir_dm(6-layer_thickness,1,-1,1)
