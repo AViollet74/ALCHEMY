@@ -217,7 +217,7 @@ for j in range(nb_layers):                                                      
     # motor2.move_dist_time_dir_dm(60,5, 1,1)
     sleep(2)
     if composite_printing=="Composite Resin":
-        vibration.activate_v(motors, 45)   
+        vibration.activate_v(motors, 60)   
     else:
         pass
     motor2.move_dist_time_dir_dm(6-layer_thickness,1,-1,1)
