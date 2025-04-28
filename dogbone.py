@@ -159,6 +159,20 @@ h_root = monitor.height
 
 
 ################################################################################################################################
+### Layer thickness definition for fine tuning
+thickness=questionary.select(
+"Select layer thickness",
+choices=["0.08 mm", "0.10 mm", "0.16 mm", "0.20 mm"]).ask()
+layer_thickness=float(thickness[:4])
+
+composite_printing=questionary.select(
+"Composite resin",
+choices=["Pure Resin", "Composite Resin"]).ask()
+if composite_printing=="Pure Resin":
+    motors=[]
+else:
+    motors=[5, 13, 17, 25]
+    vibration.setup_vibration(motors)
 ## Initialization and zero position of the printing bed
 response = questionary.select(
 "Build head calibrated?",
@@ -187,23 +201,6 @@ cnv.pack(fill=tk.BOTH, expand=True)
 ###Conversion of the images paths to Image Objects
 black_image_tk  = display.convert_full_0(black_image_path, w_root, h_root, monitors)                    #Convert black image path to black image object, with full screen dimensions                                         
 image_paths = display.convert_list(base_path, nb_layers)
-
-################################################################################################################################
-### Layer thickness definition for fine tuning
-thickness=questionary.select(
-"Select layer thickness",
-choices=["0.08 mm", "0.10 mm", "0.16 mm", "0.20 mm"]).ask()
-layer_thickness=float(thickness[:4])
-
-composite_printing=questionary.select(
-"Composite resin",
-choices=["Pure Resin", "Composite Resin"]).ask()
-if composite_printing=="Pure Resin":
-    motors=[]
-else:
-    motors=[5, 13, 17, 25]
-    vibration.setup_vibration(motors)
-
 
 ################################################################################################################################
 ### MAIN PRINTING
