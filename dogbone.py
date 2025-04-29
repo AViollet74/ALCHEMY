@@ -54,7 +54,7 @@ signal.signal(signal.SIGTERM, cleanup_all)
 
 ################################################################################################################################
 ### Object properties 
-print("Object properties")
+# print("Object properties")
 origin_path = "/home/alchemy/PRINT/"
 origin_path_layers="/home/alchemy/LAYERS/" 
 file_name=selection.file_def(origin_path)
