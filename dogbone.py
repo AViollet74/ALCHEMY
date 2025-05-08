@@ -224,7 +224,7 @@ for j in range(nb_layers):                                                      
             sleep(1)
             motor2.move_dist_time_dir_dm((210/2-l_container/2), 10,-1,2)
             sleep(1)
-            vibration.activate_v(motors, 260)
+            vibration.activate_v(motors, vibration_time)
         else:
             vibration.activate_v(motors, 120)
     else:
