@@ -85,7 +85,7 @@ else :
 
 ### Selection of resin properties
 exp_time, exp_time_first=selection.resin_selection()
-attract_time =300                                                                                # steady magnet time in seconds
+attract_time =100                                                                                # steady magnet time in seconds
 vibration_time=450                                                                               # vibration time in seconds
 
 ################################################################################################################################### 
