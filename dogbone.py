@@ -248,7 +248,7 @@ for j in range(nb_layers):                                                      
     ##  PARTICLES ACTUATION IN THE VAT
     ##  Consider state of particles and compare to instructions
     try:
-        if layers_state_values[layer_index] != Particles_state:
+        if layers_state_values[layer_index] != Particles_state and composite_printing!="Pure Resin":
             motor2.move_dist_time_dir_dm(32, 8, 1, 1)
 
             if Particles_state==1:

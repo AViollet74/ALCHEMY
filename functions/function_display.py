@@ -15,7 +15,11 @@ def name_selection(target_name):
             return monitor                                      # return the monitor
     return None
 
-
+def main_selection(target_name):
+    monitors=get_monitors()
+    for monitor in monitors:
+        if monitor.name!=target_name:
+            return monitor
 def convert_list(folder_path, nb_slice):
     """Create a list of image paths from sliced png image 
     Args:   folder_path: string of the folder path
